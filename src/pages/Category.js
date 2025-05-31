@@ -52,9 +52,11 @@ export default function Category({navigation}){
     )
 
     return(
+    
         <View style={styles.container}>
-
+            
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
+                
                 <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch}/> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={FilterUsers} />
             </View>

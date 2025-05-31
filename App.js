@@ -9,6 +9,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Login from "./src/pages/Login";
+import Splash from "./src/pages/Splash";
+import SplashScreen from 'react-native-splash-screen';
+import Register from "./src/pages/Register";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +32,7 @@ function MainTabs() {
         },
       })}
     >
+      
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Category" component={Category} />
       <Tab.Screen name="Profile" component={Profile} />
@@ -37,11 +42,15 @@ function MainTabs() {
 
 
 export default function App() {
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Splash" component={Splash} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} />
           </Stack.Navigator>

@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from "react"
-import { View, Text, TextInput, FlatList, Image, Alert } from "react-native"
+import { View, Text, TextInput, FlatList, Image, Alert, Pressable ,TouchableWithoutFeedback, Keyboard } from "react-native"
+import { Button , IconButton} from "react-native-paper"
+import styles from "../components/Style"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-
-
-export default function Login({}){
+export default function Login({navigation}){
 
     const[email, setEmail] = useState("")
     const[password, setPassword] = useState("")
@@ -12,17 +13,72 @@ export default function Login({}){
 
 
     return(
-        <View>
-            <View>
-                
-                <TextInput value={email} placeholder="Your Email" onChangeText={setEmail}   />
-                <TextInput value={password} placeholder="Your Password" onChangeText={setPassword}   />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
+        <View style={styles.containerLogin}>
+            
+            <Image
+            source={require('../asset/logoZene.png')}
+            style={{ width: 100, height: 100 }}
+            resizeMode="contain"
+                />
+            <Text style={{fontSize:24, color:"#fff", marginTop:16, fontWeight:500, marginBlock:22}}>
+                Welcome to Zen 
+            </Text>
+            
+            
+            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" onChangeText={setEmail}   />
+            <TextInput 
+                style={styles.inputLogin}
+                value={password} 
+                placeholder="Your Password" 
+                secureTextEntry={true} // hide password 
+                onChangeText={setPassword}   
+            />
+        
+            
+            
+           <Pressable style={styles.buttonLogin} onPress={()=> navigation.navigate("MainTabs")}>
+             <Text style={{fontSize:18}}> Get started <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
+             
+            
+           </Pressable>
 
+            <Text style={{color:"#fff",fontSize:14, marginTop:40, fontWeight:500}}>
+                Or continue with</Text>
+
+
+            <Button
+            icon={() => (<MaterialCommunityIcons name="google" size={20} color="#fff" />)}
+            mode="contained"
+            style={{
+                borderRadius:30,
+                width:"100%",
+                marginTop: 16,
+                backgroundColor: "#000",
+                borderWidth: 0.50,
+                padding:8,
+                borderColor: "#fff"
+            }}
+            textColor="#fff"
+            >
+            Login with Google
+            </Button>
+
+            <View style={{flexDirection:"row"}}>
+                <Text style={{color:"#fff",fontSize:14, marginTop:16, fontWeight:400}}>
+                    Don't have an account?
+                </Text>
+                 <Text 
+                 style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
+                 onPress={() => navigation.navigate("Register")}> Register Here !!</Text>
             </View>
-            <View>
+            
 
-
-            </View>
+            <Text  
+            style={{color:"#fff", fontSize:19, paddingTop:100}}onPress={() => navigation.navigate("MainTabs")}>
+                Skip <MaterialCommunityIcons color="#fff" name ="arrow-right" size={17}/>
+            </Text>
         </View>
+    </TouchableWithoutFeedback>
     )
 }

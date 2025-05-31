@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react"
-import { View, Text, TextInput,Button} from "react-native"
+import { View, Text, TextInput,Button , TouchableWithoutFeedback, Keyboard} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import { IconButton } from "react-native-paper"
 import styles from "../components/Style"
@@ -52,18 +52,15 @@ export default function Home({navigation}){
     )
 
     return(
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-            <View >
-
-                <AvatarProfile
-                />
-
-            </View>
-
+            <AvatarProfile
+            />
             <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
                 <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  ></IconButton> 
             </View>
+            
 
             <View style={styles.title} >
                 <Text>Category</Text>
@@ -116,5 +113,6 @@ export default function Home({navigation}){
           
            
         </View>
+    </TouchableWithoutFeedback>
     )
 }

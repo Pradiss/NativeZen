@@ -32,7 +32,7 @@ export default function CardUsersList({item, navigation}){
     return(
     <TouchableOpacity >
 
-        <View style={{flexDirection:"row", backgroundColor:"#fff", borderRadius:30, marginBlock:8, padding:6, marginHorizontal:8}}>
+        <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"#fff", borderRadius:30, marginBlock:8, padding:6, marginHorizontal:8}}>
             <Image
                 source={{uri: item.foto}}
                 style={{ width: 100, height:100, borderRadius:22}}
@@ -58,6 +58,14 @@ export default function CardUsersList({item, navigation}){
                 </View>
                 
             </View> 
+                
+                <View style={{flex:1, alignItems:"flex-end",padding:4,marginTop:70}}>
+                    <MaterialCommunityIcons 
+                    style={{ backgroundColor:"#6BD2D7", borderRadius:30, padding:3}}
+                    name="arrow-top-right"
+                     size={15} color="#000"  
+                     onPress={() => navigation.navigate("ProfileView", {item})}/>
+                </View>
 
         </View>
        </TouchableOpacity>
