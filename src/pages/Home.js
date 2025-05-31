@@ -86,7 +86,7 @@ export default function Home({navigation}){
 
             <View style={styles.title} >
                 <Text>Melhores Musicos Free</Text>
-                <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("ProfileDetails")}>See all</Text>
+                <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Profile")}>See all</Text>
             </View>
 
 

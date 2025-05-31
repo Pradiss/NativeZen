@@ -30,7 +30,7 @@ export default function CardUsers({item, navigation}){
     
     return(
         <View style={{flex:"1"}}>
-            <TouchableOpacity  onPress={() => navigation.navigate("profiledetails", { item: item })}>
+            <TouchableOpacity  onPress={() => navigation.navigate("Profile", { item: item })}>
                 <ImageBackground
                     source={{uri: item.foto}}
                     style={{ width: 270, height:300, borderRadius:40, marginEnd:16 }}

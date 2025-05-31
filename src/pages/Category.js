@@ -63,7 +63,7 @@ export default function Category({navigation}){
 
     
             <View style={styles.space} >
-                <Text > Todos os Free lances</Text>
+                <Text > Todos os Free lances </Text>
             </View>
 
             <FlatList
