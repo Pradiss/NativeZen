@@ -11,15 +11,16 @@ import { PaperProvider } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
-import SplashScreen from 'react-native-splash-screen';
 import Register from "./src/pages/Register";
+
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
 
-function MainTabs() {
+function MainTabs({idUsuario}) {
+  console.log("passou caraio", idUsuario)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -47,7 +48,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />

@@ -87,7 +87,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#6BD2D7",
         padding:8,
         borderColor: "#fff"
-    }
+    },
+    picker:{
+        height: 150,
+        color: "#333",
+    },
+   
   });
 
   export default styles
