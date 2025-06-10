@@ -53,7 +53,7 @@ export default function Category({navigation}){
 
     return(
     
-        <View style={styles.container}>
+        <View style={{paddingTop:50}}>  
             
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
                 

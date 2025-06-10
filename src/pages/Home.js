@@ -57,10 +57,11 @@ export default function Home({navigation}){
 
     return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView>
+        <ScrollView style={{paddingTop:50}}> 
         <View style={styles.container}>
             
             <AvatarProfile
+        
             />
             
             <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
@@ -93,7 +94,7 @@ export default function Home({navigation}){
 
             <View style={styles.title} >
                 <Text>Melhores Musicos Free</Text>
-                <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Profile")}>See all</Text>
+                <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
             </View>
 
 

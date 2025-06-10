@@ -32,10 +32,12 @@ function MainTabs({idUsuario}) {
           else if (route.name === "Profile") iconName = "account-circle-outline";
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
+        headerShown: false,
       })}
-    >
+      >
       
-      <Tab.Screen name="Home" component={Home} />
+      
+      <Tab.Screen name="Home" component={Home}  />
       <Tab.Screen name="Category" component={Category} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -46,11 +48,11 @@ function MainTabs({idUsuario}) {
 export default function App() {
   
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1}}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator  screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Splash" component={Splash} />
+            <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MainTabs" component={MainTabs} />

@@ -12,16 +12,7 @@ export default function AvatarProfiler({navigation}){
     const [users,setUsers] = useState([])
     const isFocused = useIsFocused()
 
-    const LoadingCategory = async () =>{
-        try{ 
-            const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
-            setCategory(res.data)
-
-        }catch(error){
-            Alert.alert("ERROR",error.message)
-        }
-        
-    }
+   
 
     useEffect(() => {
         const authHeader = {
@@ -51,23 +42,24 @@ export default function AvatarProfiler({navigation}){
    
     
     return(
-        <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center"}}>
-            
+        <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center", justifyContent:"space-between"}}>
+            <View style={{flexDirection:"row"}} 
+             >
+
             <Image
-           
+              
                 source={{uri: users.foto}}
                 style={{ width: 50, height: 50, borderRadius: 100, alignSelf: 'start' }}
                 />
-              
-
-               
-            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
-                <Text style={styles.title}> Hi, {users.nome}</Text>
-
-                <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff" />
+            <Text style={styles.title}   onPress={() => navigation.navigate("Profile")}> Hi, {users.nome}</Text>
             </View>
 
-                
+            <View>
+
+                <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff"
+                onPress={() => navigation.navigate("Notification")}
+                />
+            </View>    
         </View>
     )
 }
