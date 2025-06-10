@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
 import Register from "./src/pages/Register";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +20,7 @@ const Stack = createNativeStackNavigator();
 
 
 function MainTabs({idUsuario}) {
+ 
   console.log("passou caraio", idUsuario)
   return (
     <Tab.Navigator

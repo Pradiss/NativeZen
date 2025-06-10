@@ -3,10 +3,11 @@ import { View, Text, TextInput,Button ,Alert, TouchableWithoutFeedback, Keyboard
 import { useIsFocused } from "@react-navigation/native"
 import { IconButton } from "react-native-paper"
 import styles from "../components/Style"
-import { FlatList } from "react-native-gesture-handler"
+import { FlatList, ScrollView } from "react-native-gesture-handler"
 import CardCategory from "../components/CardCategory"
 import CardUsers from "../components/CardUsers"
 import axios from "axios"
+import AvatarProfile from "../components/AvatarProfile"
 
 
 
@@ -42,7 +43,10 @@ export default function Home({navigation}){
     }
 
     useEffect(() => {
+        
+
         if(isFocused)
+           
             LoadingUsers()
             LoadingCategory()
     },[isFocused])
@@ -53,7 +57,11 @@ export default function Home({navigation}){
 
     return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView>
         <View style={styles.container}>
+            
+            <AvatarProfile
+            />
             
             <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
                 <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
@@ -112,6 +120,7 @@ export default function Home({navigation}){
           
            
         </View>
+        </ScrollView>
     </TouchableWithoutFeedback>
     )
 }

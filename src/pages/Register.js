@@ -3,17 +3,44 @@ import { View, Text, TextInput, FlatList, Image, Alert, Pressable, Keyboard, Tou
 import { Button , IconButton} from "react-native-paper"
 import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import axios from "axios";
 
 export default function Register({navigation}){
 
     const[email, setEmail] = useState("")
-    const[password, setPassword] = useState("")
-    const[usuario, setUsuario] = useState("")
+    const[senha, setSenha] = useState("")
+    const[nome, setNome] = useState("")
+
+  
+    const handleRegister = async (e) => {
+        e.preventDefault()
+
+        try{
+            const res = await axios.post("https://erick5457.c44.integrator.host/api/register",
+                {
+                    nome,
+                    email,
+                    senha,
+                },
+                {
+                    headers:{
+                        "Content-Type": "application/json",
+                    }
+                }
+                
+            )
+            
+
+            navigation.navigate("Login")
+        }catch(error){
+            Alert.alert("ERRO ao Fazer cadastro", error.res?.data.message)
+        }
+    }
+
 
 
     return(
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    
         <View style={styles.containerLogin}>
             
             <Image
@@ -27,18 +54,19 @@ export default function Register({navigation}){
             
             
                 
-                <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" onChangeText={setEmail}   />
-                <TextInput style={styles.inputLogin} value={usuario} placeholder="Your Usuario" onChangeText={setUsuario}   />
+                <TextInput style={styles.inputLogin} value={nome} placeholder="Your Name" placeholderTextColor="#ccc" onChangeText={setNome}   />
+                <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" placeholderTextColor="#ccc" onChangeText={setEmail}   />
                 <TextInput 
                 style={styles.inputLogin}
-                value={password} 
+                value={senha}
+                placeholderTextColor="#ccc" 
                 placeholder="Your Password" 
                 secureTextEntry={true} // hide password 
-                onChangeText={setPassword}   />
+                onChangeText={setSenha}   />
 
             
             
-           <Pressable style={styles.buttonLogin} onPress={()=> navigation.navigate("MainTabs")}>
+           <Pressable style={styles.buttonLogin} onPress={handleRegister}>
              <Text style={{fontSize:18}}> Register <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
              
             
@@ -54,6 +82,6 @@ export default function Register({navigation}){
                <MaterialCommunityIcons color="#fff" name ="arrow-left" size={17}/> Back
             </Text>
         </View>
-    </TouchableWithoutFeedback>
+  
     )
 }

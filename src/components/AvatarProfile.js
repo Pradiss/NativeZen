@@ -4,38 +4,13 @@ import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Profile({navigation}){
 
+export default function AvatarProfiler({navigation}){
     
     const [users,setUsers] = useState([])
-    const [categoria,setCategory] = useState([])
     const isFocused = useIsFocused()
-
-    
-   
-    const instrumento = (idInstrumento) =>{
-        switch(idInstrumento){
-            case 1: return "Violão";
-            case 2: return "Bateria";
-            case 3: return "Cavaco";
-            case 4: return "Cantor(a)";
-            case 5: return "Baixo";
-        }
-        
-    }
-    const category = (idCategoria) =>{
-        switch(idCategoria){
-            case 1: return "Samba";
-            case 2: return "Sertanejo";
-            case 3: return "Rock";
-            case 4: return "Pagode";
-            case 5: return "MPB";
-            case 6: return "DJ";
-        }
-        
-    }
-    
 
     const LoadingCategory = async () =>{
         try{ 
@@ -69,20 +44,30 @@ export default function Profile({navigation}){
         
         if(isFocused)
             LoadingUsers()
-            LoadingCategory()
+           
     },[isFocused])
+
+
+   
     
     return(
-        <View style={styles.SpaceTop}>
+        <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center"}}>
+            
             <Image
+           
                 source={{uri: users.foto}}
-                style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
+                style={{ width: 50, height: 50, borderRadius: 100, alignSelf: 'start' }}
                 />
-                <View style={{alignItems:"center" }}>
+              
 
-                    <Text style={styles.title}>{users.nome}</Text>
-                    <Text style={styles.title}>{category(users.idCategoria)} {instrumento(users.idInstrumento)}</Text>
-                </View>
+               
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
+                <Text style={styles.title}> Hi, {users.nome}</Text>
+
+                <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff" />
+            </View>
+
+                
         </View>
     )
 }

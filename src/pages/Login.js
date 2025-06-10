@@ -54,8 +54,9 @@ export default function Login({navigation}){
             </Text>
             
             
-            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" onChangeText={setEmail}   />
+            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" placeholderTextColor="#ccc"  onChangeText={setEmail}   />
             <TextInput 
+                placeholderTextColor="#ccc"
                 style={styles.inputLogin}
                 value={senha} 
                 placeholder="Your Password" 
