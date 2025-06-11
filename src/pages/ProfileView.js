@@ -52,4 +52,4 @@ export default function ProfileView({navigation, item}){
                 </View>
         </View>
     )
-}4
+}

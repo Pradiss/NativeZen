@@ -1,4 +1,6 @@
+
 import { StyleSheet } from "react-native";
+
 
 
 const styles = StyleSheet.create({
@@ -66,10 +68,11 @@ const styles = StyleSheet.create({
 
     inputLogin:{
     textAlign:"center",
+    textShadowColor:"#fff",
     textDecorationColor:"#fff",
-    color:"#fff",
-    backgroundColor: '#1c1c1c',
+    backgroundColor: '#555555',
     width: '100%',
+    color:"#fff",
     height:55,
     marginBlock: 8,
     borderRadius: 30,
@@ -87,7 +90,20 @@ const styles = StyleSheet.create({
         backgroundColor: "#6BD2D7",
         padding:8,
         borderColor: "#fff"
+    },
+    picker:{
+        height: 150,
+        color: "#333",
+    },
+
+
+    icon:{
+        padding:8,
+        borderRadius:12,
+        backgroundColor:"#7D7D7D",
+
     }
+   
   });
 
   export default styles

@@ -13,6 +13,8 @@ import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
 import SplashScreen from 'react-native-splash-screen';
 import Register from "./src/pages/Register";
+import Notification from "./src/pages/Notification";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +31,27 @@ function MainTabs() {
           else if (route.name === "Category") iconName = "account-search-outline";
           else if (route.name === "Profile") iconName = "account-circle-outline";
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+        },
+        headerShown: false,
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#ccc',
+        tabBarStyle: {
+          margin:14,
+          backgroundColor: '#7D7D7D',
+          borderRadius:24,
+          position: 'absolute',
+          bottom: 8,
+          left: 8,
+          right: 8,
+          height: 60,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5, 
         },
       })}
     >
@@ -50,6 +73,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Notification" component={Notification} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} />

@@ -30,7 +30,7 @@ export default function CardUsers({item, navigation}){
     
     return(
         <View style={{flex:"1"}}>
-            <TouchableOpacity  onPress={() => navigation.navigate("Profile", { item: item })}>
+            <TouchableOpacity  onPress={() => navigation.navigate("Profile", {idUsuario})}>
                 <ImageBackground
                     source={{uri: item.foto}}
                     style={{ width: 270, height:300, borderRadius:40, marginEnd:16 }}
@@ -41,7 +41,8 @@ export default function CardUsers({item, navigation}){
 
                 <View style={{marginTop:220,padding:20, backgroundColor:"#fff",borderRadius:18, justifyContent:"center", alignItem:"center"}}>
                     <Text>{item.nome}</Text>
-                    
+                    <Text>{category(item.idCategoria)} {instrumento(item.idInstrumento)}</Text>
+
 
                 </View>
                 </ImageBackground>

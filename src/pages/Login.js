@@ -3,17 +3,45 @@ import { View, Text, TextInput, FlatList, Image, Alert, Pressable ,TouchableWith
 import { Button , IconButton} from "react-native-paper"
 import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import axios from "axios"
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 
 export default function Login({navigation}){
 
     const[email, setEmail] = useState("")
-    const[password, setPassword] = useState("")
+    const[senha, setSenha] = useState("")
+
+    
+
+    const handleLogin = async () =>{
+        
+        try{
+            const res = await axios.post(
+                "https://erick5457.c44.integrator.host/api/login",
+                {email , senha},
+                {headers: {"Content-Type": "application/json"}}
+            )
 
 
+            const idUsuario = res.data?.usuario?.idUsuario
+            
+
+            await AsyncStorage.setItem("idUsuario", idUsuario.toString())
+
+
+            navigation.navigate("MainTabs", {idUsuario})
+            
+        }catch(error){
+            
+            
+            Alert.alert("Falha no login.", error.message || "Erro desconhecido");
+        }
+    }
 
     return(
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>  
+     
         <View style={styles.containerLogin}>
             
             <Image
@@ -26,18 +54,19 @@ export default function Login({navigation}){
             </Text>
             
             
-            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" onChangeText={setEmail}   />
+            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" placeholderTextColor="#ccc"  onChangeText={setEmail}   />
             <TextInput 
+                placeholderTextColor="#ccc"
                 style={styles.inputLogin}
-                value={password} 
+                value={senha} 
                 placeholder="Your Password" 
                 secureTextEntry={true} // hide password 
-                onChangeText={setPassword}   
+                onChangeText={setSenha}   
             />
         
             
             
-           <Pressable style={styles.buttonLogin} onPress={()=> navigation.navigate("MainTabs")}>
+           <Pressable style={styles.buttonLogin} onPress={handleLogin}>
              <Text style={{fontSize:18}}> Get started <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
              
             
@@ -79,6 +108,6 @@ export default function Login({navigation}){
                 Skip <MaterialCommunityIcons color="#fff" name ="arrow-right" size={17}/>
             </Text>
         </View>
-    </TouchableWithoutFeedback>
+ 
     )
 }
