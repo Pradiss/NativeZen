@@ -42,22 +42,11 @@ export default function AvatarProfiler({navigation}){
    
     
     return(
-        <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center", justifyContent:"space-between"}}>
-            <View style={{flexDirection:"row"}}>
-                <Image
-                    onPress={() => navigation.navigate("Profile")}
-                    source={{uri: users.foto}}
-                    style={{ width: 50, height: 50, borderRadius: 100, alignSelf: 'start' }}
-                    />
+        <View style={{flexDirection:"row", justifyContent: "space-between"}}>
+            <Avatar.Image size={24} source={{uri: users.foto}}/>
+            <Text> Hi, </Text>
             
-                <Text onPress={() => navigation.navigate("Profile")} 
-                style={styles.title}> Hi, {users.nome}</Text>
-            </View>
-
-            <View>
-                <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff"
-                onPress={() => navigation.navigate("Notification")}/>
-            </View>    
+          
         </View>
     )
 }

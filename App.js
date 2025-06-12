@@ -11,17 +11,22 @@ import { PaperProvider } from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
-import SplashScreen from 'react-native-splash-screen';
 import Register from "./src/pages/Register";
+<<<<<<< HEAD
 import Notification from "./src/pages/Notification";
 
+=======
+import AsyncStorage from "@react-native-async-storage/async-storage";
+>>>>>>> 670c740b05e39159a7401b7478db1746fb620591
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
 
-function MainTabs() {
+function MainTabs({idUsuario}) {
+ 
+  console.log("passou caraio", idUsuario)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -33,6 +38,7 @@ function MainTabs() {
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
+<<<<<<< HEAD
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#ccc',
         tabBarStyle: {
@@ -53,10 +59,13 @@ function MainTabs() {
           shadowRadius: 3.84,
           elevation: 5, 
         },
+=======
+>>>>>>> 670c740b05e39159a7401b7478db1746fb620591
       })}
-    >
+      >
       
-      <Tab.Screen name="Home" component={Home} />
+      
+      <Tab.Screen name="Home" component={Home}  />
       <Tab.Screen name="Category" component={Category} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -67,11 +76,11 @@ function MainTabs() {
 export default function App() {
   
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1}}>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Navigator  screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Notification" component={Notification} />
             <Stack.Screen name="Register" component={Register} />
