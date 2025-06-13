@@ -16,8 +16,7 @@ export default function Profile({navigation,item}){
     const isFocused = useIsFocused()
 
 
-    const route = useRoute();
-    const { idUsuario } = route.params ?? {};
+    
 
     useEffect(() => {
         const authHeader = {
@@ -44,7 +43,7 @@ export default function Profile({navigation,item}){
     return(
     <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
            
-       <TouchableOpacity onPress={() => navigation.navigate("Profile",{idUsuario: item.idUsuario})}>
+       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
         <View style={{flexDirection:"row",justifyContent:"center"}}>
                 <Avatar.Image 
                 size={50} 
