@@ -12,12 +12,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
 import Register from "./src/pages/Register";
-<<<<<<< HEAD
+
 import Notification from "./src/pages/Notification";
 
-=======
 import AsyncStorage from "@react-native-async-storage/async-storage";
->>>>>>> 670c740b05e39159a7401b7478db1746fb620591
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +36,6 @@ function MainTabs({idUsuario}) {
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
-<<<<<<< HEAD
         tabBarActiveTintColor: '#fff',
         tabBarInactiveTintColor: '#ccc',
         tabBarStyle: {
@@ -59,8 +56,7 @@ function MainTabs({idUsuario}) {
           shadowRadius: 3.84,
           elevation: 5, 
         },
-=======
->>>>>>> 670c740b05e39159a7401b7478db1746fb620591
+
       })}
       >
       

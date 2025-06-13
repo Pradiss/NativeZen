@@ -30,7 +30,7 @@ export default function CardUsersList({item, navigation}){
     
     
     return(
-    <TouchableOpacity >
+    <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{item})}>
 
         <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"#fff", borderRadius:30, marginBlock:8, padding:6, marginHorizontal:8}}>
             <Image
@@ -64,7 +64,7 @@ export default function CardUsersList({item, navigation}){
                     style={{ backgroundColor:"#6BD2D7", borderRadius:30, padding:3}}
                     name="arrow-top-right"
                      size={15} color="#000"  
-                     onPress={() => navigation.navigate("ProfileView", {item})}/>
+                     onPress={() => navigation.navigate("ProfileDetails",{item})}/>
                 </View>
 
         </View>

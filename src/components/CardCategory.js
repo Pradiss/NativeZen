@@ -1,12 +1,13 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image} from "react-native"
+import { View, Text, Image, TouchableOpacity} from "react-native"
 
 export default function CardCategory({item,navigation}){
 
 
     
     return(
+        <TouchableOpacity onPress={() => navigation.navigate("Category")}>
         <View  >
            <View style={{flex:1, alignItems:"center"}}>
             <Image
@@ -19,5 +20,6 @@ export default function CardCategory({item,navigation}){
             <Text>{item.generoMusical}</Text>
            </View>
         </View>
+        </TouchableOpacity>
     )
 }

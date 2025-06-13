@@ -61,11 +61,7 @@ export default function Home({navigation}){
         <View style={styles.container}>
             
             <AvatarProfile
-<<<<<<< HEAD
             navigation={navigation}
-=======
-        
->>>>>>> 670c740b05e39159a7401b7478db1746fb620591
             />
             
             <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
@@ -89,7 +85,7 @@ export default function Home({navigation}){
             renderItem={({ item }) => (
                <CardCategory
                item={item}
-               
+               navigation={navigation}
                />
             )}
             />

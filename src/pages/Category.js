@@ -3,7 +3,7 @@ import { View, Text, TextInput} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import { Button, IconButton } from "react-native-paper"
 import styles from "../components/Style"
-import { FlatList } from "react-native-gesture-handler"
+import { FlatList, ScrollView } from "react-native-gesture-handler"
 import CardCategory from "../components/CardCategory"
 import axios from "axios"
 
@@ -52,37 +52,32 @@ export default function Category({navigation}){
     )
 
     return(
-    
-        <View style={styles.container}>
+        
+        
+        <View style={{paddingTop:50}}>
             
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
-                
                 <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch}/> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
-
     
             <View style={styles.space} >
                 <Text > Todos os Free lances </Text>
             </View>
 
-            <FlatList
-            data={FilterUsers}
             
-            keyExtractor={(item) => item.idUsuario.toString()}
-            
-            renderItem={({ item }) => (
-               <CardUsersList
-               item={item}
-               
-               
-               />
+                <FlatList
+                data={FilterUsers}
+                keyExtractor={(item) => item.idUsuario.toString()}
+                renderItem={({ item }) => (
+                    <CardUsersList
+                    item={item}
+                    navigation={navigation}
+                    />
+                )}
+                />
 
-            )}
-            />
- 
-          
-           
+            
         </View>
     )
 }

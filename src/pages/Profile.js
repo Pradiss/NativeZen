@@ -86,8 +86,4 @@ export default function Profile({navigation}){
                 </View>
         </View>
     )
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 670c740b05e39159a7401b7478db1746fb620591

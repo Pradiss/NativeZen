@@ -1,18 +1,19 @@
+
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert } from "react-native"
+import { View, Text, Image ,Alert, TouchableOpacity } from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
+import { Avatar } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from "../components/Style"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
-export default function AvatarProfiler({navigation}){
+export default function Profile({navigation}){
     
     const [users,setUsers] = useState([])
+    const [categoria,setCategory] = useState([])
     const isFocused = useIsFocused()
 
-   
 
     useEffect(() => {
         const authHeader = {
@@ -31,22 +32,31 @@ export default function AvatarProfiler({navigation}){
             }
             
         }
-
-        
-        if(isFocused)
-            LoadingUsers()
-           
-    },[isFocused])
-
-
    
+        if(isFocused)
+            LoadingUsers()  
+    },[isFocused])
     
     return(
-        <View style={{flexDirection:"row", justifyContent: "space-between"}}>
-            <Avatar.Image size={24} source={{uri: users.foto}}/>
-            <Text> Hi, </Text>
-            
-          
+    <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
+       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <View style={{flexDirection:"row"}}>
+
+            <Avatar.Image 
+                size={50} 
+                source={{ uri: users.foto }} 
+                style={{ alignSelf: 'flex-start' }}
+                
+                />
+            <Text style={styles.title}   onPress={() => navigation.navigate("Profile")}> Hi, {users.nome}</Text>
         </View>
+        </TouchableOpacity>
+       
+
+        <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff"
+        onPress={() => navigation.navigate("Notification")}
+        />
+          
+    </View>
     )
 }
