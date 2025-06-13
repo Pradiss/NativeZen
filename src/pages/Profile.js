@@ -77,7 +77,7 @@ export default function Profile({navigation}){
         <View style={{paddingTop:50}} >
             <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
                 <MaterialCommunityIcons  name="reorder-horizontal" color="#000" size={24}  
-                onPress={()=> navigation.navigate("Config")}
+                onPress={()=> navigation.navigate("Configuração")}
                 />
             </View>
             <Image
@@ -90,11 +90,7 @@ export default function Profile({navigation}){
                     <Text style={styles.title}>{category(users.idCategoria)} {instrumento(users.idInstrumento)}</Text>
                 </View>
 
-            <Pressable onPress={() => navigation.navigate("EditProfile")} 
-            style={styles.buttonLogin}
-                >
-                <Text>Editar Perfil</Text>
-            </Pressable>
+           
         </View>
     )
 }

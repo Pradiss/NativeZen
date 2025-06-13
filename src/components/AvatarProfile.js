@@ -7,13 +7,17 @@ import { Avatar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from "../components/Style"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useRoute } from '@react-navigation/native';
 
-export default function Profile({navigation}){
+export default function Profile({navigation,item}){
     
     const [users,setUsers] = useState([])
     const [categoria,setCategory] = useState([])
     const isFocused = useIsFocused()
 
+
+    const route = useRoute();
+    const { idUsuario } = route.params ?? {};
 
     useEffect(() => {
         const authHeader = {
@@ -39,21 +43,23 @@ export default function Profile({navigation}){
     
     return(
     <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
-       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-        <View style={{flexDirection:"row"}}>
-
-            <Avatar.Image 
+           
+       <TouchableOpacity onPress={() => navigation.navigate("Profile",{idUsuario: item.idUsuario})}>
+        <View style={{flexDirection:"row",justifyContent:"center"}}>
+                <Avatar.Image 
                 size={50} 
                 source={{ uri: users.foto }} 
-                style={{ alignSelf: 'flex-start' }}
-                
+                style={{ alignSelf: 'flex-start' }}     
                 />
-            <Text style={styles.title}   onPress={() => navigation.navigate("Profile")}> Hi, {users.nome}</Text>
+                <View style={{justifyContent:"center", padding:8}}>
+                     <Text>Welcome</Text>
+                    <Text  style={{fontSize: 16, fontWeight: 'bold'}} onPress={() => navigation.navigate("Profile")}> Hi, {users.nome}</Text>
+                </View>
         </View>
         </TouchableOpacity>
        
 
-        <MaterialCommunityIcons style={styles.icon} name="bell" size={25} color="#fff"
+        <MaterialCommunityIcons style={styles.icon} name="bell" size={24} color="#fff"
         onPress={() => navigation.navigate("Notification")}
         />
           

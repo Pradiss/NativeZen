@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from "react"
-
+import { useRoute } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity} from "react-native"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function CardUsers({item, navigation}){
+    
 
      const instrumento = (idInstrumento) =>{
         switch(idInstrumento){
@@ -30,7 +31,7 @@ export default function CardUsers({item, navigation}){
     
     return(
         <View style={{flex:"1"}}>
-            <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{item:item})}>
+            <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
                 <ImageBackground
                     source={{uri: item.foto}}
                     style={{ width: 270, height:300, borderRadius:40, marginEnd:16 }}

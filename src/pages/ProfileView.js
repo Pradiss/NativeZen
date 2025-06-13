@@ -38,16 +38,7 @@ export default function ProfileView({navigation}){
     }
     
 
-    const LoadingCategory = async () =>{
-        try{ 
-            const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
-            setCategory(res.data)
-
-        }catch(error){
-            Alert.alert("ERROR",error.message)
-        }
-        
-    }
+  
 
     useEffect(() => {
         const authHeader = {
@@ -66,6 +57,17 @@ export default function ProfileView({navigation}){
             }
             
         }
+
+          const LoadingCategory = async () =>{
+        try{ 
+            const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
+            setCategory(res.data)
+
+        }catch(error){
+            Alert.alert("ERROR",error.message)
+        }
+        
+    }
 
         
         if(isFocused)

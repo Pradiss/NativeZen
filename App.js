@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import EditProfile from "./src/pages/EditProfile";
 import Config from "./src/pages/Config";
 import Chat from "./src/pages/Chat";
+import Filters from "./src/pages/Filters";
 
 const Tab = createBottomTabNavigator();
 
@@ -86,8 +87,9 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
-            <Stack.Screen name="Config" component={Config} />
+            <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
+            <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
+            <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

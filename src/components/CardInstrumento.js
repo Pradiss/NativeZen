@@ -7,16 +7,18 @@ export default function CardInstrument({item}){
     
     
     return(
-        <View style={{flexDirection:""}} >
-           <View>
-            {/* <Image
-                source={{uri: item.foto}}
-                style={{ width: 100, height: 100 }}
-                resizeMode="cover"
-            /> */}
-                
-            <Text>{item.nomeInstrumeto}</Text>
-           </View>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Category")}>
+            <View>
+                <View style={{flex:1, alignItems:"center"}}>
+                   <Image
+                       source={{uri: item.foto}}
+                       style={{ width: 80, height: 80 , borderRadius:28, marginEnd:8, marginBottom:8}}
+                       resizeMode="cover"
+                   />
+                       
+                   <Text>{item.generoMusical}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
     )
 }

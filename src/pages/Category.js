@@ -64,8 +64,7 @@ export default function Category({navigation}){
             <View style={styles.space} >
                 <Text > Todos os Free lances </Text>
             </View>
-
-            
+      
                 <FlatList
                 data={FilterUsers}
                 keyExtractor={(item) => item.idUsuario.toString()}
@@ -78,6 +77,7 @@ export default function Category({navigation}){
                 />
 
             
+
         </View>
     )
 }

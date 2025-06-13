@@ -55,12 +55,12 @@ export default function Notification({navigation}){
         
         <View style={styles.container}>
             
-            <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
+            {/* <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
                 <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch}/> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
-            </View>
+            </View> */}
     
-            <View style={styles.space} >
+            <View style={styles.title} >
                 <Text > Todos os Notifications </Text>
             </View>
 
