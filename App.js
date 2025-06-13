@@ -16,15 +16,17 @@ import Register from "./src/pages/Register";
 import Notification from "./src/pages/Notification";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import EditProfile from "./src/pages/EditProfile";
+import Config from "./src/pages/Config";
+import Chat from "./src/pages/Chat";
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
 
-function MainTabs({idUsuario}) {
+function MainTabs() {
  
-  console.log("passou caraio", idUsuario)
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -33,6 +35,7 @@ function MainTabs({idUsuario}) {
           if (route.name === "Home") iconName = "home";
           else if (route.name === "Category") iconName = "account-search-outline";
           else if (route.name === "Profile") iconName = "account-circle-outline";
+          else if (route.name === "Chat") iconName = "chat-outline";
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
@@ -63,6 +66,7 @@ function MainTabs({idUsuario}) {
       
       <Tab.Screen name="Home" component={Home}  />
       <Tab.Screen name="Category" component={Category} />
+      <Tab.Screen name="Chat" component={Chat} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
@@ -78,10 +82,12 @@ export default function App() {
           <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Notification" component={Notification} />
+            <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
-            <Stack.Screen name="ProfileDetails" component={ProfileView} />
+            <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen name="Config" component={Config} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

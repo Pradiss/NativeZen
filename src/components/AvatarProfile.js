@@ -38,7 +38,7 @@ export default function Profile({navigation}){
     },[isFocused])
     
     return(
-    <View style={{flexDirection:"row",paddingHorizontal:16, marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
+    <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
         <View style={{flexDirection:"row"}}>
 
@@ -53,7 +53,7 @@ export default function Profile({navigation}){
         </TouchableOpacity>
        
 
-        <MaterialCommunityIcons style={styles.icon} name="bell" size={20} color="#fff"
+        <MaterialCommunityIcons style={styles.icon} name="bell" size={25} color="#fff"
         onPress={() => navigation.navigate("Notification")}
         />
           

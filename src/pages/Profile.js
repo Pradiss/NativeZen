@@ -1,14 +1,14 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert } from "react-native"
+import { View, Text, Image ,Alert, Pressable } from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Profile({navigation}){
 
-    
     const [users,setUsers] = useState([])
     const [categoria,setCategory] = useState([])
     const isFocused = useIsFocused()
@@ -74,7 +74,12 @@ export default function Profile({navigation}){
     },[isFocused])
     
     return(
-        <View style={styles.SpaceTop}>
+        <View style={{paddingTop:50}} >
+            <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
+                <MaterialCommunityIcons  name="reorder-horizontal" color="#000" size={24}  
+                onPress={()=> navigation.navigate("Config")}
+                />
+            </View>
             <Image
                 source={{uri: users.foto}}
                 style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
@@ -84,6 +89,12 @@ export default function Profile({navigation}){
                     <Text style={styles.title}>{users.nome}</Text>
                     <Text style={styles.title}>{category(users.idCategoria)} {instrumento(users.idInstrumento)}</Text>
                 </View>
+
+            <Pressable onPress={() => navigation.navigate("EditProfile")} 
+            style={styles.buttonLogin}
+                >
+                <Text>Editar Perfil</Text>
+            </Pressable>
         </View>
     )
 }
