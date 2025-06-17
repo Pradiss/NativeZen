@@ -20,6 +20,7 @@ import EditProfile from "./src/pages/EditProfile";
 import Config from "./src/pages/Config";
 import Chat from "./src/pages/Chat";
 import Filters from "./src/pages/Filters";
+import ChangePassword from "./src/pages/ChangePassword";
 
 const Tab = createBottomTabNavigator();
 
@@ -90,6 +91,7 @@ export default function App() {
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
+            <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

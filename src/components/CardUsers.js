@@ -2,6 +2,8 @@ import React,{useState,useEffect} from "react"
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity} from "react-native"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import styles from "./Style";
+
 
 export default function CardUsers({item, navigation}){
     
@@ -34,15 +36,22 @@ export default function CardUsers({item, navigation}){
             <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
                 <ImageBackground
                     source={{uri: item.foto}}
-                    style={{ width: 270, height:300, borderRadius:40, marginEnd:16 }}
+                    style={{ width: 270, height:300, borderRadius:40, marginEnd:16 , justifyContent:"flex-end"}}
                     resizeMode="cover"
                     imageStyle={{borderRadius:40}}
                     >
             
 
-                <View style={{marginTop:220,padding:20, backgroundColor:"#fff",borderRadius:18, justifyContent:"center", alignItem:"center"}}>
-                    <Text>{item.nome}</Text>
-                    <Text>{category(item.idCategoria)} {instrumento(item.idInstrumento)}</Text>
+                <View style={{padding:20, backgroundColor:"#000",borderRadius:18, justifyContent:"center", alignItem:"center"}}>
+                    <Text style={{fontSize:20,color:"#fff"}}>{item.nome}</Text>
+                    <Text style={styles.textEndress}>
+                            <MaterialCommunityIcons name="guitar-pick" size={20} color="#fff">
+                            </MaterialCommunityIcons>{category(item.idCategoria)}
+                    </Text>
+                    <Text style={styles.textEndress}>
+                            <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#fff">
+                            </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
+                    </Text>
 
 
                 </View>

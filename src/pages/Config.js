@@ -17,7 +17,7 @@ export default function Config({navigation}){
                <Text style={styles.textButtonConfig}>Edit Profile </Text>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate("ChangePassword")} style={styles.buttonConfig}>
+            <Pressable onPress={() => navigation.navigate("Change Password")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="account-circle-outline" size={17}></MaterialCommunityIcons> 
                <Text style={styles.textButtonConfig}>Change Password </Text>
             </Pressable>

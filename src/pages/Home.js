@@ -9,7 +9,7 @@ import CardUsers from "../components/CardUsers"
 import axios from "axios"
 import AvatarProfile from "../components/AvatarProfile"
 import { useRoute } from "@react-navigation/native";
-
+import CardInstrument from "../components/CardInstrumento"
 
 
 
@@ -18,6 +18,7 @@ export default function Home({navigation}){
     const [search,setSearch] = useState("")
     const [users,setUsers] = useState([])
     const [category,setCategory] = useState([])
+    const [instrument,setInstrument] = useState([])
     const isFocused = useIsFocused()
     const route = useRoute();
     const { idUsuario } = route.params ?? {};
@@ -45,12 +46,23 @@ export default function Home({navigation}){
         }
         
     }
+    const LoadingInstrument = async () =>{
+        try{
+            const res = await axios.get("https://erick5457.c44.integrator.host/api/instrumento")
+            setInstrument(res.data)
+
+        }catch(error){
+            Alert.alert("ERROR",error)
+        }
+        
+    }
         
 
         if(isFocused)
            
             LoadingUsers()
             LoadingCategory()
+            LoadingInstrument()
     },[isFocused])
 
     const FilterUsers = users.filter(user =>
@@ -63,10 +75,9 @@ export default function Home({navigation}){
             <AvatarProfile 
             navigation={navigation}
             />
-            <ScrollView > 
+
+            <ScrollView> 
             <View style={styles.container}>
-                
-                
                 
                 <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
                     <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
@@ -76,7 +87,7 @@ export default function Home({navigation}){
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Category</Text>
-                    <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
+                    <Text title="Press me"style={{ fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
                 </View>
 
                 <FlatList
@@ -96,7 +107,7 @@ export default function Home({navigation}){
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Melhores Musicos Free</Text>
-                    <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
+                    <Text title="Press me" style={{fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
                 </View>
 
                 <FlatList
@@ -110,27 +121,24 @@ export default function Home({navigation}){
                 <CardUsers
                 item={item}
                 navigation={navigation}
-                
-                
                 />
-
                 )}
                 />     
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Melhores Musicos Free</Text>
-                    <Text title="Press me"style={{width:"13%", fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
+                    <Text title="Press me" style={{fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
                 </View>   
 
-                 <FlatList
+                <FlatList
                 style={{paddingStart:12}}
-                data={category}
-                keyExtractor={(item) => item.idCategoria.toString()}
+                data={instrument}
+                keyExtractor={(item) => item.idInstrumento.toString()}
                 horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
-                <CardCategory
+                <CardInstrument
                 item={item}
                 navigation={navigation}
                 />
@@ -138,7 +146,9 @@ export default function Home({navigation}){
                 />   
 
                 <View style={{paddingTop:200}}></View>
+
             </View>
+
             </ScrollView>
        </View>
     </TouchableWithoutFeedback>

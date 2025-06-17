@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image} from "react-native"
+import { View, Text, Image, TouchableOpacity} from "react-native"
 
 export default function CardInstrument({item}){
 
@@ -16,7 +16,7 @@ export default function CardInstrument({item}){
                        resizeMode="cover"
                    />
                        
-                   <Text>{item.generoMusical}</Text>
+                   <Text>{item.nomeInstrumento}</Text>
                 </View>
             </View>
         </TouchableOpacity>

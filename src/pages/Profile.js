@@ -74,22 +74,30 @@ export default function Profile({navigation}){
     },[isFocused])
     
     return(
-        <View style={{paddingTop:50}} >
+        <View style={{paddingTop:60}}>
+
             <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
                 <MaterialCommunityIcons  name="cog" color="#000" size={24}  
                 onPress={()=> navigation.navigate("Configuração")}
                 />
             </View>
+
             <Image
-                source={{uri: users.foto}}
-                style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
-                />
-                <View style={{alignItems:"center" }}>
+            source={{uri: users.foto}}
+            style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
+            />
+            <View style={{alignItems:"center"}}>
 
-                    <Text style={styles.title}>{users.nome}</Text>
+                    <Text style={styles.titleName}>{users.nome}</Text>
+                    <Text style={styles.title}>{users.email}</Text>
                     <Text style={styles.title}>{category(users.idCategoria)} {instrumento(users.idInstrumento)}</Text>
-                </View>
+            </View>
 
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+                
+                
+                 <MaterialCommunityIcons  name="youtube" color="#000" size={24}/>
+            </View>
            
         </View>
     )
