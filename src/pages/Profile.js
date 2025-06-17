@@ -76,7 +76,7 @@ export default function Profile({navigation}){
     return(
         <View style={{paddingTop:50}} >
             <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
-                <MaterialCommunityIcons  name="reorder-horizontal" color="#000" size={24}  
+                <MaterialCommunityIcons  name="cog" color="#000" size={24}  
                 onPress={()=> navigation.navigate("Configuração")}
                 />
             </View>

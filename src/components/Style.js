@@ -102,6 +102,26 @@ const styles = StyleSheet.create({
         borderRadius:12,
         backgroundColor:"#7D7D7D",
 
+    },
+
+    buttonConfig:{
+        borderRadius:18,
+        width:"100%",
+        height:55,
+        paddingHorizontal:16,
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"start",
+        marginTop: 8,
+        backgroundColor: "#f8f8f8",
+        padding:8,
+       
+    },  
+    textButtonConfig:{
+        paddingHorizontal:16,
+        color:"#000",
+        fontSize:16,
+        fontWeight:500,
     }
    
   });

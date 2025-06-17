@@ -61,7 +61,7 @@ export default function Notification({navigation}){
             </View> */}
     
             <View style={styles.title} >
-                <Text > Todos os Notifications </Text>
+                <Text style={styles.titleName}>Today</Text>
             </View>
 
             

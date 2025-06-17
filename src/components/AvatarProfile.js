@@ -22,7 +22,7 @@ export default function Profile({navigation,item}){
         const authHeader = {
             headers: {
                 Authorization: `Basic ${btoa('admin@example.com:password')}`,
-                // Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,rr
             },
         };
         const LoadingUsers = async () =>{
