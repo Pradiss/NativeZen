@@ -126,7 +126,7 @@ export default function Home({navigation}){
                 />     
 
                 <View style={styles.title} >
-                    <Text style={styles.titleName}>Melhores Musicos Free</Text>
+                    <Text style={styles.titleName}>Escolha por instrumento</Text>
                     <Text title="Press me" style={{fontSize:12}} onPress={() => navigation.navigate("Category")}>See all</Text>
                 </View>   
 

@@ -87,16 +87,51 @@ export default function Profile({navigation}){
             style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
             />
             <View style={{alignItems:"center"}}>
+                
+                <Text style={{fontSize:28, fontWeight:600, marginTop:16}}>{users.nome}  {users.idade}</Text>
 
-                    <Text style={styles.titleName}>{users.nome}</Text>
-                    <Text style={styles.title}>{users.email}</Text>
-                    <Text style={styles.title}>{category(users.idCategoria)} {instrumento(users.idInstrumento)}</Text>
+                <View style={{flexDirection:"row", marginTop:8, gap:16}}>
+                    <Text style={{color:"#222222", fontSize:16, fontWeight:400}}>
+                        <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                        </MaterialCommunityIcons>
+                        {category(users.idCategoria)}
+                    </Text>
+
+                    <Text style={{fontSize:16,color:"#222222", fontWeight:400 ,marginBottom:8}}>
+                        <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+                        </MaterialCommunityIcons>
+                        {instrumento(users.idInstrumento)}
+                    </Text>
+                </View>
+                
+
+                <Text style={{fontSize:14,color:"#444444", fontWeight:400 ,marginBottom:8}} >
+                    <MaterialCommunityIcons style={{color:"#888888"}} name="google-maps" size={20} />{users.cidade} {users.uf}
+                </Text>
+
+                <Pressable style={styles.button} onPress={() => navigation.navigate("MainTabs", {screen: "Chat"})}>
+                    <Text style={{color:"#fff", fontWeight:500, fontSize:16}}>Chat</Text>
+                </Pressable>
+
             </View>
 
-            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", gap:12, marginTop:30}}>
                 
+                 <MaterialCommunityIcons  name="instagram" color="#000" size={28} 
+                 style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
                 
-                 <MaterialCommunityIcons  name="youtube" color="#000" size={24}/>
+                 <MaterialCommunityIcons  name="facebook" color="#000" size={28}
+                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
+                 <MaterialCommunityIcons  name="whatsapp" color="#000" size={28}
+                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
+                 <MaterialCommunityIcons  name="youtube" color="#000" size={28}
+                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
+            </View>
+
+            
+            <View style={{padding:32, marginTop:16, backgroundColor:"#e8e8e8",borderRadius:16}}>
+                <Text style={styles.titleName}>About</Text>
+                <Text style={{marginBlock:8}}>{users.descricao}</Text>
             </View>
            
         </View>

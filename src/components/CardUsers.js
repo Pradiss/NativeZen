@@ -40,21 +40,30 @@ export default function CardUsers({item, navigation}){
                     resizeMode="cover"
                     imageStyle={{borderRadius:40}}
                     >
-            
+                    <View style={{padding:20, backgroundColor:"#000",borderRadius:30, justifyContent:"center", alignItem:"center"}}>
+                        <Text style={{fontSize:22,color:"#fff", fontWeight:600 }}>{item.nome}</Text>
+                        
+                        <Text style={{color:"#fff", fontSize:16,marginBlock:4}}>
+                                <MaterialCommunityIcons name="google-maps" size={20} color="#fff">
+                                </MaterialCommunityIcons>
+                                {item.cidade}
+                            </Text>
 
-                <View style={{padding:20, backgroundColor:"#000",borderRadius:18, justifyContent:"center", alignItem:"center"}}>
-                    <Text style={{fontSize:20,color:"#fff"}}>{item.nome}</Text>
-                    <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="guitar-pick" size={20} color="#fff">
-                            </MaterialCommunityIcons>{category(item.idCategoria)}
-                    </Text>
-                    <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#fff">
-                            </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
-                    </Text>
+                        <View style={{flexDirection:"row", gap:16}}>
+                            <Text style={{color:"#fff", fontSize:16}}>
+                                <MaterialCommunityIcons name="guitar-pick" size={20} color="#fff">
+                                </MaterialCommunityIcons>
+                                {category(item.idCategoria)}
+                            </Text>
+                            <Text style={{fontSize:14,color:"#fff", fontWeight:600 ,marginBottom:8}}>
+                                <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#fff">
+                                </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
+                            </Text>
+                        </View>
+                        
 
 
-                </View>
+                    </View>
                 </ImageBackground>
             </TouchableOpacity>
             
