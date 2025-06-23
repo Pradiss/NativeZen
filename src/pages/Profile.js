@@ -116,7 +116,7 @@ export default function Profile({navigation}){
             </View>
 
                
-            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", gap:12, marginTop:30}}>
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", gap:24, marginTop:30}}>
 
                 <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
                     <MaterialCommunityIcons  name="instagram" color="#000" size={28}
@@ -125,13 +125,13 @@ export default function Profile({navigation}){
                         const appUrl = `instagram://user?username=${username}`;
                         const webUrl = `https://www.instagram.com/${username}`;
 
-                        // Verifica se o app do Instagram pode ser aberto
+                       
                         Linking.canOpenURL(appUrl)
                             .then((supported) => {
                             if (supported) {
-                                Linking.openURL(appUrl); // Abre o app do Instagram
+                                Linking.openURL(appUrl); 
                             } else {
-                                Linking.openURL(webUrl); // Abre o perfil no navegador
+                                Linking.openURL(webUrl); 
                             }
                             })
                             .catch(() => {
@@ -140,7 +140,7 @@ export default function Profile({navigation}){
                         }}
                        style={{padding:8, backgroundColor:"#e9e9e9", borderRadius:50}}
                    />
-                    <Text>{users.instagram}</Text>
+                    <Text >{users.instagram}</Text>
                 </View>
                 
                
