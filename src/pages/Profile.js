@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert, Pressable } from "react-native"
+import { View, Text, Image ,Alert, Pressable,Linking } from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
@@ -115,17 +115,89 @@ export default function Profile({navigation}){
 
             </View>
 
+               
             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", gap:12, marginTop:30}}>
+
+                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
+                    <MaterialCommunityIcons  name="instagram" color="#000" size={28}
+                    onPress={() => {
+                        const username = users.instagram;
+                        const appUrl = `instagram://user?username=${username}`;
+                        const webUrl = `https://www.instagram.com/${username}`;
+
+                        // Verifica se o app do Instagram pode ser aberto
+                        Linking.canOpenURL(appUrl)
+                            .then((supported) => {
+                            if (supported) {
+                                Linking.openURL(appUrl); // Abre o app do Instagram
+                            } else {
+                                Linking.openURL(webUrl); // Abre o perfil no navegador
+                            }
+                            })
+                            .catch(() => {
+                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Instagram.');
+                            });
+                        }}
+                       style={{padding:8, backgroundColor:"#e9e9e9", borderRadius:50}}
+                   />
+                    <Text>{users.instagram}</Text>
+                </View>
                 
-                 <MaterialCommunityIcons  name="instagram" color="#000" size={28} 
-                 style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
+               
                 
+                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
                  <MaterialCommunityIcons  name="facebook" color="#000" size={28}
+                 onPress={() => {
+                        const username = users.facebook;
+                        const appUrl = `facebook://user?username=${username}`;
+                        const webUrl = `https://www.facebook.com/${username}`;
+
+                        
+                        Linking.canOpenURL(appUrl)
+                            .then((supported) => {
+                            if (supported) {
+                                Linking.openURL(appUrl); 
+                            } else {
+                                Linking.openURL(webUrl); 
+                            }
+                            })
+                            .catch(() => {
+                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Facebook.');
+                            });
+                        }}
                   style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
-                 <MaterialCommunityIcons  name="whatsapp" color="#000" size={28}
+                   <Text>{users.facebook}</Text>
+                </View>
+
+                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
+                    <MaterialCommunityIcons  name="whatsapp" color="#000" size={28}
+                     onPress={() => {
+                        const username = users.whatsapp;
+                        const appUrl = `whatsapp://send?phone=${username}`;
+                        const webUrl = `https://wa.me/${username}`;
+
+                     
+                        Linking.canOpenURL(appUrl)
+                            .then((supported) => {
+                            if (supported) {
+                                Linking.openURL(appUrl); 
+                            } else {
+                                Linking.openURL(webUrl); 
+                            }
+                            })
+                            .catch(() => {
+                            Alert.alert('Erro', 'Não foi possível abrir o do WhatsApp.');
+                            });
+                        }}
                   style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
-                 <MaterialCommunityIcons  name="youtube" color="#000" size={28}
+                  <Text>{users.whatsapp}</Text>
+                </View>
+
+                {/* <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
+                    <MaterialCommunityIcons  name="youtube" color="#000" size={28}
                   style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
+                  <Text>{users.youtube}</Text>
+                  </View> */}
             </View>
 
             

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Profile from './src/pages/Profile';
 import Category from './src/pages/Category';
 import Home from './src/pages/Home';
@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
 import Register from "./src/pages/Register";
-
+import { useRoute } from "@react-navigation/native";
 import Notification from "./src/pages/Notification";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -76,7 +76,8 @@ function MainTabs() {
 
 
 export default function App() {
-  
+
+
   return (
     <GestureHandlerRootView style={{ flex: 1}}>
       <PaperProvider>
@@ -84,9 +85,9 @@ export default function App() {
           <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
             <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />

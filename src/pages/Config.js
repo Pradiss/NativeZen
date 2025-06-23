@@ -6,7 +6,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 export default function Config({navigation}){
      
 
-   
+
+   const handleLogout = async () => {
+    await AsyncStorage.removeItem("idUsuario");
+    navigation.replace('Login');
+    };
+
     return(
         <View style={{padding:16}}>
            
@@ -39,7 +44,7 @@ export default function Config({navigation}){
                <Text style={styles.textButtonConfig}>Help </Text>
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate("Login")}
+            <Pressable onPress={handleLogout}
             style={{borderRadius:18,
             width:"100%",
             height:55,
