@@ -2,15 +2,24 @@ import React, { useState, useEffect} from "react"
 import { View, Text, FlatList, Alert ,Pressable} from "react-native"
 import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Config({navigation}){
      
 
 
    const handleLogout = async () => {
-    await AsyncStorage.removeItem("idUsuario");
-    navigation.replace('Login');
-    };
+   try {
+      await AsyncStorage.removeItem("idUsuario")
+      navigation.replace('Login')
+   } catch (error) {
+      console.error("Erro ao fazer logout:", error)
+   }
+   }
+
+
+
+
 
     return(
         <View style={{padding:16}}>

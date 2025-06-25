@@ -41,7 +41,7 @@ export default function Profile({navigation,item}){
     },[isFocused])
     
     return(
-    <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between" }}>
+    <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between", }}>
            
        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
         <View style={{flexDirection:"row",justifyContent:"center"}}>

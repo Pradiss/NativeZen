@@ -35,23 +35,24 @@ function MainTabs() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
           if (route.name === "Home") iconName = "home";
-          else if (route.name === "Category") iconName = "account-search-outline";
+          else if (route.name === "Explore") iconName = "magnify";
           else if (route.name === "Profile") iconName = "account-circle-outline";
           else if (route.name === "Chat") iconName = "chat-outline";
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
+        // tabBarShowLabel:false,
         tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: '#ccc',
+        tabBarInactiveTintColor:"#ccc",
         tabBarStyle: {
           margin:14,
-          backgroundColor: '#7D7D7D',
+          backgroundColor: '#000',
           borderRadius:24,
           position: 'absolute',
           bottom: 8,
           left: 8,
           right: 8,
-          height: 60,
+          height: 55,
           shadowColor: '#000',
           shadowOffset: {
             width: 0,
@@ -65,9 +66,8 @@ function MainTabs() {
       })}
       >
       
-      
       <Tab.Screen name="Home" component={Home}  />
-      <Tab.Screen name="Category" component={Category} />
+      <Tab.Screen name="Explore" component={Category} />
       <Tab.Screen name="Chat" component={Chat} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -84,7 +84,7 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash}  />
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
             <Stack.Screen name="Register" component={Register} />
@@ -92,7 +92,7 @@ export default function App() {
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
-            <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
+            <Stack.Screen name="Login" component={Login} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

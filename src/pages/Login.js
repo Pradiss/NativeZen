@@ -7,41 +7,31 @@ import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
 export default function Login({navigation}){
 
     const[email, setEmail] = useState("")
     const[senha, setSenha] = useState("")
 
-    
-
     const handleLogin = async () =>{
-        
-        try{
-            const res = await axios.post(
-                "https://erick5457.c44.integrator.host/api/login",
-                {email , senha},
-                {headers: {"Content-Type": "application/json"}}
-            )
+      try {
+        const res = await axios.post('https://erick5457.c44.integrator.host/api/login',
+        { email, senha }, { headers:{ 'Content-Type': 'application/json'}})
 
+        const idUsuario = res.data?.usuario?.idUsuario
 
-            const idUsuario = res.data?.usuario?.idUsuario
-            
+        await AsyncStorage.setItem('idUsuario', idUsuario.toString())
 
-            await AsyncStorage.setItem("idUsuario", idUsuario.toString())
-
-
-            navigation.navigate("MainTabs", {idUsuario})
-            
-        }catch(error){
-            
-            
-            Alert.alert("Falha no login.", error.message || "Erro desconhecido");
+        // reset
+            navigation.reset({
+            index: 0,
+            routes: [{ name: 'MainTabs' }],
+            })
+        } catch (error) {
+            Alert.alert('Falha no login', error)
         }
     }
 
     return(
-     
         <View style={styles.containerLogin}>
             
             <Image
@@ -61,15 +51,14 @@ export default function Login({navigation}){
                 value={senha} 
                 placeholder="Your Password" 
                 secureTextEntry={true} // hide password 
-                onChangeText={setSenha}   
+                onChangeText={setSenha}  
+                onSubmitEditing={handleLogin} 
             />
         
-            
             
            <Pressable style={styles.buttonLogin} onPress={handleLogin}>
              <Text style={{fontSize:18}}> Get started <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
              
-            
            </Pressable>
 
             <Text style={{color:"#fff",fontSize:14, marginTop:40, fontWeight:500}}>
@@ -103,10 +92,10 @@ export default function Login({navigation}){
             </View>
             
 
-            <Text  
-            style={{color:"#fff", fontSize:19, paddingTop:100}}onPress={() => navigation.navigate("MainTabs")}>
+            {/* <Text  
+            style={{color:"#fff", fontSize:19}}onPress={() => navigation.navigate("MainTabs")}>
                 Skip <MaterialCommunityIcons color="#fff" name ="arrow-right" size={17}/>
-            </Text>
+            </Text> */}
         </View>
  
     )

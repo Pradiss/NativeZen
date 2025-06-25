@@ -121,22 +121,22 @@ export default function Profile({navigation}){
                 <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
                     <MaterialCommunityIcons  name="instagram" color="#000" size={28}
                     onPress={() => {
-                        const username = users.instagram;
-                        const appUrl = `instagram://user?username=${username}`;
-                        const webUrl = `https://www.instagram.com/${username}`;
+                        const username = users.instagram
+                        const appUrl = `instagram://user?username=${username}`
+                        const webUrl = `https://www.instagram.com/${username}`
 
                        
                         Linking.canOpenURL(appUrl)
                             .then((supported) => {
                             if (supported) {
-                                Linking.openURL(appUrl); 
+                                Linking.openURL(appUrl)
                             } else {
-                                Linking.openURL(webUrl); 
+                                Linking.openURL(webUrl)
                             }
                             })
                             .catch(() => {
-                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Instagram.');
-                            });
+                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Instagram.')
+                            })
                         }}
                        style={{padding:8, backgroundColor:"#e9e9e9", borderRadius:50}}
                    />
@@ -148,22 +148,22 @@ export default function Profile({navigation}){
                 <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
                  <MaterialCommunityIcons  name="facebook" color="#000" size={28}
                  onPress={() => {
-                        const username = users.facebook;
-                        const appUrl = `facebook://user?username=${username}`;
-                        const webUrl = `https://www.facebook.com/${username}`;
+                        const username = users.facebook
+                        const appUrl = `facebook://user?username=${username}`
+                        const webUrl = `https://www.facebook.com/${username}`
 
                         
                         Linking.canOpenURL(appUrl)
                             .then((supported) => {
                             if (supported) {
-                                Linking.openURL(appUrl); 
+                                Linking.openURL(appUrl)
                             } else {
-                                Linking.openURL(webUrl); 
+                                Linking.openURL(webUrl)
                             }
                             })
                             .catch(() => {
                             Alert.alert('Erro', 'Não foi possível abrir o perfil do Facebook.');
-                            });
+                            })
                         }}
                   style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
                    <Text>{users.facebook}</Text>
@@ -172,22 +172,22 @@ export default function Profile({navigation}){
                 <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
                     <MaterialCommunityIcons  name="whatsapp" color="#000" size={28}
                      onPress={() => {
-                        const username = users.whatsapp;
-                        const appUrl = `whatsapp://send?phone=${username}`;
-                        const webUrl = `https://wa.me/${username}`;
+                        const username = users.whatsapp
+                        const appUrl = `whatsapp://send?phone=${username}`
+                        const webUrl = `https://wa.me/${username}`
 
                      
                         Linking.canOpenURL(appUrl)
                             .then((supported) => {
                             if (supported) {
-                                Linking.openURL(appUrl); 
+                                Linking.openURL(appUrl)
                             } else {
-                                Linking.openURL(webUrl); 
+                                Linking.openURL(webUrl)
                             }
                             })
                             .catch(() => {
-                            Alert.alert('Erro', 'Não foi possível abrir o do WhatsApp.');
-                            });
+                            Alert.alert('Erro', 'Não foi possível abrir o do WhatsApp.')
+                            })
                         }}
                   style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
                   <Text>{users.whatsapp}</Text>

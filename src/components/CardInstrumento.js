@@ -7,7 +7,7 @@ export default function CardInstrument({item}){
     
     
     return(
-        <TouchableOpacity onPress={() => navigation.navigate("Category")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Explore", {instrumento: item})}>
             <View>
                 <View style={{flex:1, alignItems:"center"}}>
                    <Image
