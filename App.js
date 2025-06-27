@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
-import Profile from './src/pages/Profile';
-import Category from './src/pages/Category';
-import Home from './src/pages/Home';
-import ProfileView from "./src/pages/ProfileView";
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
+import Profile from './src/pages/Profile';
+import Category from './src/pages/Category';
+import Home from './src/pages/Home';
+import ProfileView from "./src/pages/ProfileView";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Login from "./src/pages/Login";
 import Splash from "./src/pages/Splash";
 import Register from "./src/pages/Register";
-import { useRoute } from "@react-navigation/native";
 import Notification from "./src/pages/Notification";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import EditProfile from "./src/pages/EditProfile";
 import Config from "./src/pages/Config";
 import Chat from "./src/pages/Chat";
 import Filters from "./src/pages/Filters";
 import ChangePassword from "./src/pages/ChangePassword";
+import { FormStepOne } from "./src/pages/FormStepOne/FormStepOne";
+import { FormStepTwo } from "./src/pages/FormStepTwo/FormStepTwo";
+import RegisterWrapper from "./src/pages/RegisterWrapper";
 
 const Tab = createBottomTabNavigator();
 
@@ -81,18 +82,26 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1}}>
       <PaperProvider>
+        <StatusBar
+        backgroundColor="#000"  // cor de fundo da barra
+        barStyle="light" // ícones brancos
+        translucent={false}     // se quiser que fique por cima do conteúdo (true = sobreposto)
+      />
         <NavigationContainer>
           <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
-            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Registe" component={Register} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="FormStepOne" component={FormStepOne} />
+            <Stack.Screen name="FormStepTwo" component={FormStepTwo} />
+            <Stack.Screen name="Register" component={RegisterWrapper} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

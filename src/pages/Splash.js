@@ -19,9 +19,9 @@ export default function Splash({navigation}){
     }
     check()
 
-      const timer = setTimeout(() => {navigation.replace('Login');}, 2400)
+      const timer = setTimeout(() => {navigation.replace('Login');}, 3000)
       return () => clearTimeout(timer)
-      
+
     }, [navigation])
   
     return(

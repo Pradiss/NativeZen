@@ -5,20 +5,26 @@ import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useForm } from "react-hook-form";
 
+import { useRef } from "react";
 
 export default function Login({navigation}){
 
     const[email, setEmail] = useState("")
     const[senha, setSenha] = useState("")
+    const senhaInputRef = useRef();
 
+    const { control, formState: { errors } } = useForm();
+    
+    
     const handleLogin = async () =>{
       try {
         const res = await axios.post('https://erick5457.c44.integrator.host/api/login',
         { email, senha }, { headers:{ 'Content-Type': 'application/json'}})
 
         const idUsuario = res.data?.usuario?.idUsuario
-
+        
         await AsyncStorage.setItem('idUsuario', idUsuario.toString())
 
         // reset
@@ -44,7 +50,16 @@ export default function Login({navigation}){
             </Text>
             
             
-            <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" placeholderTextColor="#ccc"  onChangeText={setEmail}   />
+            <TextInput 
+            style={styles.inputLogin} 
+            value={email} 
+            placeholder="Your Email" 
+            placeholderTextColor="#ccc"  
+            onChangeText={setEmail} 
+            returnKeyType="next"
+            onSubmitEditing={() => senhaInputRef.current?.focus()}  
+            />
+
             <TextInput 
                 placeholderTextColor="#ccc"
                 style={styles.inputLogin}
@@ -61,7 +76,7 @@ export default function Login({navigation}){
              
            </Pressable>
 
-            <Text style={{color:"#fff",fontSize:14, marginTop:40, fontWeight:500}}>
+            {/* <Text style={{color:"#fff",fontSize:14, marginTop:40, fontWeight:500}}>
                 Or continue with</Text>
 
 
@@ -80,7 +95,7 @@ export default function Login({navigation}){
             textColor="#fff"
             >
             Login with Google
-            </Button>
+            </Button> */}
 
             <View style={{flexDirection:"row"}}>
                 <Text style={{color:"#fff",fontSize:14, marginTop:16, fontWeight:400}}>
@@ -88,10 +103,12 @@ export default function Login({navigation}){
                 </Text>
                  <Text 
                  style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
-                 onPress={() => navigation.navigate("Register")}> Register Here !!</Text>
+                 onPress={() => navigation.navigate("FormStepOne")}>{' '}
+          Register here!</Text>
             </View>
             
 
+             
             {/* <Text  
             style={{color:"#fff", fontSize:19}}onPress={() => navigation.navigate("MainTabs")}>
                 Skip <MaterialCommunityIcons color="#fff" name ="arrow-right" size={17}/>

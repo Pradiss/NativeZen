@@ -30,8 +30,12 @@ export default function Register({navigation}){
                 
             )
             
-
             navigation.navigate("Login")
+        // reset
+            navigation.reset({
+            index: 0,
+            routes: [{ name: 'MainTabs' }],
+            })
         }catch(error){
             Alert.alert("ERRO ao Fazer cadastro", error.res?.data.message)
         }

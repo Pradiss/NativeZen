@@ -52,8 +52,6 @@ export default function Category({navigation}){
     )
 
     return(
-        
-        
         <View style={{paddingTop:50}}>
             
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
@@ -65,7 +63,7 @@ export default function Category({navigation}){
                 <Text > Todos os Free lances </Text>
             </View>
       
-                <FlatList
+            <FlatList
                 data={FilterUsers}
                 keyExtractor={(item) => item.idUsuario.toString()}
                 renderItem={({ item }) => (
@@ -75,9 +73,6 @@ export default function Category({navigation}){
                     />
                 )}
                 />
-
-            
-
         </View>
     )
 }
