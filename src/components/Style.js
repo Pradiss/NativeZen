@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderColor: "#c7c7c7",
         
+        
     },
     title:{
         margin:14,
@@ -110,42 +111,15 @@ const styles = StyleSheet.create({
         marginTop: 24,
         backgroundColor: "#6BD2D7",
         padding:8,
-        borderColor: "#fff"
+        borderColor: "#fff",
+        //sombra
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 12 },
+      shadowOpacity: 0.15, 
+      shadowRadius: 3, 
+      elevation: 5,
     },
    
-
-    buttonSteps: {
-    height: 56,
-    width: '100%',
-    backgroundColor: '#087F5B',
-    borderRadius: 16,
-    marginTop: 24,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: '2px 4px 4px 0 #ADB5BD',
-    shadowColor: '#ADB5BD',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84
-    },
-    titleBtnSteps: {
-        fontSize: 20,
-        fontWeight: '700',
-        lineHeight: 24,
-        letterSpacing: -0.5,
-        color: '#FFFF'
-    },
-    progress: {
-        height: 4,
-        backgroundColor: '#087F5B',
-        borderRadius: 2
-    },
-//////
 
     icon:{
         padding:8,

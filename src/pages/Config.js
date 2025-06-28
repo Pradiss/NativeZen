@@ -25,32 +25,32 @@ export default function Config({navigation}){
         <View style={{padding:16}}>
            
 
-            <Text style={{fontSize:18,fontWeight:600,marginBlock:8}}>Account Settings</Text>
+            <Text style={{fontSize:18,fontWeight:600,marginBlock:8}}>Configurações de Conta</Text>
             <Pressable onPress={() => navigation.navigate("EditProfile")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="lock-outline" size={17}></MaterialCommunityIcons> 
-               <Text style={styles.textButtonConfig}>Edit Profile </Text>
+               <Text style={styles.textButtonConfig}>Editar Perfil </Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Change Password")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="account-circle-outline" size={17}></MaterialCommunityIcons> 
-               <Text style={styles.textButtonConfig}>Change Password </Text>
+               <Text style={styles.textButtonConfig}>Mudar Senha</Text>
             </Pressable>
 
-            <Text style={{fontSize:18,fontWeight:600,marginBlock:8}}>More</Text>
+            <Text style={{fontSize:18,fontWeight:600,marginBlock:8}}>Mais</Text>
 
-           <Pressable onPress={() => navigation.navigate("Language")} style={styles.buttonConfig}>
+           {/* <Pressable onPress={() => navigation.navigate("Language")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="tooltip-text-outline" size={17}></MaterialCommunityIcons> 
                <Text style={styles.textButtonConfig}>Language </Text>
-            </Pressable>
+            </Pressable> */}
 
             <Pressable onPress={() => navigation.navigate("Privacy")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="shield-alert-outline" size={17}></MaterialCommunityIcons> 
-               <Text style={styles.textButtonConfig}>Privacy </Text>
+               <Text style={styles.textButtonConfig}>Política de Privacidade </Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Help")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="help-circle-outline" size={17}></MaterialCommunityIcons> 
-               <Text style={styles.textButtonConfig}>Help </Text>
+               <Text style={styles.textButtonConfig}>Suporte </Text>
             </Pressable>
 
             <Pressable onPress={handleLogout}
@@ -65,7 +65,7 @@ export default function Config({navigation}){
             backgroundColor: "#f8f8f8",
             padding:8}}
             >
-                <Text style={{color:"red", fontSize:16}}>Logout</Text>
+                <Text style={{color:"red", fontSize:16}}>Sair</Text>
             </Pressable>
         </View>
     )

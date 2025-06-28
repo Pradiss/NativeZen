@@ -86,8 +86,8 @@ export default function Home({navigation}){
                 
 
                 <View style={styles.title} >
-                    <Text style={styles.titleName}>Category</Text>
-                    <Text title="Press me"style={{ fontSize:12}} onPress={() => navigation.navigate("Explore")}>See all</Text>
+                    <Text style={styles.titleName}>Categorias</Text>
+                    <Text title="Press me"style={{ fontSize:12}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
                 </View>
 
                 <FlatList

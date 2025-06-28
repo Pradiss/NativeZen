@@ -52,15 +52,15 @@ export default function Category({navigation}){
     )
 
     return(
-        <View style={{paddingTop:50}}>
+        <View style={{paddingTop:56}}>
             
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
-                <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
+                <TextInput  style={styles.input} placeholder="Buscar Free Lances" value={search} onChangeText={setSearch} /> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
     
             <View style={styles.space} >
-                <Text > Todos os Free lances </Text>
+                <Text style={styles.titleName} > Todos os Free lances </Text>
             </View>
       
             <FlatList

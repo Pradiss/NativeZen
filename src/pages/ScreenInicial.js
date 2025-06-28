@@ -46,7 +46,12 @@ export default function ScreenInicial({navigation}){
                     alignItems:"center",
                     backgroundColor: "#6BD2D7",
                     padding:8,
-                    borderColor: "#fff"
+                    borderColor: "#fff",
+                    shadowColor: "#000",
+                    shadowOffset: { width: 2, height: 6 },
+                    shadowOpacity: 0.15, 
+                    shadowRadius: 3, 
+                    elevation: 5,
                      }} onPress={()=> navigation.navigate("Register")}>
                     <Text style={{fontSize:18}}>Criar uma conta<MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
                     

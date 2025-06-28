@@ -195,7 +195,7 @@ export default function ProfileView({navigation}){
 
             
             <View style={{padding:32, marginTop:16, backgroundColor:"#e8e8e8",borderRadius:16}}>
-                <Text style={styles.titleName}>About</Text>
+                <Text style={styles.titleName}>Sobre</Text>
                 <Text style={{marginBlock:8}}>{users.descricao}</Text>
             </View>
                 

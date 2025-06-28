@@ -15,7 +15,7 @@ export default function Login({navigation}){
     const[senha, setSenha] = useState("")
     const senhaInputRef = useRef();
 
-    const { control, formState: { errors } } = useForm();
+   
     
     
     const handleLogin = async () =>{
@@ -53,7 +53,7 @@ export default function Login({navigation}){
             <TextInput 
             style={styles.inputLogin} 
             value={email} 
-            placeholder="Your Email" 
+            placeholder="Seu E-mail" 
             placeholderTextColor="#ccc"  
             onChangeText={setEmail} 
             returnKeyType="next"
@@ -64,7 +64,7 @@ export default function Login({navigation}){
                 placeholderTextColor="#ccc"
                 style={styles.inputLogin}
                 value={senha} 
-                placeholder="Your Password" 
+                placeholder="Sua Senha" 
                 secureTextEntry={true} // hide password 
                 onChangeText={setSenha}  
                 onSubmitEditing={handleLogin} 
@@ -97,16 +97,21 @@ export default function Login({navigation}){
             Login with Google
             </Button> */}
 
-            <View style={{flexDirection:"row"}}>
+            <View style={{flexDirection:"row" ,paddingTop:14,}}>
                 <Text style={{color:"#fff",fontSize:14, marginTop:16, fontWeight:400}}>
-                    Don't have an account?
+                    Não tem uma conta?
                 </Text>
                  <Text 
                  style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
                  onPress={() => navigation.navigate("Register")}>{' '}
-          Register here!</Text>
+       Cadastre-se aqui!</Text>
             </View>
             
+            <Image
+            source={require('../asset/logoZene.png')}
+            style={{ width: 90, height: 40, marginTop:32 }}
+            resizeMode="contain"
+              />
 
              
             {/* <Text  

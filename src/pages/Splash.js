@@ -8,16 +8,16 @@ export default function Splash({navigation}){
 
   useEffect(() => {
 
-    // const check = async () => {
-    //   try {
-    //     const id = await AsyncStorage.getItem('idUsuario')
-    //     // console.log('ID LIDO:', id)
-    //     navigation.replace(id ? 'MainTabs' : 'ScreenInicial')
-    //   } catch {
-    //     navigation.replace('Login')
-    //   }
-    // }
-    // check()
+     const check = async () => {
+       try {
+         const id = await AsyncStorage.getItem('idUsuario')
+        // console.log('ID LIDO:', id)
+        navigation.replace(id ? 'MainTabs' : 'ScreenInicial')
+      } catch {
+        navigation.replace('Login')
+     }
+     }
+    check()
 
       const timer = setTimeout(() => {navigation.replace('ScreenInicial');}, 3000)
       return () => clearTimeout(timer)
