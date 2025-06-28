@@ -45,7 +45,7 @@ export default function Register({navigation}){
 
     return(
     
-        <View style={styles.containerLogin}>
+        <View style={[styles.containerLogin]}>
             
             <Image
             source={require('../asset/logoZene.png')}
@@ -53,25 +53,25 @@ export default function Register({navigation}){
             resizeMode="contain"
                 />
             <Text style={{fontSize:24, color:"#fff", marginTop:16, fontWeight:500, marginBlock:22}}>
-                Resgiter to Zen
+                Cadastre-se na Zene
             </Text>
             
             
                 
-                <TextInput style={styles.inputLogin} value={nome} placeholder="Your Name" placeholderTextColor="#ccc" onChangeText={setNome}   />
-                <TextInput style={styles.inputLogin} value={email} placeholder="Your Email" placeholderTextColor="#ccc" onChangeText={setEmail}   />
+                <TextInput style={styles.inputLogin} value={nome} placeholder="Seu Nome" placeholderTextColor="#ccc" onChangeText={setNome}   />
+                <TextInput style={styles.inputLogin} value={email} placeholder="Seu E-mail" placeholderTextColor="#ccc" onChangeText={setEmail}   />
                 <TextInput 
                 style={styles.inputLogin}
                 value={senha}
                 placeholderTextColor="#ccc" 
-                placeholder="Your Password" 
+                placeholder="Sua Senha" 
                 secureTextEntry={true} // hide password 
                 onChangeText={setSenha}   />
 
             
             
            <Pressable style={styles.buttonLogin} onPress={handleRegister}>
-             <Text style={{fontSize:18}}> Register <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
+             <Text style={{fontSize:18}}>Cadastrar<MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
              
             
            </Pressable>
@@ -82,7 +82,7 @@ export default function Register({navigation}){
             
 
             <Text  
-            style={{color:"#fff", fontSize:19, marginTop:140}}onPress={() => navigation.navigate("Login")}>
+            style={{color:"#fff", fontSize:19, marginTop:60}}onPress={() => navigation.navigate("Login")}>
                <MaterialCommunityIcons color="#fff" name ="arrow-left" size={17}/> Back
             </Text>
         </View>

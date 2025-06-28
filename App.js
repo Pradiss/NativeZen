@@ -19,9 +19,7 @@ import Config from "./src/pages/Config";
 import Chat from "./src/pages/Chat";
 import Filters from "./src/pages/Filters";
 import ChangePassword from "./src/pages/ChangePassword";
-import { FormStepOne } from "./src/pages/FormStepOne/FormStepOne";
-import { FormStepTwo } from "./src/pages/FormStepTwo/FormStepTwo";
-import RegisterWrapper from "./src/pages/RegisterWrapper";
+import ScreenInicial from "./src/pages/ScreenInicial";
 
 const Tab = createBottomTabNavigator();
 
@@ -93,15 +91,14 @@ export default function App() {
             <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
-            <Stack.Screen name="Registe" component={Register} />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="FormStepOne" component={FormStepOne} />
-            <Stack.Screen name="FormStepTwo" component={FormStepTwo} />
-            <Stack.Screen name="Register" component={RegisterWrapper} />
+            <Stack.Screen name="ScreenInicial" component={ScreenInicial} />
+            
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

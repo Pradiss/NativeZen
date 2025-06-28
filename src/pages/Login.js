@@ -46,7 +46,7 @@ export default function Login({navigation}){
             resizeMode="contain"
                 />
             <Text style={{fontSize:24, color:"#fff", marginTop:16, fontWeight:500, marginBlock:22}}>
-                Welcome to Zen 
+                Bem vindo ao Zene! 
             </Text>
             
             
@@ -72,7 +72,7 @@ export default function Login({navigation}){
         
             
            <Pressable style={styles.buttonLogin} onPress={handleLogin}>
-             <Text style={{fontSize:18}}> Get started <MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
+             <Text style={{fontSize:18}}>Começar<MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
              
            </Pressable>
 
@@ -103,7 +103,7 @@ export default function Login({navigation}){
                 </Text>
                  <Text 
                  style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
-                 onPress={() => navigation.navigate("FormStepOne")}>{' '}
+                 onPress={() => navigation.navigate("Register")}>{' '}
           Register here!</Text>
             </View>
             

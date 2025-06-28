@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     },
     containerSplash:{
         flex: 1,
-        backgroundColor:"#000",
+        backgroundColor:"#232323",
         justifyContent: "center",
         alignItems: "center",
         
@@ -60,10 +60,29 @@ const styles = StyleSheet.create({
     // Login
     containerLogin:{
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#232323',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    },
+    ///screen
+    backgroundScreen:{
+    flex: 1,
+    backgroundColor: '#F6F6F6',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop:50,
+    
+    },
+    //scren Black
+    backgroundScreenBlack:{
+   
+    borderTopLeftRadius:50,
+    borderTopRightRadius:50,
+    backgroundColor: '#232323',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding:40
     },
     
 
@@ -81,6 +100,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:"center",
     },
+
     buttonLogin:{
         borderRadius:30,
         width:"100%",
