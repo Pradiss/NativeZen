@@ -1,3 +1,4 @@
+
 import React,{useState,useEffect} from "react"
 import { useRoute } from "@react-navigation/native";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity} from "react-native"
@@ -34,37 +35,46 @@ export default function CardUsers({item, navigation}){
     return(
         <View style={{flex:"1"}}>
             <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
-                <ImageBackground
-                    source={{uri: item.foto}}
-                    style={{ width: 270, height:300, borderRadius:40, marginEnd:16 , justifyContent:"flex-end"}}
-                    resizeMode="cover"
-                    imageStyle={{borderRadius:40}}
-                    >
-                    <View style={{padding:20, backgroundColor:"#000",borderRadius:30, justifyContent:"center", alignItem:"center"}}>
-                        <Text style={{fontSize:22,color:"#fff", fontWeight:600 }}>{item.nome}</Text>
+                <View style={styles.CardUser}>
+                    <ImageBackground
+                        source={{uri: item.foto}}
+                        style={{ 
+                            padding:12,
+                            width: 250,
+                            height:280, 
+                            borderRadius:30,
+                            
+                            }}
+                        resizeMode="cover"
+                        imageStyle={{borderRadius:30}}
+                        >
                         
-                        <Text style={{color:"#fff", fontSize:16,marginBlock:4}}>
-                                <MaterialCommunityIcons name="google-maps" size={20} color="#fff">
-                                </MaterialCommunityIcons>
-                                {item.cidade}
-                            </Text>
+                    </ImageBackground>
+                    <View style={{padding:16,gap:4,  justifyContent:"center", alignItem:"center"}}>
+                            <Text style={{fontSize:22,color:"#000", fontWeight:600 }}>{item.nome}</Text>
+                            
+                            <Text style={{color:"#000", fontSize:15,marginBlock:4}}>
+                                    <MaterialCommunityIcons name="google-maps" size={20} color="#000">
+                                    </MaterialCommunityIcons>
+                                    {item.cidade}
+                                </Text>
 
-                        <View style={{flexDirection:"row", gap:16}}>
-                            <Text style={{color:"#fff", fontSize:16}}>
-                                <MaterialCommunityIcons name="guitar-pick" size={20} color="#fff">
-                                </MaterialCommunityIcons>
-                                {category(item.idCategoria)}
-                            </Text>
-                            <Text style={{fontSize:14,color:"#fff", fontWeight:600 ,marginBottom:8}}>
-                                <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#fff">
-                                </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
-                            </Text>
+                            <View style={{flexDirection:"row", gap:16}}>
+                                <Text style={{color:"#000", fontSize:16}}>
+                                    <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                                    </MaterialCommunityIcons>
+                                    {category(item.idCategoria)}
+                                </Text>
+                                <Text style={{fontSize:14,color:"#000", fontWeight:600 ,marginBottom:8}}>
+                                    <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+                                    </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
+                                </Text>
+                            </View>
+                            
+
+
                         </View>
-                        
-
-
-                    </View>
-                </ImageBackground>
+                </View>
             </TouchableOpacity>
             
         </View>

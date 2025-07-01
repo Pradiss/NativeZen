@@ -45,7 +45,7 @@ function MainTabs() {
         tabBarInactiveTintColor:"#ccc",
         tabBarStyle: {
           margin:14,
-          backgroundColor: '#000',
+          backgroundColor: '#232323',
           borderRadius:24,
           position: 'absolute',
           bottom: 8,

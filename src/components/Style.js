@@ -15,6 +15,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         
     },
+    //header
+    header:{
+    backgroundColor:"#fff",
+    paddingTop:56,
+    paddingBottom:8,
+    borderEndEndRadius:30,
+    borderBottomLeftRadius:30,
+    backgroundColor: "#F3F3F3",
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.16 ,
+    shadowRadius: 3, 
+    elevation: 5,
+    },
     space:{
         margin:16,
     },
@@ -28,15 +42,14 @@ const styles = StyleSheet.create({
         padding:16,
         borderRadius: 18,
         borderWidth:1,
-        borderColor: "#c7c7c7",
-        
+        borderColor: "#c7c7c7",    
         
     },
     title:{
-        margin:14,
+        marginHorizontal:12,
         flexDirection:"row", 
         justifyContent:"space-between",
-        paddingBlock:8
+        paddingBlock:28
     },
     filter:{
         backgroundColor:"#fff",
@@ -45,7 +58,7 @@ const styles = StyleSheet.create({
         borderColor: "#c7c7c7",
     },
     titleName:{
-        fontSize:18,
+        fontSize:24,
         fontWeight:500,
         color:"#000"
     },
@@ -56,6 +69,7 @@ const styles = StyleSheet.create({
         color:"#aaa"
         
     },
+    
     
     
     // Login
@@ -141,6 +155,18 @@ const styles = StyleSheet.create({
         padding:8,
        
     },  
+     CardUser:{
+        margin:8,
+        padding:8,
+        backgroundColor:"white",
+        borderRadius:40,
+        backgroundColor: "#F3F3F3",
+        shadowColor: "#000",
+        shadowOffset: { width: 1, height: 2 },
+        shadowOpacity: 0.16 ,
+        shadowRadius: 3, 
+        elevation: 5, 
+    },
     textButtonConfig:{
         paddingHorizontal:16,
         color:"#000",

@@ -1,3 +1,4 @@
+
 import React,{useState,useEffect} from "react"
 import { View, Text, TextInput,Button ,Alert, TouchableWithoutFeedback, Keyboard} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
@@ -71,23 +72,25 @@ export default function Home({navigation}){
 
     return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-       <View style={{paddingTop:46}}>
-            <AvatarProfile 
-            navigation={navigation}
-            />
+       <View>
+            <View style={styles.header}>
+                <AvatarProfile 
+                navigation={navigation}
+                />
+            </View>
 
             <ScrollView> 
             <View style={styles.container}>
                 
-                <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
+                <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,paddingTop:18,}}>
                     <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
-                    <IconButton  style={styles.filter} icon="text-search" size={30}  ></IconButton> 
+                    <IconButton  style={styles.filter} icon="text-search" size={30} onPress={() => navigation.navigate("Filtro", {item: search})}></IconButton> 
                 </View>
                 
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Categorias</Text>
-                    <Text title="Press me"style={{ fontSize:12}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
+                    <Text title="Press me"style={{ fontSize:14}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
                 </View>
 
                 <FlatList
@@ -107,15 +110,14 @@ export default function Home({navigation}){
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Melhores Musicos Free</Text>
-                    <Text title="Press me" style={{fontSize:12}} onPress={() => navigation.navigate("Explore")}>See all</Text>
+                    <Text title="Press me" style={{fontSize:14}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
                 </View>
 
                 <FlatList
-                style={{paddingStart:12}}
+                style={{paddingStart:12}}                  
                 data={users}
                 keyExtractor={(item) => item.idUsuario.toString()}
                 horizontal
-                pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                 <CardUsers
@@ -127,7 +129,7 @@ export default function Home({navigation}){
 
                 <View style={styles.title} >
                     <Text style={styles.titleName}>Escolha por instrumento</Text>
-                    <Text title="Press me" style={{fontSize:12}} onPress={() => navigation.navigate("Explore")}>See all</Text>
+                    <Text title="Press me" style={{fontSize:14}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
                 </View>   
 
                 <FlatList
