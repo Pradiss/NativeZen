@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
     color:"#fff",
     height:55,
     marginBlock: 8,
-    borderRadius: 30,
+    borderRadius: 24,
     paddingHorizontal: 10,
     justifyContent:"center",
     alignItems:"center",
     },
 
     buttonLogin:{
-        borderRadius:30,
+        borderRadius:24,
         width:"100%",
         height:55,
         justifyContent:"center",
@@ -187,7 +187,13 @@ const styles = StyleSheet.create({
     },
 
     
-   
+   textRegister:{
+    color:"white",
+    paddingBlock:8,
+    fontSize:18,
+    fontWeight:600,
+
+  },
   });
 
   export default styles
