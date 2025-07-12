@@ -52,7 +52,7 @@ export default function ScreenInicial({navigation}){
                     shadowOpacity: 0.15, 
                     shadowRadius: 3, 
                     elevation: 5,
-                     }} onPress={()=> navigation.navigate("Register")}>
+                     }} onPress={()=> navigation.navigate("FormRegister")}>
                     <Text style={{fontSize:18}}>Criar uma conta<MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
                     
                 </Pressable>

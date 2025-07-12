@@ -103,7 +103,7 @@ export default function Login({navigation}){
                 </Text>
                  <Text 
                  style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
-                 onPress={() => navigation.navigate("Register")}>{' '}
+                 onPress={() => navigation.navigate("FormRegister")}>{' '}
        Cadastre-se aqui!</Text>
             </View>
             
