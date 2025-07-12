@@ -4,7 +4,6 @@ import { useIsFocused } from "@react-navigation/native"
 import { Button, IconButton } from "react-native-paper"
 import styles from "../components/Style"
 import { FlatList, ScrollView } from "react-native-gesture-handler"
-import CardCategory from "../components/CardCategory"
 import axios from "axios"
 
 import CardUsersList from "../components/CardUsersList"
@@ -58,7 +57,9 @@ export default function Category({navigation}){
                 <TextInput  style={styles.input} placeholder="Buscar Free Lances" value={search} onChangeText={setSearch} /> 
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
-    
+
+            
+
             <View style={styles.space} >
                 <Text style={styles.titleName} > Todos os Free lances </Text>
             </View>

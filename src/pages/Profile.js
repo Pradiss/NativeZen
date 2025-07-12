@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert, Pressable,Linking } from "react-native"
+import { View, Text, Image ,Alert, Pressable,Linking ,ScrollView} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
@@ -21,7 +21,7 @@ export default function Profile({navigation}){
             case 2: return "Bateria";
             case 3: return "Cavaco";
             case 4: return "Cantor(a)";
-            case 5: return "Baixo";
+           case 5: return "Baixo";
         }
         
     }
@@ -74,6 +74,8 @@ export default function Profile({navigation}){
     },[isFocused])
     
     return(
+
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
         <View style={{paddingTop:60}}>
 
             <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
@@ -84,9 +86,10 @@ export default function Profile({navigation}){
 
             <Image
             source={{uri: users.foto}}
-            style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
+            style={{ width: 350, height: 330, borderRadius: 40, alignSelf: 'center', marginTop: 16 }}
             />
-            <View style={{alignItems:"center"}}>
+
+            <View style={{alignItems:"center", }}>
                 
                 <Text style={{fontSize:28, fontWeight:600, marginTop:16}}>{users.nome}  {users.idade}</Text>
 
@@ -207,5 +210,6 @@ export default function Profile({navigation}){
             </View>
            
         </View>
+    </ScrollView>
     )
 }

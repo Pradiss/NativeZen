@@ -47,7 +47,7 @@ export default function CardUsersList({item, navigation}){
             />
             <View style={{padding:16 , justifyContent:"center", flexDirection:"row",alignContent:"flex-end"}}>
                 <View>
-                    <Text style={styles.titleName}>{item.nome}</Text>
+                    <Text style={{fontSize:22,color:"#000", fontWeight:600 }}>{item.nome}</Text>
                     <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={20} />{item.cidade}</Text>
                     
                     <View style={{flexDirection:"row" }}>

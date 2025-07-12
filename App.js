@@ -46,7 +46,7 @@ function MainTabs() {
         tabBarStyle: {
           margin:14,
           backgroundColor: '#232323',
-          borderRadius:24,
+          borderRadius:22,
           position: 'absolute',
           bottom: 8,
           left: 8,
@@ -61,10 +61,8 @@ function MainTabs() {
           shadowRadius: 3.84,
           elevation: 5, 
         },
+      })}>
 
-      })}
-      >
-      
       <Tab.Screen name="Home" component={Home}  />
       <Tab.Screen name="Explore" component={Category} />
       <Tab.Screen name="Chat" component={Chat} />

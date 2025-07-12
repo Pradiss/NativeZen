@@ -23,16 +23,10 @@ export default function ScreenInicial({navigation}){
                 resizeMode="contain"
                     />
             </View>
-            
 
-            
-            
-           <View style={styles.backgroundScreenBlack}>
-                          
-
+           <View style={styles.backgroundScreenBlack}>        
                 <Text style={{fontSize:38, color:"#fff", marginTop:16, fontWeight:600 , textAlign:"center"}}>
                     Bem vindo ao Zene
-                    
                 </Text>
                 <Text style={{fontSize:18, color:"#c7c7c7", marginTop:16, fontWeight:400, textAlign:"center", marginBottom:36}}>
                    Cadastre e partipe com os diversos musicos e bandas da sua região
@@ -54,12 +48,10 @@ export default function ScreenInicial({navigation}){
                     elevation: 5,
                      }} onPress={()=> navigation.navigate("Register")}>
                     <Text style={{fontSize:18}}>Criar uma conta<MaterialCommunityIcons name="arrow-right" size={20} color="#000" /> </Text>
-                    
                 </Pressable>
 
                 {/* <Text style={{color:"#fff",fontSize:14, marginTop:40, fontWeight:500}}>
                     Or continue with</Text>
-
 
                 <Button
                 icon={() => (<MaterialCommunityIcons name="google" size={20} color="#fff" />)}
@@ -86,11 +78,12 @@ export default function ScreenInicial({navigation}){
                     style={{color:"#6BD2D7",fontSize:15, marginTop:16, fontWeight:400}} 
                     onPress={() => navigation.navigate("Login")}> Login</Text>
                 </View>
-                    <Image
-                    source={require('../asset/logoZene.png')}
-                    style={{ width: 90, height: 40 }}
-                    resizeMode="contain"
-                        />  
+
+                <Image
+                source={require('../asset/logoZene.png')}
+                style={{ width: 90, height: 40 }}
+                resizeMode="contain"
+                />  
            </View>
         </View>
     )
