@@ -10,10 +10,13 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
+  Alert,
+  Modal
 } from "react-native";
 import styles from "../components/Style";
 import { Button } from "react-native-paper";
+import { Picker } from '@react-native-picker/picker';
+import { DropdownModal } from "../components/Modal";
 
 import {
   formatCEP,
@@ -24,6 +27,7 @@ import {
   formatMoney,
 } from "../utils/mask";
 import { apiRegister } from "../service.js/Api";
+import { categoriaOptions, getCategoriaLabel, getInstrumentoLabel, instrumentoOptions } from "../utils/ArraysCategory";
 
 export default function FormRegister({ navigation }) {
   const [step, setStep] = useState(1);
@@ -40,12 +44,17 @@ export default function FormRegister({ navigation }) {
     uf: "",
     whatsapp: "",
     preco: "",
-    cep: "",
+    
     idInstrumento: "",
     idCategoria: "",
   });
+  const [showDropDown,setShowDropDown] = useState(false)
 
   const Register = async () => {
+    if (!formData.nome || !formData.idCategoria || !formData.idInstrumento) {
+        Alert.alert("Preencha todos os campos obrigatórios");
+        return;
+        }
     try {
       const response = await apiRegister.post(
         "/",
@@ -106,7 +115,7 @@ export default function FormRegister({ navigation }) {
       case 1:
         return (
           <>
-            <View style={{ flexDirection: "row", gap: 12 }}>
+            <View style={{ flexDirection: "row", gap: 5 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "72%" }]}
                 value={formData.nome}
@@ -116,7 +125,7 @@ export default function FormRegister({ navigation }) {
               />
 
               <TextInput
-                style={[styles.inputLogin, { width: "25%" }]}
+                style={[styles.inputLogin, { width: "27%" }]}
                 placeholder="Idade"
                 placeholderTextColor="#ccc"
                 keyboardType="numeric"
@@ -125,26 +134,31 @@ export default function FormRegister({ navigation }) {
                 onChangeText={(text) => updateField("idade", text)}
               />
             </View>
-            <TextInput
-              style={styles.inputLogin}
-              placeholder="Em qual estilo musical você atua?"
-              value={formData.idCategoria}
-              placeholderTextColor="#ccc"
-              onChangeText={(text) => updateField("idCategoria", text)}
-            />
-            <TextInput
-              style={styles.inputLogin}
-              placeholder="Qual é o seu principal instrumento?"
-              value={formData.idInstrumento}
-              placeholderTextColor="#ccc"
-              onChangeText={(text) => updateField("idInstrumento", text)}
-            />
+            
+            <View style={{ gap:8 ,marginBlock:4 }}> 
+                <DropdownModal
+                    label="Selecione um estilo musical"
+                    options={categoriaOptions}
+                    selectedValue={formData.idCategoria}
+                    onValueChange={(value) => updateField("idCategoria", value)}
+                />
+
+                <DropdownModal
+                    label="Selecione um instrumento"
+                    options={instrumentoOptions}
+                    selectedValue={formData.idInstrumento}
+                    onValueChange={(value) => updateField("idInstrumento", value)}
+                />
+            </View>
+
+            
             <TextInput
                placeholder="Quanto você cobra pelo seu trabalho musical?"
                placeholderTextColor="#ccc"
                value={formData.preco}
                onChangeText={(text) => updateField("preco", formatMoney(text))}
                keyboardType="numeric"
+               maxLength={10}
                style={styles.inputLogin}
              />
           </>
@@ -161,7 +175,7 @@ export default function FormRegister({ navigation }) {
               onChangeText={(text) => {
                 const masked = formatCEP(text);
                 cepChange(masked);
-              }} // já busca endereço
+              }} 
             />
             <TextInput
               style={styles.inputLogin}
@@ -286,14 +300,14 @@ export default function FormRegister({ navigation }) {
                <Text style={styles.textRegister}>
                 Categoria:
                 <Text style={{ color: "#6BD2D7", fontWeight: 400 }}>
-                  {formData.idCategoria}
+                  {getCategoriaLabel(formData.idCategoria)}
                 </Text>
               </Text>
 
                <Text style={styles.textRegister}>
                 Instrumento:
                 <Text style={{ color: "#6BD2D7", fontWeight: 400 }}>
-                  {formData.idInstrumento}
+                  {getInstrumentoLabel(formData.idInstrumento)}
                 </Text>
               </Text>
 
