@@ -28,14 +28,13 @@ import {
 } from "../utils/mask";
 import { apiRegister } from "../service.js/Api";
 import { categoriaOptions, getCategoriaLabel, getInstrumentoLabel, instrumentoOptions } from "../utils/ArraysCategory";
+import axios from "axios";
 
 export default function FormRegister({ navigation }) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     nome: "",
-    foto: "",
     idade: "",
-    descricao: "",
     instagram: "",
     facebook: "",
     email: "",
@@ -44,7 +43,6 @@ export default function FormRegister({ navigation }) {
     uf: "",
     whatsapp: "",
     preco: "",
-    
     idInstrumento: "",
     idCategoria: "",
   });
@@ -52,20 +50,35 @@ export default function FormRegister({ navigation }) {
 
   const Register = async () => {
     if (!formData.nome || !formData.idCategoria || !formData.idInstrumento) {
-        Alert.alert("Preencha todos os campos obrigatórios");
-        return;
-        }
+      Alert.alert("Preencha todos os campos obrigatórios");
+      return;
+    }
+    if (!isEmailValid(formData.email)) {
+      Alert.alert("Informe um email válido");
+      return;
+    }
+    if (formData.senha.length < 6) {
+      Alert.alert("A senha deve conter no mínimo 6 caracteres");
+      return;
+    }
     try {
-      const response = await apiRegister.post(
-        "/",
-        { ...formData },
-
+      const dataToSend = {
+        ...formData,
+        idade: Number(formData.idade),
+        preco: parseFloat(formData.preco.replace(/[^\d.-]/g, '')) || 0,
+        idCategoria: Number(formData.idCategoria),
+        idInstrumento: Number(formData.idInstrumento),
+      };
+      const response = await axios.post(
+        "https://erick5457.c44.integrator.host/api/register",dataToSend,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
+      Alert.alert("Sucesso", "Usuário registrado com sucesso!");
+    console.log("Sucesso", "Usuário registrado com sucesso!");
       navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Erro ao criar um Usuario", error);
@@ -377,7 +390,7 @@ export default function FormRegister({ navigation }) {
         backgroundColor: "#232323",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      
         <SafeAreaView>
           <Image
             source={require("../asset/BackgroundScreen.png")}
@@ -514,7 +527,7 @@ export default function FormRegister({ navigation }) {
           </View>
           
         </SafeAreaView>
-      </TouchableWithoutFeedback>
+      
       <View
             style={{
               flexDirection: "row",
