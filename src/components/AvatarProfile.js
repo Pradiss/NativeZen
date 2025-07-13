@@ -47,7 +47,7 @@ export default function Profile({navigation,item}){
         <View style={{flexDirection:"row",justifyContent:"center"}}>
                 <Avatar.Image 
                 size={50} 
-                source={{ uri: users.foto }} 
+                source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
                 style={{ alignSelf: 'flex-start' }}     
                 />
                 <View style={{justifyContent:"center", padding:8}}>

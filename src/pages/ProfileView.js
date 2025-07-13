@@ -80,7 +80,7 @@ export default function ProfileView({navigation}){
     return(
         <View style={styles.SpaceTop}>
             <Image
-                source={{uri: users.foto}}
+                 source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
                 style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
                 />
                 <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
@@ -92,7 +92,7 @@ export default function ProfileView({navigation}){
 
                 <View style={{flexDirection:"row", marginBlock:4, gap:16}}>
                     <Text style={{color:"#000", fontSize:16 ,fontWeight:400}}>
-                        <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                        <MaterialCommunityIcons name="music-circle" size={20} color="#000">
                         </MaterialCommunityIcons>
                         {category(users.idCategoria)}
                     </Text>

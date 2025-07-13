@@ -37,7 +37,7 @@ export default function CardUsers({item, navigation}){
             <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
                 <View style={styles.CardUser}>
                     <ImageBackground
-                        source={{uri: item.foto}}
+                         source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}
                         style={{ 
                             padding:12,
                             width: 250,
@@ -50,23 +50,23 @@ export default function CardUsers({item, navigation}){
                         >
                         
                     </ImageBackground>
-                    <View style={{padding:16,gap:4,  justifyContent:"center", alignItem:"center"}}>
-                            <Text style={{fontSize:22,color:"#000", fontWeight:600 }}>{item.nome}</Text>
+                    <View style={{padding:16,gap:8,  justifyContent:"center", alignItem:"center"}}>
+                            <Text style={{fontSize:22,color:"white", fontWeight:600 }}>{item.nome}</Text>
                             
-                            <Text style={{color:"#000", fontSize:15,marginBlock:4}}>
-                                    <MaterialCommunityIcons name="google-maps" size={20} color="#000">
+                            <Text style={{color:"#ccc", fontSize:18,marginBlock:4, }}>
+                                    <MaterialCommunityIcons name="google-maps" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>
                                     {item.cidade}
                                 </Text>
 
-                            <View style={{flexDirection:"row", gap:16}}>
-                                <Text style={{color:"#000", fontSize:16}}>
-                                    <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                            <View style={{flexDirection:"row", gap:16, alignItems:"center", }}>
+                                <Text style={{color:"#ccc", fontSize:18,}}>
+                                    <MaterialCommunityIcons name="music-circle" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>
                                     {category(item.idCategoria)}
                                 </Text>
-                                <Text style={{fontSize:14,color:"#000", fontWeight:600 ,marginBottom:8}}>
-                                    <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+                                <Text style={{fontSize:18,color:"#ccc",  }}>
+                                    <MaterialCommunityIcons name="guitar-acoustic" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
                                 </Text>
                             </View>

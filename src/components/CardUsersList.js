@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from "react"
 import { View, Text, Image, Alert, TouchableOpacity} from "react-native"
 import styles from "./Style"
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 export default function CardUsersList({item, navigation}){
 
 
@@ -40,23 +40,23 @@ export default function CardUsersList({item, navigation}){
         elevation: 5,
         }}>
             <Image
-                source={{uri: item.foto}}
+                 source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}
                 style={{ width: 100, height:100, borderRadius:22}}
                 resizeMode="cover"
                 
             />
             <View style={{padding:16 , justifyContent:"center", flexDirection:"row",alignContent:"flex-end"}}>
                 <View>
-                    <Text style={{fontSize:22,color:"#000", fontWeight:600 }}>{item.nome}</Text>
-                    <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={20} />{item.cidade}</Text>
+                    <Text style={{fontSize:22,color:"#232323", fontWeight:600 }}>{item.nome}</Text>
+                    <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={25} />{item.cidade}</Text>
                     
                     <View style={{flexDirection:"row" }}>
                         <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                            <MaterialCommunityIcons name="music-circle" size={25} color="#000">
                             </MaterialCommunityIcons>{category(item.idCategoria)}
                         </Text>
                         <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+                            <MaterialCommunityIcons name="guitar-acoustic" size={25} color="#000">
                             </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
                         </Text>
 

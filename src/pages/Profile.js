@@ -73,9 +73,10 @@ export default function Profile({navigation}){
             LoadingCategory()
     },[isFocused])
     
+    
     return(
 
-    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
         <View style={{paddingTop:60}}>
 
             <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
@@ -85,23 +86,24 @@ export default function Profile({navigation}){
             </View>
 
             <Image
-            source={{uri: users.foto}}
-            style={{ width: 350, height: 330, borderRadius: 40, alignSelf: 'center', marginTop: 16 }}
-            />
+                source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
+                style={{ width: "100%", height: 290, borderRadius: 60, alignSelf: "center", marginTop: 16 }}
+                resizeMode="cover"
+                />
 
-            <View style={{alignItems:"center", }}>
+            <View style={{alignItems:"start", }}>
                 
-                <Text style={{fontSize:28, fontWeight:600, marginTop:16}}>{users.nome}  {users.idade}</Text>
+                <Text style={{fontSize:28, fontWeight:600, marginTop:16}}>{users.nome}  , {users.idade}</Text>
 
                 <View style={{flexDirection:"row", marginTop:8, gap:16}}>
                     <Text style={{color:"#222222", fontSize:16, fontWeight:400}}>
-                        <MaterialCommunityIcons name="guitar-pick" size={20} color="#000">
+                        <MaterialCommunityIcons name="music-circle" size={25} color="#000">
                         </MaterialCommunityIcons>
                         {category(users.idCategoria)}
                     </Text>
 
                     <Text style={{fontSize:16,color:"#222222", fontWeight:400 ,marginBottom:8}}>
-                        <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+                        <MaterialCommunityIcons name="guitar-acoustic" size={25} color="#000">
                         </MaterialCommunityIcons>
                         {instrumento(users.idInstrumento)}
                     </Text>
