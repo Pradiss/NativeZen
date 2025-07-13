@@ -174,7 +174,7 @@ export default function Login({ navigation }) {
 
                 fontWeight: 400,
               }}
-              onPress={() => navigation.navigate("FormRegister")}
+              onPress={() => navigation.navigate("ScreenInicial")}
             >
               {" "}
               Cadastre-se aqui!

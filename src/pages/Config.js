@@ -8,17 +8,20 @@ export default function Config({navigation}){
      
 
 
-   const handleLogout = async () => {
-   try {
-      await AsyncStorage.removeItem("idUsuario")
-      navigation.replace('Login')
-   } catch (error) {
-      console.error("Erro ao fazer logout:", error)
-   }
-   }
-
-
-
+   const logout = async () => {
+      try {
+        await AsyncStorage.removeItem("idUsuario")
+  
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }],
+        });
+  
+      } catch (e) {
+        Alert.alert("Erro ao fazer logout", e.message)
+      }
+    }
+  
 
 
     return(
@@ -53,7 +56,7 @@ export default function Config({navigation}){
                <Text style={styles.textButtonConfig}>Suporte </Text>
             </Pressable>
 
-            <Pressable onPress={handleLogout}
+            <Pressable onPress={logout}
             style={{borderRadius:18,
             width:"100%",
             height:55,

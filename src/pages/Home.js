@@ -26,6 +26,7 @@ export default function Home({navigation}){
    
 
     useEffect(() => {
+        
          const LoadingUsers = async () =>{
         try{
             const res = await axios.get("https://erick5457.c44.integrator.host/api/usuarios")
@@ -51,16 +52,11 @@ export default function Home({navigation}){
         try{
             const res = await axios.get("https://erick5457.c44.integrator.host/api/instrumento")
             setInstrument(res.data)
-
         }catch(error){
             Alert.alert("ERROR",error)
-        }
-        
+        }   
     }
-        
-
         if(isFocused)
-           
             LoadingUsers()
             LoadingCategory()
             LoadingInstrument()
