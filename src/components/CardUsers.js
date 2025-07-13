@@ -51,21 +51,21 @@ export default function CardUsers({item, navigation}){
                         
                     </ImageBackground>
                     <View style={{padding:16,gap:8,  justifyContent:"center", alignItem:"center"}}>
-                            <Text style={{fontSize:22,color:"white", fontWeight:600 }}>{item.nome}</Text>
+                            <Text style={{fontSize:22,color:"#232323", fontWeight:600 }}>{item.nome}</Text>
                             
-                            <Text style={{color:"#ccc", fontSize:18,marginBlock:4, }}>
+                            <Text style={{color:"#232323", fontSize:18,marginBlock:4, }}>
                                     <MaterialCommunityIcons name="google-maps" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>
                                     {item.cidade}
                                 </Text>
 
                             <View style={{flexDirection:"row", gap:16, alignItems:"center", }}>
-                                <Text style={{color:"#ccc", fontSize:18,}}>
+                                <Text style={{color:"#232323", fontSize:18,}}>
                                     <MaterialCommunityIcons name="music-circle" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>
                                     {category(item.idCategoria)}
                                 </Text>
-                                <Text style={{fontSize:18,color:"#ccc",  }}>
+                                <Text style={{fontSize:18,color:"#232323",  }}>
                                     <MaterialCommunityIcons name="guitar-acoustic" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
                                 </Text>
