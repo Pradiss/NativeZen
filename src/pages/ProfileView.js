@@ -1,10 +1,12 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert, Pressable } from "react-native"
+import { View, Text, Image ,Alert, Pressable, ScrollView } from "react-native"
 import { useIsFocused , useRoute} from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Button } from "react-native-paper"
+import { SocialIcon } from "../components/RedeSocial"
 
 
 export default function ProfileView({navigation}){
@@ -78,127 +80,91 @@ export default function ProfileView({navigation}){
     },[isFocused])
     
     return(
-        <View style={styles.SpaceTop}>
-            <Image
-                 source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
-                style={{ width: 150, height: 150, borderRadius: 100, alignSelf: 'center', marginTop: 20 }}
-                />
-                <View style={{alignItems:"flex-end",paddingHorizontal:16}}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
+        <View style={{paddingTop:60}}>
+            <View style={{ alignItems:"flex-start",paddingHorizontal:16}}>
+                    <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
+                    onPress={()=> navigation.navigate("MainTabs" , {screen : "Home"})}
+                    />
+                            
             </View>
 
-            <View style={{alignItems:"center"}}>
-                
-                <Text style={{fontSize:28, fontWeight:600, marginTop:16}}>{users.nome}  {users.idade}</Text>
+            <Image
+                source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
+                style={{ width: "100%", height: 290, borderRadius: 50, alignSelf: "center", marginTop: 16 }}
+                resizeMode="cover"
+                />
 
-                <View style={{flexDirection:"row", marginBlock:4, gap:16}}>
-                    <Text style={{color:"#000", fontSize:16 ,fontWeight:400}}>
-                        <MaterialCommunityIcons name="music-circle" size={20} color="#000">
+            <View style={{alignItems:"start", }}>
+                
+                <Text style={{fontSize:38, fontWeight:600, marginTop:16}}>{users.nome}  , {users.idade}</Text>
+
+                <Text style={{fontSize:20,color:"#555555", fontWeight:400 ,marginTop:8}} >
+                    <MaterialCommunityIcons style={{color:"#222222"}} name="google-maps" size={22} />{users.cidade} , {users.uf}
+                </Text>
+                <View style={{flexDirection:"row", marginTop:16, gap:32}}>
+                    <Text style={{color:"#555555", fontSize:20, fontWeight:400}}>
+                        <MaterialCommunityIcons name="music-circle" size={22} color="#000" >
                         </MaterialCommunityIcons>
                         {category(users.idCategoria)}
                     </Text>
-                
-                    <Text style={{fontSize:16,color:"#000", fontWeight:400 ,marginBottom:8}}>
-                        <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
+
+                    <Text style={{fontSize:20,color:"#555555", fontWeight:400 ,marginBottom:8}}>
+                        <MaterialCommunityIcons name="guitar-acoustic" size={22} color="#000">
                         </MaterialCommunityIcons>
-                         {instrumento(users.idInstrumento)}
+                        {instrumento(users.idInstrumento)}
                     </Text>
                 </View>
-
-                <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={20} />{users.cidade} {users.uf}</Text>
-
-                <Pressable style={styles.button} onPress={()=> navigation.navigate("MainTabs",{screen: "Chat"})}>
-                    <Text style={{color:"#fff", fontWeight:500, fontSize:16}}>Chat</Text>
-                </Pressable>
-
             </View>
 
-            <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center", gap:12, marginTop:30}}>
-                
-                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
-                    <MaterialCommunityIcons  name="instagram" color="#000" size={28}
-                    onPress={() => {
-                        const username = users.instagram;
-                        const appUrl = `instagram://user?username=${username}`;
-                        const webUrl = `https://www.instagram.com/${username}`;
-
-                       
-                        Linking.canOpenURL(appUrl)
-                            .then((supported) => {
-                            if (supported) {
-                                Linking.openURL(appUrl); 
-                            } else {
-                                Linking.openURL(webUrl); 
-                            }
-                            })
-                            .catch(() => {
-                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Instagram.');
-                            });
-                        }}
-                       style={{padding:8, backgroundColor:"#e9e9e9", borderRadius:50}}
-                   />
-                    <Text >{users.instagram}</Text>
-                </View>
-                
+            <View style={{paddingTop:8, gap:16}}>
+                <Text style={{fontSize:28,fontWeight:700}}>R$ {users.preco}</Text>
+                <Button icon="chat-outline" mode="contained" 
+                style={{backgroundColor:"black"}}
+                onPress={() => navigation.navigate("MainTabs" , {screen : "Chat"})}
+                >Envie uma mensagem</Button>
+            </View>
                
-                
-                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
-                 <MaterialCommunityIcons  name="facebook" color="#000" size={28}
-                 onPress={() => {
-                        const username = users.facebook;
-                        const appUrl = `facebook://user?username=${username}`;
-                        const webUrl = `https://www.facebook.com/${username}`;
+            <View style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 24,
+                marginBlock: 16
+                }}>
+                <SocialIcon
+                    platform="Instagram"
+                    icon="instagram"
+                    username={users.instagram}
+                    urlScheme="instagram://user?username="
+                    webBaseUrl="https://www.instagram.com/"
+                />
 
-                        
-                        Linking.canOpenURL(appUrl)
-                            .then((supported) => {
-                            if (supported) {
-                                Linking.openURL(appUrl); 
-                            } else {
-                                Linking.openURL(webUrl); 
-                            }
-                            })
-                            .catch(() => {
-                            Alert.alert('Erro', 'Não foi possível abrir o perfil do Facebook.');
-                            });
-                        }}
-                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
-                   <Text>{users.facebook}</Text>
-                </View>
+                <SocialIcon
+                    platform="Facebook"
+                    icon="facebook"
+                    username={users.facebook}
+                    urlScheme="facebook://user?username="
+                    webBaseUrl="https://www.facebook.com/"
+                />
 
-                <View style={{flexDirection:"column", alignItems:"center", gap:8}}>
-                    <MaterialCommunityIcons  name="whatsapp" color="#000" size={28}
-                     onPress={() => {
-                        const username = users.whatsapp;
-                        const appUrl = `whatsapp://send?phone=${username}`;
-                        const webUrl = `https://wa.me/${username}`;
-
-                     
-                        Linking.canOpenURL(appUrl)
-                            .then((supported) => {
-                            if (supported) {
-                                Linking.openURL(appUrl); 
-                            } else {
-                                Linking.openURL(webUrl); 
-                            }
-                            })
-                            .catch(() => {
-                            Alert.alert('Erro', 'Não foi possível abrir o do WhatsApp.');
-                            });
-                        }}
-                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/>
-                  <Text >{users.whatsapp}</Text>
-                </View>
-
-                 {/* <MaterialCommunityIcons  name="youtube" color="#000" size={28}
-                  style={{padding:12, backgroundColor:"#e9e9e9", borderRadius:50}}/> */}
+                <SocialIcon
+                    platform="WhatsApp"
+                    icon="whatsapp"
+                    username={users.whatsapp}
+                    urlScheme="whatsapp://send?phone="
+                    webBaseUrl="https://wa.me/"
+                />
             </View>
 
-            
-            <View style={{padding:32, marginTop:16, backgroundColor:"#e8e8e8",borderRadius:16}}>
-                <Text style={styles.titleName}>Sobre</Text>
-                <Text style={{marginBlock:8}}>{users.descricao}</Text>
+
+            <View style={{paddingTop:8, gap:16}}>
+
+                <Text style={{fontSize:20,fontWeight:600}}>Descrição</Text>
+                <Text  style={{fontSize:16}}>{users.descricao}</Text>
             </View>
-                
+           
         </View>
+    </ScrollView>
     )
 }

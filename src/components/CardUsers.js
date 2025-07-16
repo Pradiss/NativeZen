@@ -53,7 +53,7 @@ export default function CardUsers({item, navigation}){
                     <View style={{padding:16,gap:8,  justifyContent:"center", alignItem:"center"}}>
                             <Text style={{fontSize:22,color:"#232323", fontWeight:600 }}>{item.nome}</Text>
                             
-                            <Text style={{color:"#232323", fontSize:18,marginBlock:4, }}>
+                            <Text style={{color:"#232323", fontSize:18,marginBlock:4 }}>
                                     <MaterialCommunityIcons name="google-maps" size={25} color="#6BD2D7">
                                     </MaterialCommunityIcons>
                                     {item.cidade}

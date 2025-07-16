@@ -87,12 +87,12 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="Splash" component={Splash}  />
-            <Stack.Screen name="Change Password" component={ChangePassword} options={{headerShown:true}} />
+            <Stack.Screen name="Change Password" component={ChangePassword}  />
             <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
             <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="ProfileDetails" component={ProfileView} options={{headerShown:true}} />
-            <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:true}} />
+            <Stack.Screen name="ProfileDetails"  component={ProfileView}  />
+            <Stack.Screen name="Editar Perfil" component={EditProfile} options={{headerShown:true}} />
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />

@@ -51,7 +51,7 @@ export default function Profile({navigation,item}){
                 style={{ alignSelf: 'flex-start' }}     
                 />
                 <View style={{justifyContent:"center", padding:8}}>
-                     <Text>Welcome</Text>
+                     <Text>Bem Vindo !!</Text>
                     <Text  style={{fontSize: 16, fontWeight: 'bold'}} onPress={() => navigation.navigate("Profile")}> Hi, {users.nome}</Text>
                 </View>
         </View>

@@ -33,11 +33,12 @@ export default function CardUsersList({item, navigation}){
     <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
 
         <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"#fff", borderRadius:30, marginBlock:8, padding:6, marginHorizontal:12,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15, 
-        shadowRadius: 3, 
-        elevation: 5,
+        backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.16,
+    shadowRadius: 3,
+    elevation: 5,
         }}>
             <Image
                  source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}
