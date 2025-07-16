@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Button } from "react-native-paper"
 import { SocialIcon } from "../components/RedeSocial"
+import { formatReais } from "../utils/mask"
 
 export default function Profile({navigation}){
 
@@ -36,6 +37,7 @@ export default function Profile({navigation}){
         }
         
     }
+    
     
 
     const LoadingCategory = async () =>{
@@ -77,7 +79,7 @@ export default function Profile({navigation}){
     return(
 
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
-        <View style={{paddingTop:60}}>
+        <View style={{paddingTop:50}}>
 
             <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end",paddingHorizontal:16}}>
                 <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
@@ -117,7 +119,7 @@ export default function Profile({navigation}){
             </View>
 
             <View style={{paddingTop:8, gap:16}}>
-                <Text style={{fontSize:28,fontWeight:700}}>R$ {users.preco}</Text>
+                <Text style={{fontSize:28,fontWeight:700}}>{formatReais(users.preco)}</Text>
                 <Button icon="chat-outline" mode="contained" 
                 style={{backgroundColor:"black"}}
                 onPress={() => navigation.navigate("Chat")}

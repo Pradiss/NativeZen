@@ -50,3 +50,16 @@ return "R$ " + number
   .replace(".", ",")
   .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+
+export const formatReais = (value) => {
+  // Converte para número (caso seja string)
+  const number = Number(value) || 0;
+  
+  // Formata como moeda brasileira
+  return number.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2
+  });
+};

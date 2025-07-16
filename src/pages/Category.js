@@ -58,7 +58,18 @@ export default function Category({navigation}){
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
 
-            
+            <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
+                <Button 
+                mode="contained"
+                style={{ marginVertical:8, marginHorizontal:4, backgroundColor:"#000" }}
+                onPress={() => navigation.navigate("CreateProfile")}
+                labelStyle={{ fontSize: 14, color:"white" }}> Rock </Button>
+                <Button 
+                mode="contained"
+                style={{ marginVertical:8, marginHorizontal:4, backgroundColor:"#000" }}
+                onPress={() => navigation.navigate("CreateProfile")}
+                labelStyle={{ fontSize: 14, color:"white" }}>MPB </Button>
+            </View>
 
             <View style={styles.space} >
                 <Text style={styles.titleName} > Todos os Free lances </Text>

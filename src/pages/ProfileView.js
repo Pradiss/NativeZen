@@ -7,7 +7,7 @@ import styles from "../components/Style"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from "react-native-paper"
 import { SocialIcon } from "../components/RedeSocial"
-
+import { formatReais } from "../utils/mask";
 
 export default function ProfileView({navigation}){
 
@@ -41,8 +41,6 @@ export default function ProfileView({navigation}){
         
     }
     
-
-  
 
     useEffect(() => {
         const authHeader = {
@@ -81,7 +79,7 @@ export default function ProfileView({navigation}){
     
     return(
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
-        <View style={{paddingTop:60}}>
+        <View style={{paddingTop:50}}>
             <View style={{ alignItems:"flex-start",paddingHorizontal:16}}>
                     <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
                     onPress={()=> navigation.navigate("MainTabs" , {screen : "Home"})}
@@ -118,7 +116,7 @@ export default function ProfileView({navigation}){
             </View>
 
             <View style={{paddingTop:8, gap:16}}>
-                <Text style={{fontSize:28,fontWeight:700}}>R$ {users.preco}</Text>
+                <Text style={{fontSize:28,fontWeight:700}}>{formatReais(users.preco)}</Text>
                 <Button icon="chat-outline" mode="contained" 
                 style={{backgroundColor:"black"}}
                 onPress={() => navigation.navigate("MainTabs" , {screen : "Chat"})}
