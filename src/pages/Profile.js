@@ -127,8 +127,7 @@ export default function Profile({navigation}){
             <View style={{
                 flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
-                gap: 24,
+                justifyContent: "space-around",
                 marginBlock: 16
                 }}>
                 <SocialIcon
