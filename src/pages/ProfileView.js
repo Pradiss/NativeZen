@@ -80,7 +80,7 @@ export default function ProfileView({navigation}){
     return(
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
         <View style={{paddingTop:50}}>
-            <View style={{ alignItems:"flex-start",paddingHorizontal:16}}>
+            <View style={{ alignItems:"flex-start"}}>
                     <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
                     onPress={()=> navigation.navigate("MainTabs" , {screen : "Home"})}
                     />
@@ -89,7 +89,19 @@ export default function ProfileView({navigation}){
 
             <Image
                 source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
-                style={{ width: "100%", height: 290, borderRadius: 50, alignSelf: "center", marginTop: 16 }}
+                style={{ 
+                    width: "100%",
+                     height: 290,
+                     borderRadius: 50,
+                     alignSelf: "center",
+                     marginTop: 16,
+                     backgroundColor: "#fff",
+                     shadowColor: "#000",
+                     shadowOffset: { width: 1, height: 2 },
+                     shadowOpacity: 0.16,
+                     shadowRadius: 3,
+                     elevation: 5
+                }}
                 resizeMode="cover"
                 />
 

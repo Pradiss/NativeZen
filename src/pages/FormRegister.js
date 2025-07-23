@@ -27,7 +27,6 @@ import {
   formatMoney,
 } from "../utils/mask";
 import { apiRegister } from "../service.js/Api";
-import { categoriaOptions, getCategoriaLabel, getInstrumentoLabel, instrumentoOptions } from "../utils/ArraysCategory";
 import axios from "axios";
 
 export default function FormRegister({ navigation }) {

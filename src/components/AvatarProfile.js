@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from "../components/Style"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useRoute } from '@react-navigation/native';
+import { apiUsers } from "../service.js/Api";
 
 export default function Profile({navigation,item}){
     
@@ -19,16 +20,20 @@ export default function Profile({navigation,item}){
     
 
     useEffect(() => {
-        const authHeader = {
-            headers: {
-                Authorization: `Basic ${btoa('admin@example.com:password')}`,
-                // Authorization: `Bearer ${token}`,rr
-            },
-        };
+       
         const LoadingUsers = async () =>{
             try{
+                
                 const idUsuario = await AsyncStorage.getItem("idUsuario")
-                const res = await axios.get(`https://erick5457.c44.integrator.host/api/usuarios/${idUsuario}`, authHeader)
+                const api = await AsyncStorage.getItem("api")
+                const res = await apiUsers.get(
+                    `/${idUsuario}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${api}`
+                        }
+                    }
+                )
                 setUsers(res.data)
             }catch(error){
                 Alert.alert("ERROR",error)
@@ -41,7 +46,11 @@ export default function Profile({navigation,item}){
     },[isFocused])
     
     return(
-    <View style={{flexDirection:"row",paddingHorizontal:14,marginBlock:8, alignItems:"center", justifyContent:"space-between", }}>
+    <View style={{flexDirection:"row",
+        paddingHorizontal:14,
+        marginBlock:4, 
+        alignItems:"center", 
+        justifyContent:"space-between" }}>
            
        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
         <View style={{flexDirection:"row",justifyContent:"center"}}>
@@ -57,7 +66,6 @@ export default function Profile({navigation,item}){
         </View>
         </TouchableOpacity>
        
-
         <MaterialCommunityIcons style={styles.icon} name="bell" size={24} color="#fff"
         onPress={() => navigation.navigate("Notification")}
         />

@@ -14,32 +14,55 @@ import {
 } from "react-native";
 import styles from "../components/Style";
 import { apiRegister } from "../service.js/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { DropdownModal } from "../components/Modal";
+import {
+  categoriaOptions,
+  getCategoriaLabel,
+  getInstrumentoLabel,
+  instrumentoOptions,
+} from "../utils/ArraysCategory";
+import { Avatar } from "react-native-paper";
+import { formatMoney } from "../utils/mask";
+import { set } from "date-fns";
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
   const [nome, setNome] = useState([]);
-  const [phone, setPhone] = useState([]);
-  const [cpf, setCpf] = useState([]);
-  const [street, setStreet] = useState([]);
-  const [number, setNumber] = useState([]);
-  const [location, setLocation] = useState([]);
-  const [cep, setCep] = useState([]);
-  const [city, setCity] = useState([]);
-  const [state, setState] = useState([]);
-  const [country, setCountry] = useState([]);
+  const [whatsapp, setWhatsapp] = useState([]);
+  const [instagram, setInstagram] = useState([]);
+  const [facebook, setFacebook] = useState([]);
+  const [idade, setIdade] = useState([]);
+  const [uf, setUf] = useState([]);
+  const [cidade, setCidade] = useState([]);
+  const [preco, setPreco] = useState([]);
+  const [idInstrumento, setIdInstrumento] = useState([]);
+  const [idCategoria, setIdCategoria] = useState([]);
 
   const Register = async () => {
+    const api = await AsyncStorage.getItem("api_token");
     try {
       const response = await apiRegister.put(
-        "/",
+        `${api}`,
         {
           nome,
+          idade,
+          instagram,
+          facebook,
           email,
-         
+          cidade,
+          uf,
+          whatsapp,
+          preco,
+          idInstrumento,
+          idCategoria,
         },
-
-        
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${api}`,
+          },
+        }
       );
       navigation.navigate("Login");
 
@@ -65,6 +88,11 @@ export default function Register({ navigation }) {
     }
   };
 
+
+  const updateField = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -73,55 +101,111 @@ export default function Register({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 70 }}>
           <View style={{ alignItems: "center" }}>
-            <View
-              style={{
-                paddingBottom: 26,
-                flexDirection: "row",
-                gap: 0,
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={require("../asset/logoZene.png")}
-                style={{ width: 40, height: 40 }}
-                resizeMode="contain"
+
+            {/* <Avatar.Image
+              size={50}
+              source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
+              style={{ alignSelf: "flex-start" }}
+            /> */}
+
+            <View style={{ flexDirection: "row", gap: 5 }}>
+              <TextInput
+                style={[styles.inputLogin, { width: "73%" }]}
+                value={nome}
+                onChangeText={setNome}
+                placeholder="Digite seu nome"
+                placeholderTextColor="#ccc"
+              />
+
+              <TextInput
+                style={[styles.inputLogin, { width: "27%" }]}
+                placeholder="Sua Idade"
+                placeholderTextColor="#ccc"
+                keyboardType="numeric"
+                maxLength={2}
+                value={idade}
+                onChangeText={setIdade}
+              />
+            </View>
+
+            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+              <DropdownModal
+                label="Selecione um estilo musical"
+                options={categoriaOptions}
+                selectedValue={idCategoria}
+                onValueChange={(value) => updateField("idCategoria", value)}
+              />
+
+              <DropdownModal
+                label="Selecione um instrumento"
+                options={instrumentoOptions}
+                selectedValue={idInstrumento}
+                onValueChange={(value) => updateField("idInstrumento", value)}
               />
             </View>
 
             <TextInput
               style={styles.inputLogin}
-              value={nome}
-              onChangeText={setNome}
-              placeholder="Seu nome"
-                placeholderTextColor="#888"
-            />
-
-            <TextInput
-              style={styles.inputLogin}
               placeholder="Seu E-mail"
-                placeholderTextColor="#888"
+              placeholderTextColor="#ccc"
               value={email}
               onChangeText={setEmail}
             />
 
-           
+            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+              <TextInput
+                style={[styles.inputLogin, { width: "50%" }]}
+                placeholder="Digite Seu @ do Instagram"
+                placeholderTextColor="#ccc"
+                value={instagram}
+                onChangeText={setInstagram}
+              />
+              <TextInput
+                style={[styles.inputLogin, { width: "50%" }]}
+                placeholder="Digite Seu whatsapp"
+                placeholderTextColor="#ccc"
+                keyboardType="phone-pad"
+                value={whatsapp}
+                onChangeText={setWhatsapp}
+              />
+            </View>
 
-           <Pressable
-                   style={{
-                     borderRadius: 20,
-                     width: "100%",
-                     height: 55,
-                     justifyContent: "center",
-                     alignItems: "center",
-                     marginTop: 32,
-                     backgroundColor: "black",
-                     padding: 8,
-                     color: "white",
-                   }}
-                   onPress={Register}
-                 >
-                   <Text style={{ fontSize: 18, color: "#fff" }}>Editar perfil </Text>
-                 </Pressable>
+            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+              <TextInput
+                style={[styles.inputLogin, { width: "70%" }]}
+                placeholder="Digite seu facebook "
+                placeholderTextColor="#ccc"
+                value={facebook}
+                onChangeText={setFacebook}
+              />
+              <TextInput
+                style={[styles.inputLogin, { width: "30%" }]}
+                placeholder="Preço"
+                placeholderTextColor="#ccc"
+                keyboardType="phone-pad"
+                value={preco}
+                onChangeText={setPreco}
+              />
+            </View>
+
+            <Pressable
+              style={{
+                borderRadius: 20,
+                width: "100%",
+                height: 55,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 32,
+                backgroundColor: "black",
+                padding: 8,
+                color: "white",
+              }}
+              onPress={Register}
+            >
+              <Text style={{ fontSize: 18, color: "#fff" }}>
+                Editar perfil{" "}
+              </Text>
+            </Pressable>
             <View style={{ flexDirection: "row", paddingTop: 8 }}>
               <Text style={{ fontSize: 14, marginTop: 16, fontWeight: 400 }}>
                 Quer Mudar a senha?
@@ -136,7 +220,6 @@ export default function Register({ navigation }) {
                 }}
                 onPress={() => navigation.navigate("Change Password")}
               >
-              
                 Senha
               </Text>
             </View>

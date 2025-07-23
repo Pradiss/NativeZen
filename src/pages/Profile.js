@@ -81,7 +81,7 @@ export default function Profile({navigation}){
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
         <View style={{paddingTop:50}}>
 
-            <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end",paddingHorizontal:16}}>
+            <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end"}}>
                 <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
                 onPress={()=> navigation.navigate("Home")}
                 />
@@ -92,7 +92,19 @@ export default function Profile({navigation}){
 
             <Image
                 source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
-                style={{ width: "100%", height: 290, borderRadius: 50, alignSelf: "center", marginTop: 16 }}
+                style={{ 
+                    width: "100%", 
+                    height: 290, 
+                    borderRadius: 50, 
+                    alignSelf: "center", 
+                    marginTop: 16,
+                    backgroundColor: "#fff",
+                    shadowColor: "#000",
+                    shadowOffset: { width: 1, height: 2 },
+                    shadowOpacity: 0.16,
+                    shadowRadius: 3,
+                    elevation: 5
+                }}
                 resizeMode="cover"
                 />
 
@@ -162,7 +174,8 @@ export default function Profile({navigation}){
                 <Text style={{fontSize:20,fontWeight:600}}>Descrição</Text>
                 <Text  style={{fontSize:16}}>{users.descricao}</Text>
             </View>
-           
+
+            <View style={{paddingTop:100}}></View>
         </View>
     </ScrollView>
     )

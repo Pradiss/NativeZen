@@ -5,11 +5,7 @@ import { Button, IconButton } from "react-native-paper"
 import styles from "../components/Style"
 import { FlatList, ScrollView } from "react-native-gesture-handler"
 import axios from "axios"
-
 import CardUsersList from "../components/CardUsersList"
-
-
-
 
 export default function Category({navigation}){
 
@@ -49,6 +45,7 @@ export default function Category({navigation}){
     const FilterUsers = users.filter(user =>
         user.nome.toLowerCase().includes(search.toLowerCase())
     )
+  
 
     return(
         <View style={{paddingTop:56}}>
@@ -58,17 +55,27 @@ export default function Category({navigation}){
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
 
-            <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,}}>
-                <Button 
-                mode="contained"
-                style={{ marginVertical:8, marginHorizontal:4, backgroundColor:"#000" }}
-                onPress={() => navigation.navigate("CreateProfile")}
-                labelStyle={{ fontSize: 14, color:"white" }}> Rock </Button>
-                <Button 
-                mode="contained"
-                style={{ marginVertical:8, marginHorizontal:4, backgroundColor:"#000" }}
-                onPress={() => navigation.navigate("CreateProfile")}
-                labelStyle={{ fontSize: 14, color:"white" }}>MPB </Button>
+            <View style={{flexDirection:"row", alignItems:"center"}}> 
+
+                <FlatList 
+                
+                data={category}
+                keyExtractor ={(item)=> item.idCategoria.toString()}
+                horizontal={true}
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                renderItem={(item) => {
+                    return (
+                        <Button
+                        mode="contained"
+                        style={{ marginVertical: 8, marginHorizontal: 4, backgroundColor:"#232323" }}
+                        
+                        >
+                        {item.item.generoMusical}
+                        </Button>
+                );
+                }}
+                />
             </View>
 
             <View style={styles.space} >

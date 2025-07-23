@@ -39,9 +39,11 @@ export default function Login({ navigation }) {
         { headers: { "Content-Type": "application/json" } }
       );
 
+      const token = res.data.token
       const idUsuario = res.data?.usuario?.idUsuario;
 
-      await AsyncStorage.setItem("idUsuario", idUsuario.toString());
+      await AsyncStorage.setItem("api_token", token)
+      await AsyncStorage.setItem("idUsuario", idUsuario.toString())
 
       // reset
       navigation.reset({
@@ -64,7 +66,7 @@ export default function Login({ navigation }) {
         backgroundColor: "#232323",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      
         <View style={{ alignItems: "center" }}>
           <Image
             source={require("../asset/logoZene.png")}
@@ -192,7 +194,7 @@ export default function Login({ navigation }) {
                 Skip <MaterialCommunityIcons color="#fff" name ="arrow-right" size={17}/>
             </Text> */}
         </View>
-      </TouchableWithoutFeedback>
+      
     </KeyboardAvoidingView>
   );
 }

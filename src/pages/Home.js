@@ -143,7 +143,7 @@ export default function Home({navigation}){
                 )}
                 />   
 
-                <View style={{paddingTop:200}}></View>
+                <View style={{paddingTop:300}}></View>
 
             </View>
 

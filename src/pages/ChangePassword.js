@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  FlatList,
-  Alert,
   TextInput,
-  Button,
   Pressable,
   Image,
 } from "react-native";
@@ -17,6 +14,10 @@ export default function ChangePassword({ navigation }) {
 
   const [senhaNova, setSenhaNova] = useState("");
 
+  const ChangePassword = async () => {
+  
+  }
+
   return (
     <View
       style={{
@@ -24,7 +25,8 @@ export default function ChangePassword({ navigation }) {
         paddingTop: 56,
       }}
     >
-      <View style={{ alignItems: "start", paddingHorizontal: 16 }}>
+      <View>
+        <View style={{ alignItems: "start", paddingHorizontal: 16 }}>
         <MaterialCommunityIcons
           name="arrow-left"
           color="#000"
@@ -96,6 +98,7 @@ export default function ChangePassword({ navigation }) {
       >
         <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha </Text>
       </Pressable>
+      </View>
     </View>
   );
 }

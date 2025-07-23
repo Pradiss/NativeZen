@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
 
   icon: {
     padding: 8,
-    borderRadius: 12,
-    backgroundColor: "#7D7D7D",
+    borderRadius: 14,
+    backgroundColor: "#232323",
   },
 
   buttonConfig: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 8,
     backgroundColor: "white",
-    borderRadius: 40,
+    borderRadius: 38,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 2 },
