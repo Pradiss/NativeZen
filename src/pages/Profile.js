@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Button } from "react-native-paper"
 import { SocialIcon } from "../components/RedeSocial"
 import { formatReais } from "../utils/mask"
+import { apiUsers } from "../service.js/Api"
 
 export default function Profile({navigation}){
 
@@ -52,16 +53,19 @@ export default function Profile({navigation}){
     }
 
     useEffect(() => {
-        const authHeader = {
-            headers: {
-                Authorization: `Basic ${btoa('admin@example.com:password')}`,
-                // Authorization: `Bearer ${token}`,
-            },
-        };
+        
         const LoadingUsers = async () =>{
             try{
+                const api = await AsyncStorage.getItem("api_token")
                 const idUsuario = await AsyncStorage.getItem("idUsuario")
-                const res = await axios.get(`https://erick5457.c44.integrator.host/api/usuarios/${idUsuario}`, authHeader)
+                const res = await apiUsers.get(`/${idUsuario}`,
+                    {
+                        headers:{
+                            "Content-Type" : "application/json",
+                            "Authorization" : `Bearer ${api}`
+                        }
+                    }
+                )
                 setUsers(res.data)
             }catch(error){
                 Alert.alert("ERROR",error)

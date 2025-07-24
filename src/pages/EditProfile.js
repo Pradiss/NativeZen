@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import styles from "../components/Style";
 import { apiRegister } from "../service.js/Api";
+import { apiUsers } from "../service.js/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DropdownModal } from "../components/Modal";
 import {
@@ -22,72 +23,101 @@ import {
   getInstrumentoLabel,
   instrumentoOptions,
 } from "../utils/ArraysCategory";
-import { Avatar } from "react-native-paper";
-import { formatMoney } from "../utils/mask";
-import { set } from "date-fns";
 
 export default function Register({ navigation }) {
-  const [email, setEmail] = useState([]);
-  const [nome, setNome] = useState([]);
-  const [whatsapp, setWhatsapp] = useState([]);
-  const [instagram, setInstagram] = useState([]);
-  const [facebook, setFacebook] = useState([]);
-  const [idade, setIdade] = useState([]);
-  const [uf, setUf] = useState([]);
-  const [cidade, setCidade] = useState([]);
-  const [preco, setPreco] = useState([]);
-  const [idInstrumento, setIdInstrumento] = useState([]);
-  const [idCategoria, setIdCategoria] = useState([]);
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [idade, setIdade] = useState("");
+  const [uf, setUf] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [preco, setPreco] = useState("");
+  const [idInstrumento, setIdInstrumento] = useState("");
+  const [idCategoria, setIdCategoria] = useState("");
 
-  const Register = async () => {
-    const api = await AsyncStorage.getItem("api_token");
-    try {
-      const response = await apiRegister.put(
-        `${api}`,
-        {
-          nome,
-          idade,
-          instagram,
-          facebook,
-          email,
-          cidade,
-          uf,
-          whatsapp,
-          preco,
-          idInstrumento,
-          idCategoria,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${api}`,
-          },
-        }
-      );
-      navigation.navigate("Login");
+  useEffect(()=>{
+    const userData = async () =>{
+      const api = await AsyncStorage.getItem("api_token")
+      const idUsuario = await AsyncStorage.getItem("idUsuario")
 
-      navigation.reset({
-        index: 0,
-        routes: [{ nome: "MyTabs" }],
-      });
-    } catch (error) {
-      Alert.alert("Erro ao criar um Usuario", error);
+      try{
+        const res = await apiUsers.get(
+          `/${idUsuario}`,
+          {
+            headers:{
+              "Content-Type" : "application/json",
+              "Authorization" : `Bearer ${api}`
+            }
+          })
+        setNome(res.data.nome)
+        setEmail(res.data.email)
+        setInstagram(res.data.instagram)
+        setCidade(res.data.cidade)
+        setFacebook(res.data.facebook)
+        setPreco(res.data.preco.toString())
+        setWhatsapp(res.data.whatsapp)
+        setUf(res.data.uf)
+        setIdade(res.data.idade.toString())
+        setIdCategoria(res.data.idCategoria.toString())
+        setIdInstrumento(res.data.idInstrumento.toString())
+        
+      }catch(e){
+        Alert.alert("Deu erro",e.message)
+      }
     }
-  };
 
+    userData()
+  },[])
+
+  const EditProfile = async () => {
+    const api = await AsyncStorage.getItem("api_token");
+    const idUsuario = await AsyncStorage.getItem("idUsuario");
+    try {
+        const response = await apiUsers.put(
+          `${idUsuario}`,
+          {
+            nome,
+            idade,
+            instagram,
+            facebook,
+            email,
+            cidade,
+            uf,
+            whatsapp,
+            preco,
+            idInstrumento,
+            idCategoria,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${api}`,
+            },
+          }
+        )
+      
+        navigation.navigate("MainTabs", {screen: "Profile"})
+  
+        
+      } catch (error) {
+        Alert.alert("Erro ao criar um Usuario", error)
+      }
+    }
+  
   const formatPhone = (value) => {
     const cleaned = value.replace(/\D/g, "").slice(0, 11);
     if (cleaned.length <= 10) {
       return cleaned
         .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{4})(\d)/, "$1-$2");
+        .replace(/(\d{4})(\d)/, "$1-$2")
     } else {
       return cleaned
         .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{5})(\d)/, "$1-$2");
+        .replace(/(\d{5})(\d)/, "$1-$2")
     }
-  };
-
+  }
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -98,7 +128,7 @@ export default function Register({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      
         <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 70 }}>
           <View style={{ alignItems: "center" }}>
 
@@ -133,14 +163,14 @@ export default function Register({ navigation }) {
                 label="Selecione um estilo musical"
                 options={categoriaOptions}
                 selectedValue={idCategoria}
-                onValueChange={(value) => updateField("idCategoria", value)}
+                onValueChange={setIdCategoria}
               />
 
               <DropdownModal
                 label="Selecione um instrumento"
                 options={instrumentoOptions}
                 selectedValue={idInstrumento}
-                onValueChange={(value) => updateField("idInstrumento", value)}
+                onValueChange={setIdInstrumento}
               />
             </View>
 
@@ -152,7 +182,7 @@ export default function Register({ navigation }) {
               onChangeText={setEmail}
             />
 
-            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+            <View style={{ gap: 8, marginBlock: 2, flexDirection: "row" }}>
               <TextInput
                 style={[styles.inputLogin, { width: "50%" }]}
                 placeholder="Digite Seu @ do Instagram"
@@ -170,7 +200,7 @@ export default function Register({ navigation }) {
               />
             </View>
 
-            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+            <View style={{ gap: 8, flexDirection: "row" }}>
               <TextInput
                 style={[styles.inputLogin, { width: "70%" }]}
                 placeholder="Digite seu facebook "
@@ -200,7 +230,7 @@ export default function Register({ navigation }) {
                 padding: 8,
                 color: "white",
               }}
-              onPress={Register}
+              onPress={EditProfile}
             >
               <Text style={{ fontSize: 18, color: "#fff" }}>
                 Editar perfil{" "}
@@ -225,7 +255,7 @@ export default function Register({ navigation }) {
             </View>
           </View>
         </ScrollView>
-      </TouchableWithoutFeedback>
+      
     </KeyboardAvoidingView>
   );
 }

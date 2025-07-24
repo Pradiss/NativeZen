@@ -11,8 +11,9 @@ export default function Splash({navigation}){
      const check = async () => {
        try {
          const id = await AsyncStorage.getItem('idUsuario')
+         const api = await AsyncStorage.getItem('api_token')
         // console.log('ID LIDO:', id)
-        navigation.replace(id ? 'MainTabs' : 'ScreenInicial')
+        navigation.replace(id && api ? 'MainTabs' : 'ScreenInicial')
       } catch {
         navigation.replace('Login')
      }

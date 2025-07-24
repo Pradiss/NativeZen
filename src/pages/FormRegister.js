@@ -19,6 +19,12 @@ import { Picker } from '@react-native-picker/picker';
 import { DropdownModal } from "../components/Modal";
 
 import {
+  categoriaOptions,
+  getCategoriaLabel,
+  getInstrumentoLabel,
+  instrumentoOptions,
+} from "../utils/ArraysCategory";
+import {
   formatCEP,
   formatPhone,
   formatN,
@@ -147,7 +153,7 @@ export default function FormRegister({ navigation }) {
               />
             </View>
             
-            <View style={{ gap:8 ,marginBlock:4 }}> 
+            <View style={{ gap:8 ,marginBlock:4, flexDirection:"row" }}> 
                 <DropdownModal
                     label="Selecione um estilo musical"
                     options={categoriaOptions}

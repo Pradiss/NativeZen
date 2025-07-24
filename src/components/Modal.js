@@ -51,9 +51,9 @@ export const DropdownModal = ({ label, options, selectedValue, onValueChange }) 
 
 const styles = StyleSheet.create({
   input: {
+    width:"50%",
     borderRadius: 24,
     paddingVertical: 22,
-    paddingHorizontal: 16,
     backgroundColor: "#555555",
   },
   inputText: {

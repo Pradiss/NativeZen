@@ -14,8 +14,9 @@ export default function ChangePassword({ navigation }) {
 
   const [senhaNova, setSenhaNova] = useState("");
 
-  const ChangePassword = async () => {
-  
+
+  const changePassword = async() => {
+    
   }
 
   return (
