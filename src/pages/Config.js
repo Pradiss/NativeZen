@@ -30,12 +30,12 @@ export default function Config({navigation}){
 
             <Text style={{fontSize:18,fontWeight:600,marginBlock:8}}>Configurações de Conta</Text>
             <Pressable onPress={() => navigation.navigate("Editar Perfil")} style={styles.buttonConfig}>
-               <MaterialCommunityIcons color="#000" name ="lock-outline" size={17}></MaterialCommunityIcons> 
+               <MaterialCommunityIcons color="#000" name ="account-edit-outline" size={17}></MaterialCommunityIcons> 
                <Text style={styles.textButtonConfig}>Editar Perfil </Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Change Password")} style={styles.buttonConfig}>
-               <MaterialCommunityIcons color="#000" name ="account-circle-outline" size={17}></MaterialCommunityIcons> 
+               <MaterialCommunityIcons color="#000" name ="lock-outline" size={17}></MaterialCommunityIcons> 
                <Text style={styles.textButtonConfig}>Mudar Senha</Text>
             </Pressable>
 

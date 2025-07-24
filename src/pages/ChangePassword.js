@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   Pressable,
+  Alert,
   Image,
 } from "react-native";
 import styles from "../components/Style";
@@ -11,12 +12,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ChangePassword({ navigation }) {
   const [senha, setSenha] = useState("");
-
   const [senhaNova, setSenhaNova] = useState("");
 
-
-  const changePassword = async() => {
-    
+  const editPassword = () => {
+    if(senha === senhaNova){
+      Alert.alert("Sucesso","Senha alterada com sucesso!")
+    }
+    else{
+      Alert.alert("Erro","As senhas não conferem!")
+    }
   }
 
   return (
@@ -59,25 +63,20 @@ export default function ChangePassword({ navigation }) {
         placeholderTextColor="#ccc"
         style={styles.inputLogin}
         value={senha}
-        placeholder="Senha Atual"
+        placeholder="Digite sua Senha Atual"
         secureTextEntry={true} // hide password
         onChangeText={setSenha}
       />
-      {senha.length > 0 && senha.length < 6 && (
-        <Text style={{ color: "red", marginBottom: 8 }}>
-          A senha deve conter no mínimo 6 caracteres
-        </Text>
-      )}
 
       <TextInput
         placeholderTextColor="#ccc"
         style={styles.inputLogin}
         value={senhaNova}
-        placeholder="Senha antiga"
+        placeholder="Digite Sua Senha Nova"
         secureTextEntry={true} // hide password
         onChangeText={setSenhaNova}
       />
-      {senha.length > 0 && senha.length < 6 && (
+      {senha.length  > 0 && senha.length < 6 && (
         <Text style={{ color: "red", marginBottom: 8 }}>
           A senha deve conter no mínimo 6 caracteres
         </Text>
@@ -95,7 +94,7 @@ export default function ChangePassword({ navigation }) {
           padding: 8,
           color: "white",
         }}
-        onPress={ChangePassword}
+        onPress={editPassword}
       >
         <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha </Text>
       </Pressable>

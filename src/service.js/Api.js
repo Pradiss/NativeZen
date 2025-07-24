@@ -18,3 +18,7 @@ export const apiUsers = axios.create({
 export const apiCategory = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/category",
 })
+
+export const apiCategorias = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/categorias"
+})

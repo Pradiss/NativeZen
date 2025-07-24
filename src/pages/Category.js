@@ -36,6 +36,10 @@ export default function Category({navigation}){
         
     }
 
+    const filterCategory = category.filter(cat => 
+        cat.generoMusical.toLowerCase().includes(search.toLowerCase())
+    )
+
     useEffect(() => {
         if(isFocused)
             LoadingUsers()
@@ -59,7 +63,7 @@ export default function Category({navigation}){
 
                 <FlatList 
                 
-                data={category}
+                data={filterCategory}
                 keyExtractor ={(item)=> item.idCategoria.toString()}
                 horizontal={true}
                 pagingEnabled
@@ -69,7 +73,7 @@ export default function Category({navigation}){
                         <Button
                         mode="contained"
                         style={{ marginVertical: 8, marginHorizontal: 4, backgroundColor:"#232323" }}
-                        
+                        onPress={() => {setSearch(item.item.generoMusical)}}
                         >
                         {item.item.generoMusical}
                         </Button>

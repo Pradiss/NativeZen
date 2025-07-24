@@ -174,10 +174,12 @@ export default function Profile({navigation}){
             </View>
 
 
-             <View style={{paddingTop:8, gap:16}}>
-                <Text style={{fontSize:20,fontWeight:600}}>Descrição</Text>
-                <Text  style={{fontSize:16}}>{users.descricao}</Text>
-            </View>
+             <View>
+                <Text style={{fontSize:20,fontWeight:600,marginTop:8}}>Descrição</Text>
+                
+             </View>
+            <Text  style={{fontSize:16}}>{users.descricao}</Text>
+           
 
             <View style={{paddingTop:100}}></View>
         </View>
