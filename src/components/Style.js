@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 14,
     fontWeight: 300,
-    color: "#aaa",
+    color: "#555",
   },
 
   // Login

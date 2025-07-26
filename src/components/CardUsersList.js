@@ -50,15 +50,15 @@ export default function CardUsersList({item, navigation}){
             <View style={{padding:16 , justifyContent:"center", flexDirection:"row",alignContent:"flex-end"}}>
                 <View>
                     <Text style={{fontSize:22,color:"#232323", fontWeight:600 }}>{item.nome}</Text>
-                    <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={25} />{item.cidade}</Text>
+                    <Text style={styles.textEndress}><MaterialCommunityIcons  name="google-maps" size={20} />{item.cidade}</Text>
                     
                     <View style={{flexDirection:"row" }}>
                         <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="music-circle" size={25} color="#000">
+                            <MaterialCommunityIcons name="music-circle" size={20} color="#000">
                             </MaterialCommunityIcons>{category(item.idCategoria)}
                         </Text>
                         <Text style={styles.textEndress}>
-                            <MaterialCommunityIcons name="guitar-acoustic" size={25} color="#000">
+                            <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
                             </MaterialCommunityIcons>{instrumento(item.idInstrumento)}
                         </Text>
 

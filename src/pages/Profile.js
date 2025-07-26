@@ -134,10 +134,13 @@ export default function Profile({navigation}){
                 </View>
             </View>
 
-            <View style={{paddingTop:8, gap:16}}>
+            <View style={{paddingTop:16, gap:16}}>
                 <Text style={{fontSize:28,fontWeight:700}}>{formatReais(users.preco)}</Text>
                 <Button icon="chat-outline" mode="contained" 
-                style={{backgroundColor:"black"}}
+                style={{backgroundColor:"black",
+                    paddingVertical: 4, paddingHorizontal: 16, 
+                    alignSelf: "center",  width: "100%"                    
+                }}
                 onPress={() => navigation.navigate("Chat")}
                 >Envie uma mensagem</Button>
             </View>
@@ -146,7 +149,7 @@ export default function Profile({navigation}){
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "space-around",
-                marginBlock: 16
+                marginBlock: 32
                 }}>
                 <SocialIcon
                     platform="Instagram"
@@ -174,11 +177,11 @@ export default function Profile({navigation}){
             </View>
 
 
-             <View>
-                <Text style={{fontSize:20,fontWeight:600,marginTop:8}}>Descrição</Text>
+            <View style={{gap:16,}}>
+                <Text style={{fontSize:22,fontWeight:600,}}>Descrição</Text>
                 
-             </View>
-            <Text  style={{fontSize:16}}>{users.descricao}</Text>
+                <Text  style={{fontSize:18}}>{users.descricao}</Text>
+            </View>
            
 
             <View style={{paddingTop:100}}></View>

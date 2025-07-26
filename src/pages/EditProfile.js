@@ -157,6 +157,24 @@ export default function Register({ navigation }) {
                 onChangeText={setIdade}
               />
             </View>
+            <View style={{ flexDirection: "row", gap: 5 }}>
+              <TextInput
+                style={[styles.inputLogin, { width: "73%" }]}
+                value={cidade}
+                onChangeText={setCidade}
+                placeholder="Digite sua Cidade"
+                placeholderTextColor="#ccc"
+              />
+
+              <TextInput
+                style={[styles.inputLogin, { width: "27%" }]}
+                placeholder="Sua Idade"
+                placeholderTextColor="#ccc"
+                maxLength={2}
+                value={uf}
+                onChangeText={setUf}
+              />
+            </View>
 
             <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
               <DropdownModal

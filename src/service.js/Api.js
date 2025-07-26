@@ -22,3 +22,7 @@ export const apiCategory = axios.create({
 export const apiCategorias = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/categorias"
 })
+
+export const apiInstrumento = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/instrumento"
+})

@@ -1,55 +1,60 @@
 import React,{useState,useEffect} from "react"
-import { View, Text, TextInput} from "react-native"
+import { View, Text, TextInput,Alert} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import { Button, IconButton } from "react-native-paper"
 import styles from "../components/Style"
 import { FlatList, ScrollView } from "react-native-gesture-handler"
 import axios from "axios"
 import CardUsersList from "../components/CardUsersList"
+import { apiCategorias, apiInstrumento, apiUsers } from "../service.js/Api"
 
 export default function Category({navigation}){
 
     const [search,setSearch] = useState("")
     const [users,setUsers] = useState([])
     const [category,setCategory] = useState([])
+    const [instrument, setInstrument] = useState([])
+    const [filterCategory, setFilterCategory] = useState("");
+    const [filterInstrument, setFilterInstrument] = useState("")
     const isFocused = useIsFocused()
 
-    const LoadingUsers = async () =>{
-        try{
-            const res = await axios.get("https://erick5457.c44.integrator.host/api/usuarios")
-            setUsers(res.data)
+    const LoadingAllData = async () => {
+            try {
+                const [resUsers, resCategorias, resInstrumentos] = await Promise.all([
+                apiUsers.get("/"),
+                apiCategorias.get("/"),
+                apiInstrumento.get("/")
+                ])
 
-        }catch(error){
-            Alert.alert("ERROR",error)
+                setUsers(resUsers.data)
+                setCategory(resCategorias.data)
+                setInstrument(resInstrumentos.data)
+
+            } catch (error) {
+                Alert.alert("Erro ao carregar dados", error.message || "Erro desconhecido");
+                console.log(error)
+            }
         }
-        
-    }
-
-    const LoadingCategory = async () =>{
-        try{
-            const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
-            setCategory(res.data)
-
-        }catch(error){
-            Alert.alert("ERROR",error)
-        }
-        
-    }
-
-    const filterCategory = category.filter(cat => 
-        cat.generoMusical.toLowerCase().includes(search.toLowerCase())
-    )
 
     useEffect(() => {
-        if(isFocused)
-            LoadingUsers()
-            LoadingCategory()
+        if(isFocused){
+
+            LoadingAllData()
+        }
     },[isFocused])
 
-    const FilterUsers = users.filter(user =>
-        user.nome.toLowerCase().includes(search.toLowerCase())
-    )
-  
+        const FilterUsers = users.filter(user => {
+            //filtra por tudo 
+            const filterAll =
+             user.nome.toLowerCase().includes(search.toLowerCase()) ||
+             user.cidade.toLowerCase().includes(search.toLowerCase());
+
+            //filtra pela categoria 
+            const filterCategoria = filterCategory ? user.idCategoria === filterCategory : true
+            const filterInstrumento = filterInstrument ? user.idInstrumento === filterInstrument : true
+
+        return filterAll && filterCategoria && filterInstrumento ;
+        });
 
     return(
         <View style={{paddingTop:56}}>
@@ -59,27 +64,67 @@ export default function Category({navigation}){
                 <IconButton  style={styles.filter} icon="text-search" size={30}  onPress={() => navigation.navigate("Filters")} />
             </View>
 
-            <View style={{flexDirection:"row", alignItems:"center"}}> 
-
+            <View style={{paddingStart:8}}> 
                 <FlatList 
-                
-                data={filterCategory}
+                data={category}
                 keyExtractor ={(item)=> item.idCategoria.toString()}
                 horizontal={true}
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 renderItem={(item) => {
                     return (
-                        <Button
+                    <Button
                         mode="contained"
                         style={{ marginVertical: 8, marginHorizontal: 4, backgroundColor:"#232323" }}
-                        onPress={() => {setSearch(item.item.generoMusical)}}
+                        onPress={() => {setFilterCategory(item.item.idCategoria)}}
                         >
                         {item.item.generoMusical}
-                        </Button>
-                );
+                    </Button>
+                )
                 }}
-                />
+                />  
+                
+                <FlatList 
+                data={instrument}
+                keyExtractor ={(item)=> item.idInstrumento.toString()}
+                horizontal={true}
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                renderItem={(item) => {
+                    return (
+                    <Button
+                        mode="outlined"
+                        style={{ 
+                            marginVertical: 4, 
+                            marginHorizontal: 4,
+                        }}
+                        LabelStyle={{color:"#232323"}}
+                        onPress={() => {setFilterInstrument(item.item.idInstrumento)}}
+                        >
+                        {item.item.nomeInstrumento}
+                    </Button>
+                )
+                }}
+                />   
+            </View>
+
+            <View style={{paddingHorizontal:8,paddingTop:16}}>
+                <Button
+                    mode="outlined"
+                    style={{ marginVertical: 8,
+                        marginHorizontal: 4,
+                        paddingBlock:2,
+                        borderColor: "#232323",
+                     }}
+                    labelStyle={{ color: "#232323" }}
+                    icon="close"
+                    onPress={() => {
+                        setSearch("")
+                        setFilterCategory("")
+                        setFilterInstrument("")
+                        }}>
+                    Limpar Filtros
+                </Button>
             </View>
 
             <View style={styles.space} >
