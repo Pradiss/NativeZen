@@ -86,7 +86,9 @@ export default function Category({navigation}){
                     return (
                     <Button
                         mode="contained"
-                        style={{ marginVertical: 8, marginHorizontal: 4, backgroundColor:"#232323" }}
+                        style={{ marginVertical: 8,
+                             marginHorizontal: 4,
+                             backgroundColor:"#232323" }}
                         onPress={() => {setFilterCategory(item.item.idCategoria)}}
                         >
                         {item.item.generoMusical}
@@ -105,11 +107,10 @@ export default function Category({navigation}){
                     return (
                     <Button
                         mode="outlined"
-                        style={{ 
-                            marginVertical: 4, 
+                        style={{marginVertical: 4,
                             marginHorizontal: 4,
-                        }}
-                        LabelStyle={{color:"#232323"}}
+                            }}
+                        labelStyle={{ color: "#000" }}
                         onPress={() => {setFilterInstrument(item.item.idInstrumento)}}
                         >
                         {item.item.nomeInstrumento}
@@ -119,7 +120,7 @@ export default function Category({navigation}){
                 />   
             </View>
 
-            <View style={{paddingHorizontal:8,paddingTop:16}}>
+            <View style={{paddingHorizontal:8,paddingTop:8}}>
                 <Button
                     mode="outlined"
                     style={{ marginVertical: 8,
@@ -138,21 +139,21 @@ export default function Category({navigation}){
                 </Button>
             </View>
 
-            <View style={styles.space} >
+            <View style={styles.title} >
                 <Text style={styles.titleName} > Todos os Free lances </Text>
             </View>
       
-            <FlatList
-                data={FilterUsers}
-                keyExtractor={(item) => item.idUsuario.toString()}
-                renderItem={({ item }) => (
-                    <CardUsersList
-                    item={item}
-                    navigation={navigation}
+                <FlatList
+                    data={FilterUsers}
+                    keyExtractor={(item) => item.idUsuario.toString()}
+                    renderItem={({ item }) => (
+                        <CardUsersList
+                        item={item}
+                        navigation={navigation}
+                        />
+                    )}
                     />
-                )}
-                />
-        <View style={{marginTop:300}}></View>
+            <View style={{marginTop:300}}></View>
                 
         </View>
     )
