@@ -62,10 +62,8 @@ export default function Home({navigation}){
             LoadingInstrument()
     },[isFocused])
 
-    const FilterUsers = users.filter(user =>
-        user.nome.toLowerCase().includes(search.toLowerCase())
-    )
-
+  
+  
     return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View>
@@ -83,10 +81,13 @@ export default function Home({navigation}){
                     <IconButton  style={styles.filter} icon="text-search" size={30} onPress={() => navigation.navigate("Filtro", {item: search})}></IconButton> 
                 </View>
                 
-
-                <View style={styles.title} >
+                <View style={styles.title}>
                     <Text style={styles.titleName}>Categorias</Text>
-                    <Text title="Press me"style={{ fontSize:14}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
+                    <Text 
+                    title="Press me"
+                    style={{ fontSize:14}} 
+                    onPress={() => navigation.navigate("Explore")}>
+                        Ver todos</Text>
                 </View>
 
                 <FlatList
@@ -104,7 +105,7 @@ export default function Home({navigation}){
                 )}
                 />
 
-                <View style={styles.title} >
+                <View style={styles.title}>
                     <Text style={styles.titleName}>Melhores Musicos Free</Text>
                     <Text title="Press me" style={{fontSize:14}} onPress={() => navigation.navigate("Explore")}>Ver todos</Text>
                 </View>

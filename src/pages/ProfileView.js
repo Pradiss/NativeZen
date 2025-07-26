@@ -88,7 +88,7 @@ export default function ProfileView({ navigation }) {
         paddingHorizontal: 16,
       }}
     >
-      <View style={{ paddingTop: 50 }}>
+      <View style={{ paddingTop: 56 }}>
         <View style={{ alignItems: "flex-start" }}>
           <MaterialCommunityIcons
             name="arrow-left"
@@ -107,7 +107,7 @@ export default function ProfileView({ navigation }) {
             height: 290,
             borderRadius: 50,
             alignSelf: "center",
-            marginTop: 16,
+            marginTop: 22,
             backgroundColor: "#fff",
             shadowColor: "#000",
             shadowOffset: { width: 1, height: 2 },

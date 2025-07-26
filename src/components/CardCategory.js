@@ -4,10 +4,15 @@ import { View, Text, Image, TouchableOpacity} from "react-native"
 
 export default function CardCategory({item,navigation}){
 
-
-    
     return(
-        <TouchableOpacity onPress={() => navigation.navigate("Category")}>
+        <TouchableOpacity onPress={() =>
+            navigation.navigate("MainTabs", {
+                screen: "Explore",
+                params: {
+                filtroCategoria: item.idCategoria,
+                },
+            })
+        }>
         <View  >
            <View style={{flex:1, alignItems:"center"}}>
             <Image

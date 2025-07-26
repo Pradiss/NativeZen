@@ -83,7 +83,7 @@ export default function Profile({navigation}){
     return(
 
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
-        <View style={{paddingTop:50}}>
+        <View style={{paddingTop:56}}>
 
             <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end"}}>
                 <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
@@ -101,7 +101,7 @@ export default function Profile({navigation}){
                     height: 290, 
                     borderRadius: 50, 
                     alignSelf: "center", 
-                    marginTop: 16,
+                    marginTop:22,
                     backgroundColor: "#fff",
                     shadowColor: "#000",
                     shadowOffset: { width: 1, height: 2 },

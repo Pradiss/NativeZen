@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  Alert,
-  Image,
-} from "react-native";
+import { View, Text, TextInput, Pressable, Alert, Image } from "react-native";
 import styles from "../components/Style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -15,13 +8,12 @@ export default function ChangePassword({ navigation }) {
   const [senhaNova, setSenhaNova] = useState("");
 
   const editPassword = () => {
-    if(senha === senhaNova){
-      Alert.alert("Sucesso","Senha alterada com sucesso!")
+    if (senha === senhaNova) {
+      Alert.alert("Sucesso", "Senha alterada com sucesso!");
+    } else {
+      Alert.alert("Erro", "As senhas não conferem!");
     }
-    else{
-      Alert.alert("Erro","As senhas não conferem!")
-    }
-  }
+  };
 
   return (
     <View
@@ -30,74 +22,75 @@ export default function ChangePassword({ navigation }) {
         paddingTop: 56,
       }}
     >
-      <View>
-        <View style={{ alignItems: "start", paddingHorizontal: 16 }}>
-        <MaterialCommunityIcons
-          name="arrow-left"
-          color="#000"
-          size={24}
-          onPress={() => navigation.navigate("MainTabs", { screen: "Home" })}
-        />
-      </View>
-      <View
-        style={{
-          paddingBottom: 26,
-          flexDirection: "row",
-          gap: 0,
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={require("../asset/logoZene.png")}
-          style={{ width: 100, height: 100, alignItems:"center" }}
-          resizeMode="contain"
-        />
-      </View>
+        <View style={{ alignItems: "start", }}>
+          <MaterialCommunityIcons
+            name="arrow-left"
+            color="#000"
+            size={24}
+            onPress={() => navigation.navigate("MainTabs", { screen: "Home" })}
+          />
+        </View>
+      <View style={{alignItems:"center"}}>
+        <View
+          style={{
+            paddingBottom: 26,
+            flexDirection: "row",
+            gap: 0,
+            alignItems: "center",
+            justifyContent:"center"
+          }}
+        >
+          <Image
+            source={require("../asset/logoZene.png")}
+            style={{ width: 100, height: 100, alignItems: "center" }}
+            resizeMode="contain"
+          />
+        </View>
 
-      <Text style={{ fontSize: 22 }}>Gostaria de mudar sua senha?</Text>
-      <Text style={{ paddingBlock: 8 }}>
-        Digite sua senha atual e a nova senha desejada
-      </Text>
-
-      <TextInput
-        placeholderTextColor="#ccc"
-        style={styles.inputLogin}
-        value={senha}
-        placeholder="Digite sua Senha Atual"
-        secureTextEntry={true} // hide password
-        onChangeText={setSenha}
-      />
-
-      <TextInput
-        placeholderTextColor="#ccc"
-        style={styles.inputLogin}
-        value={senhaNova}
-        placeholder="Digite Sua Senha Nova"
-        secureTextEntry={true} // hide password
-        onChangeText={setSenhaNova}
-      />
-      {senha.length  > 0 && senha.length < 6 && (
-        <Text style={{ color: "red", marginBottom: 8 }}>
-          A senha deve conter no mínimo 6 caracteres
+        <Text style={{ fontSize: 22 }}>Gostaria de mudar sua senha?</Text>
+        <Text style={{ paddingBlock: 8 }}>
+          Digite sua senha atual e a nova senha desejada
         </Text>
-      )}
 
-      <Pressable
-        style={{
-          borderRadius: 20,
-          width: "100%",
-          height: 55,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 32,
-          backgroundColor: "black",
-          padding: 8,
-          color: "white",
-        }}
-        onPress={editPassword}
-      >
-        <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha </Text>
-      </Pressable>
+        <TextInput
+          placeholderTextColor="#ccc"
+          style={styles.inputLogin}
+          value={senha}
+          placeholder="Digite sua Senha Atual"
+          secureTextEntry={true} // hide password
+          onChangeText={setSenha}
+        />
+
+        <TextInput
+          placeholderTextColor="#ccc"
+          style={styles.inputLogin}
+          value={senhaNova}
+          placeholder="Digite Sua Senha Nova"
+          secureTextEntry={true} // hide password
+          onChangeText={setSenhaNova}
+        />
+        {senha.length > 0 && senha.length < 6 && (
+          <Text style={{ color: "red", marginBottom: 8 }}>
+            A senha deve conter no mínimo 6 caracteres
+          </Text>
+        )}
+
+        <Pressable
+          style={{
+            borderRadius: 20,
+            width: "100%",
+            height: 55,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 32,
+            backgroundColor: "black",
+            padding: 8,
+            color: "white",
+          }}
+          onPress={editPassword}
+        >
+          <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha </Text>
+        </Pressable>
       </View>
     </View>
   );

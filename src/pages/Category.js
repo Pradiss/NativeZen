@@ -7,6 +7,7 @@ import { FlatList, ScrollView } from "react-native-gesture-handler"
 import axios from "axios"
 import CardUsersList from "../components/CardUsersList"
 import { apiCategorias, apiInstrumento, apiUsers } from "../service.js/Api"
+import { useRoute } from '@react-navigation/native'
 
 export default function Category({navigation}){
 
@@ -14,9 +15,12 @@ export default function Category({navigation}){
     const [users,setUsers] = useState([])
     const [category,setCategory] = useState([])
     const [instrument, setInstrument] = useState([])
-    const [filterCategory, setFilterCategory] = useState("");
+    const [filterCategory, setFilterCategory] = useState("")
     const [filterInstrument, setFilterInstrument] = useState("")
     const isFocused = useIsFocused()
+    const route = useRoute();
+    const { filtroCategoria: filtroCategoriaRota } = route.params || {}
+    const { filtroInstrumento: filtroInstrumentoRota } = route.params || {}
 
     const LoadingAllData = async () => {
             try {
@@ -40,6 +44,13 @@ export default function Category({navigation}){
         if(isFocused){
 
             LoadingAllData()
+
+        }
+        if (filtroCategoriaRota) {
+            setFilterCategory(filtroCategoriaRota);
+        }
+        if (filtroInstrumentoRota) {
+            setFilterInstrumentrr(filtroInstrumentoRota);
         }
     },[isFocused])
 
@@ -141,6 +152,8 @@ export default function Category({navigation}){
                     />
                 )}
                 />
+        <View style={{marginTop:300}}></View>
+                
         </View>
     )
 }
