@@ -4,12 +4,13 @@ import { View, Text, Image ,Alert, Pressable,Linking ,ScrollView, } from "react-
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Button } from "react-native-paper"
 import { SocialIcon } from "../components/RedeSocial"
 import { formatReais } from "../utils/mask"
 import { apiUsers } from "../service.js/Api"
+import EditDescription from "../components/EditDescription"
 
 export default function Profile({navigation}){
 
@@ -39,8 +40,6 @@ export default function Profile({navigation}){
         
     }
     
-    
-
     const LoadingCategory = async () =>{
         try{ 
             const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
@@ -178,9 +177,15 @@ export default function Profile({navigation}){
 
 
             <View style={{gap:16,}}>
-                <Text style={{fontSize:22,fontWeight:600,}}>Descrição</Text>
+                <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
+                    <Text style={{fontSize:22,fontWeight:600,}}>Descrição</Text>
+                    <MaterialIcons name="edit-note" size={24} color="#000"
+                      onPress={() => navigation.navigate("EditDescription")}
+                    />
+                </View>
                 
                 <Text  style={{fontSize:18}}>{users.descricao}</Text>
+
             </View>
            
 

@@ -132,12 +132,6 @@ export default function Register({ navigation }) {
         <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 70 }}>
           <View style={{ alignItems: "center" }}>
 
-            {/* <Avatar.Image
-              size={50}
-              source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
-              style={{ alignSelf: "flex-start" }}
-            /> */}
-
             <View style={{ flexDirection: "row", gap: 5 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "73%" }]}

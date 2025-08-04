@@ -3,8 +3,7 @@ import { View, Text, TextInput,Alert} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import { Button, IconButton } from "react-native-paper"
 import styles from "../components/Style"
-import { FlatList, ScrollView } from "react-native-gesture-handler"
-import axios from "axios"
+import { FlatList } from "react-native-gesture-handler"
 import CardUsersList from "../components/CardUsersList"
 import { apiCategorias, apiInstrumento, apiUsers } from "../service.js/Api"
 import { useRoute } from '@react-navigation/native'
@@ -50,7 +49,7 @@ export default function Category({navigation}){
             setFilterCategory(filtroCategoriaRota);
         }
         if (filtroInstrumentoRota) {
-            setFilterInstrumentrr(filtroInstrumentoRota);
+            setFilterInstrument(filtroInstrumentoRota);
         }
     },[isFocused])
 

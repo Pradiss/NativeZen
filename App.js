@@ -21,6 +21,8 @@ import Filters from "./src/pages/Filters";
 import ChangePassword from "./src/pages/ChangePassword";
 import ScreenInicial from "./src/pages/ScreenInicial";
 import FormRegister from "./src/pages/FormRegister";
+import ChangePhoto from "./src/pages/ChangePhoto";
+import EditDescription from "./src/components/EditDescription";
 
 const Tab = createBottomTabNavigator();
 
@@ -96,6 +98,8 @@ export default function App() {
             <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Mudar foto" component={ChangePhoto} />
+            <Stack.Screen name="EditDescription" component={EditDescription}/>
             <Stack.Screen name="ScreenInicial" component={ScreenInicial} />
             <Stack.Screen name="FormRegister" component={FormRegister} />
             

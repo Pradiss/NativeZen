@@ -12,8 +12,6 @@ import AvatarProfile from "../components/AvatarProfile"
 import { useRoute } from "@react-navigation/native";
 import CardInstrument from "../components/CardInstrumento"
 
-
-
 export default function Home({navigation}){
 
     const [search,setSearch] = useState("")
@@ -22,11 +20,8 @@ export default function Home({navigation}){
     const [instrument,setInstrument] = useState([])
     const isFocused = useIsFocused()
     const route = useRoute();
-    const { idUsuario } = route.params ?? {};
    
-
     useEffect(() => {
-        
          const LoadingUsers = async () =>{
         try{
             const res = await axios.get("https://erick5457.c44.integrator.host/api/usuarios")
@@ -34,8 +29,7 @@ export default function Home({navigation}){
 
         }catch(error){
             Alert.alert("ERROR",error)
-        }
-        
+        }        
     }
 
     const LoadingCategory = async () =>{
@@ -48,6 +42,7 @@ export default function Home({navigation}){
         }
         
     }
+    
     const LoadingInstrument = async () =>{
         try{
             const res = await axios.get("https://erick5457.c44.integrator.host/api/instrumento")
@@ -62,8 +57,6 @@ export default function Home({navigation}){
             LoadingInstrument()
     },[isFocused])
 
-  
-  
     return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
        <View>
