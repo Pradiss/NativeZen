@@ -1,15 +1,17 @@
 export const formatPhone = (value) => {
+  if (typeof value !== "string") return "";
   const cleaned = value.replace(/\D/g, "").slice(0, 11);
-  if (cleaned.length <= 10) {
-    return cleaned
-      .replace(/(\d{2})(\d)/, "($1) $2")
-      .replace(/(\d{4})(\d)/, "$1-$2");
-  } else {
-    return cleaned
-      .replace(/(\d{2})(\d)/, "($1) $2")
-      .replace(/(\d{5})(\d)/, "$1-$2");
-  }
+  if (cleaned.length <= 2) return `(${cleaned}`;
+  if (cleaned.length <= 6) return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+  if (cleaned.length <= 10) return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 6)}-${cleaned.slice(6)}`;
+  return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
 };
+
+export const cleanPhone = (value) => {
+  if (!value) return ""; 
+  return value.replace(/\D/g, "");
+};
+
 export const formatCPF = (value) =>
   value
     .replace(/\D/g, "") // só dígitos

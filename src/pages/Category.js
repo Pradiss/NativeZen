@@ -40,17 +40,9 @@ export default function Category({navigation}){
         }
 
     useEffect(() => {
-        if(isFocused){
-
-            LoadingAllData()
-
-        }
-        if (filtroCategoriaRota) {
-            setFilterCategory(filtroCategoriaRota);
-        }
-        if (filtroInstrumentoRota) {
-            setFilterInstrument(filtroInstrumentoRota);
-        }
+        if (isFocused && users.length === 0) {
+        LoadingAllData()
+    }
     },[isFocused])
 
         const FilterUsers = users.filter(user => {
@@ -67,7 +59,7 @@ export default function Category({navigation}){
         });
 
     return(
-        <View style={{paddingTop:56}}>
+        <View style={{paddingTop:56, flex: 1,}}>
             
             <View style={{flexDirection:"row",alignItems:"center",marginHorizontal:12 }}>
                 <TextInput  style={styles.input} placeholder="Buscar Free Lances" value={search} onChangeText={setSearch} /> 
@@ -151,6 +143,8 @@ export default function Category({navigation}){
                         navigation={navigation}
                         />
                     )}
+                    contentContainerStyle={{ paddingBottom: 200 }}
+                    ListFooterComponent={<View style={{ height: 80 }} />}
                     />
             <View style={{marginTop:300}}></View>
                 

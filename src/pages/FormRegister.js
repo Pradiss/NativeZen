@@ -34,6 +34,7 @@ import {
 } from "../utils/mask";
 import { apiRegister } from "../service.js/Api";
 import axios from "axios";
+import { cleanPhone } from "../utils/mask";
 
 export default function FormRegister({ navigation }) {
   const [step, setStep] = useState(1);
@@ -73,6 +74,7 @@ export default function FormRegister({ navigation }) {
         preco: parseFloat(formData.preco.replace(/[^\d.-]/g, '')) || 0,
         idCategoria: Number(formData.idCategoria),
         idInstrumento: Number(formData.idInstrumento),
+        whatsapp: cleanPhone(formData.whatsapp)
       };
       const response = await axios.post(
         "https://erick5457.c44.integrator.host/api/register",dataToSend,
@@ -127,6 +129,9 @@ export default function FormRegister({ navigation }) {
     console.log("Dados enviado", formData);
     Alert.alert("Formulario enviado com sucesso ");
   };
+
+  
+
 
   const steps = () => {
     switch (step) {

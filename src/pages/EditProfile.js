@@ -23,6 +23,8 @@ import {
   getInstrumentoLabel,
   instrumentoOptions,
 } from "../utils/ArraysCategory";
+import { formatPhone } from "../utils/mask";
+import { cleanPhone } from "../utils/mask";
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
@@ -57,7 +59,7 @@ export default function Register({ navigation }) {
         setCidade(res.data.cidade)
         setFacebook(res.data.facebook)
         setPreco(res.data.preco.toString())
-        setWhatsapp(res.data.whatsapp)
+        setWhatsapp(formatPhone(res.data.whatsapp));
         setUf(res.data.uf)
         setIdade(res.data.idade.toString())
         setIdCategoria(res.data.idCategoria.toString())
@@ -67,7 +69,6 @@ export default function Register({ navigation }) {
         Alert.alert("Deu erro",e.message)
       }
     }
-
     userData()
   },[])
 
@@ -85,7 +86,7 @@ export default function Register({ navigation }) {
             email,
             cidade,
             uf,
-            whatsapp,
+            whatsapp: cleanPhone(whatsapp),
             preco,
             idInstrumento,
             idCategoria,
@@ -93,7 +94,7 @@ export default function Register({ navigation }) {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${api}`,
+              'Authorization': `Bearer ${api}`,
             },
           }
         )
@@ -106,18 +107,7 @@ export default function Register({ navigation }) {
       }
     }
   
-  const formatPhone = (value) => {
-    const cleaned = value.replace(/\D/g, "").slice(0, 11);
-    if (cleaned.length <= 10) {
-      return cleaned
-        .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{4})(\d)/, "$1-$2")
-    } else {
-      return cleaned
-        .replace(/(\d{2})(\d)/, "($1) $2")
-        .replace(/(\d{5})(\d)/, "$1-$2")
-    }
-  }
+
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));

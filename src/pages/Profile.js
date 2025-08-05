@@ -8,9 +8,11 @@ import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Button } from "react-native-paper"
 import { SocialIcon } from "../components/RedeSocial"
-import { formatReais } from "../utils/mask"
+import { formatPhone, formatReais } from "../utils/mask"
 import { apiUsers } from "../service.js/Api"
 import EditDescription from "../components/EditDescription"
+import { cleanPhone } from "../utils/mask"
+
 
 export default function Profile({navigation}){
 
@@ -167,12 +169,13 @@ export default function Profile({navigation}){
                 />
 
                 <SocialIcon
-                    platform="WhatsApp"
-                    icon="whatsapp"
-                    username={users.whatsapp}
-                    urlScheme="whatsapp://send?phone="
-                    webBaseUrl="https://wa.me/"
+                platform="WhatsApp"
+                icon="whatsapp"
+                username={users.whatsapp}
+                urlScheme="whatsapp://send?phone="
+                webBaseUrl={`https://wa.me/${cleanPhone(users.whatsapp)}`}
                 />
+
             </View>
 
 
