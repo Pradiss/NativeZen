@@ -51,9 +51,34 @@ export default function Login({ navigation }) {
         routes: [{ name: "MainTabs" }],
       });
     } catch (error) {
-      Alert.alert("Falha no login", error);
+      if(error.response){
+        if(error.response.status === 401){
+          Alert.alert("Falha no login", "E-mail ou senha incorretos.")
+        }else{
+          Alert.alert("Falha no login ", 
+            error.response.data.message || error.message
+          )
+        }
+      }else if (error.request){
+        Alert.alert("Falha no login", "Servidor não respondeu. Tente novamente")
+      }else{
+        Alert.alert("Falha no login ", error.message)
+      }
+      
+
     }
   };
+
+      
+  const validarForm = () => {
+   
+      
+   
+   
+
+    return true
+  }
+
 
   return (
     <KeyboardAvoidingView

@@ -103,7 +103,7 @@ export default function Config({ navigation }) {
                <Text style={styles.textButtonConfig}>Language </Text>
             </Pressable> */}
 
-      <Pressable
+      {/* <Pressable
         onPress={() => navigation.navigate("Privacy")}
         style={styles.buttonConfig}
       >
@@ -113,7 +113,7 @@ export default function Config({ navigation }) {
           size={17}
         ></MaterialCommunityIcons>
         <Text style={styles.textButtonConfig}>Política de Privacidade </Text>
-      </Pressable>
+      </Pressable> */}
 
       <Pressable
         onPress={() => navigation.navigate("Help")}

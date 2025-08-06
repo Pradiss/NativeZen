@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert, Pressable,Linking ,ScrollView, } from "react-native"
+import { View, Text, Image ,Alert,ScrollView, TextInput } from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
@@ -183,11 +183,11 @@ export default function Profile({navigation}){
                 <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
                     <Text style={{fontSize:22,fontWeight:600,}}>Descrição</Text>
                     <MaterialIcons name="edit-note" size={24} color="#000"
-                      onPress={() => navigation.navigate("EditDescription")}
+                      onPress={() => navigation.navigate("")}
                     />
                 </View>
                 
-                <Text  style={{fontSize:18}}>{users.descricao}</Text>
+                <EditDescription description={users.description}/>
 
             </View>
            

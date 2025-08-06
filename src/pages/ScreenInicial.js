@@ -21,7 +21,7 @@ import { useRef } from "react";
 
 export default function ScreenInicial({ navigation }) {
   return (
-    <View style={styles.backgroundScreen}>
+    <View style={[styles.backgroundScreen, {flex:1}]}>
       <View>
         <Image
           source={require("../asset/BackgroundScreen.png")}
@@ -104,7 +104,7 @@ export default function ScreenInicial({ navigation }) {
                 </Button> */}
 
         <View
-          style={{ flexDirection: "row", paddingBottom: 50, paddingTop: 12 }}
+          style={{ flexDirection: "row", paddingBottom: 32, paddingTop: 12 }}
         >
           <Text
             style={{
@@ -132,7 +132,7 @@ export default function ScreenInicial({ navigation }) {
 
         <Image
           source={require("../asset/logoZene.png")}
-          style={{ width: 90, height: 40 }}
+          style={{ width: 40, height: 40 }}
           resizeMode="contain"
         />
       </View>

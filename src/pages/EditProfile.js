@@ -11,6 +11,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  
 } from "react-native";
 import styles from "../components/Style";
 import { apiRegister } from "../service.js/Api";
@@ -23,8 +24,7 @@ import {
   getInstrumentoLabel,
   instrumentoOptions,
 } from "../utils/ArraysCategory";
-import { formatPhone } from "../utils/mask";
-import { cleanPhone } from "../utils/mask";
+
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
@@ -59,7 +59,7 @@ export default function Register({ navigation }) {
         setCidade(res.data.cidade)
         setFacebook(res.data.facebook)
         setPreco(res.data.preco.toString())
-        setWhatsapp(formatPhone(res.data.whatsapp));
+        setWhatsapp(res.data.whatsapp.toString());
         setUf(res.data.uf)
         setIdade(res.data.idade.toString())
         setIdCategoria(res.data.idCategoria.toString())
@@ -86,7 +86,7 @@ export default function Register({ navigation }) {
             email,
             cidade,
             uf,
-            whatsapp: cleanPhone(whatsapp),
+            whatsapp,
             preco,
             idInstrumento,
             idCategoria,
@@ -103,11 +103,53 @@ export default function Register({ navigation }) {
   
         
       } catch (error) {
-        Alert.alert("Erro ao criar um Usuario", error)
+        Alert.alert("Erro ao editar um usuario", error.message)
       }
     }
   
+     
+  const validarForm = () => {
+    if(!nome.trim()){
+      Alert.alert("Campo Obrigatório", "O nome é obrigatorio")
+      return false
+    }
+    if(!idade|| isNaN(idade) || idade < 1 || idade > 99){
+      Alert.alert("Campo Obrigatório", "A idade é obrigatório")
+      return false
+    }
+    if(!cidade.trim()){
+      Alert.alert("Campo Obrigatório", "A cidade é obrigatório")
+      return false
+      }
+    if(!uf.trim()){
+      Alert.alert("Campo Obrigatório", "O estado é obrigatório")
+      return false
+      }
+    if(!idCategoria.trim()){
+      Alert.alert("Campo Obrigatório", "O estilo musical é obrigatório")
+      return false
+      }
+    if(!idInstrumento.trim()){
+      Alert.alert("Campo Obrigatório", "O Instrumento musical é obrigatório")
+      return false
+      }
+    if(!whatsapp.trim()){
+      Alert.alert("Campo Obrigatório", "Seu Numero é obrigatório")
+      return false
+      }
+      
+    if(!email.trim()){
+      Alert.alert("Campo Obrigatório", "seu E-mail é obrigatório")
+      return false
+      }
+      
+    if(!preco.trim()){
+      Alert.alert("Campo Obrigatório", "Seu preço é obrigatório")
+      return false
+      }
 
+    return true
+  }
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -122,7 +164,7 @@ export default function Register({ navigation }) {
         <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 70 }}>
           <View style={{ alignItems: "center" }}>
 
-            <View style={{ flexDirection: "row", gap: 5 }}>
+            <View style={{ flexDirection: "row", gap: 5, marginBottom:10 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "73%" }]}
                 value={nome}
@@ -141,7 +183,9 @@ export default function Register({ navigation }) {
                 onChangeText={setIdade}
               />
             </View>
-            <View style={{ flexDirection: "row", gap: 5 }}>
+
+            
+            <View style={{ flexDirection: "row", gap: 5, marginBottom:10 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "73%" }]}
                 value={cidade}
@@ -160,7 +204,7 @@ export default function Register({ navigation }) {
               />
             </View>
 
-            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
+            <View style={{ gap: 8, marginBlock: 4, flexDirection: "row", marginBottom:10 }}>
               <DropdownModal
                 label="Selecione um estilo musical"
                 options={categoriaOptions}
@@ -177,14 +221,14 @@ export default function Register({ navigation }) {
             </View>
 
             <TextInput
-              style={styles.inputLogin}
+              style={[styles.inputLogin, { marginBottom:10}]}
               placeholder="Seu E-mail"
               placeholderTextColor="#ccc"
               value={email}
               onChangeText={setEmail}
             />
 
-            <View style={{ gap: 8, marginBlock: 2, flexDirection: "row" }}>
+            <View style={{ gap: 8, marginBlock: 2, flexDirection: "row", marginBottom:10 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "50%" }]}
                 placeholder="Digite Seu @ do Instagram"
@@ -202,7 +246,7 @@ export default function Register({ navigation }) {
               />
             </View>
 
-            <View style={{ gap: 8, flexDirection: "row" }}>
+            <View style={{ gap: 8, flexDirection: "row", marginBottom:10 }}>
               <TextInput
                 style={[styles.inputLogin, { width: "70%" }]}
                 placeholder="Digite seu facebook "
@@ -232,7 +276,10 @@ export default function Register({ navigation }) {
                 padding: 8,
                 color: "white",
               }}
-              onPress={EditProfile}
+              onPress={() => {
+                if(validarForm()){
+                  EditProfile()}
+                }}
             >
               <Text style={{ fontSize: 18, color: "#fff" }}>
                 Editar perfil{" "}

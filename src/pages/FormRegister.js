@@ -114,6 +114,51 @@ export default function FormRegister({ navigation }) {
     }
   };
 
+
+  const validationRegister = ( ) => {
+    switch (step) {
+      case 1: 
+          if(!formData.nome.trim() || !formData.idade.trim() || !formData.preco.trim() || !formData.idCategoria.trim() || !formData.idInstrumento.trim()){
+          Alert.alert("Campos Obrigatórios", "Preencha o seu Nome, idade, Instrumento, Estilo Musical e o seu Preço ")
+          return;
+          } 
+        break;
+
+      case 2: 
+      if(!formData.cep.trim() || !formData.cidade.trim() || !formData.uf.trim()){
+        Alert.alert("Campos obrigatórios", "Preencha o CEP sua cidade e o Estado ")
+        return
+      } 
+      break
+
+      case 3: 
+      if(!formData.whatsapp.trim()){
+        Alert.alert("Campo Obrigatório", "Preencha o seu número de WhatsApp")
+        return
+      }
+      break
+
+      case 4:
+        if (!formData.email.trim() || !formData.senha.trim()) {
+          Alert.alert("Campos obrigatórios", "Preencha e-mail e senha.");
+          return;
+        }
+        if (!isEmailValid(formData.email)) {
+          Alert.alert("E-mail inválido", "Digite um e-mail válido.");
+          return;
+        }
+        if (formData.senha.length < 6) {
+          Alert.alert("Senha fraca", "A senha deve ter pelo menos 6 caracteres.");
+          return;
+        }
+        break;
+    
+  }
+  setStep((s) => s + 1)
+}
+
+
+
   const nextPass = () => {
     if (step < 4) setStep(step + 1);
   };
@@ -181,7 +226,7 @@ export default function FormRegister({ navigation }) {
                value={formData.preco}
                onChangeText={(text) => updateField("preco", formatMoney(text))}
                keyboardType="numeric"
-               maxLength={10}
+               maxLength={12}
                style={styles.inputLogin}
              />
           </>
@@ -496,7 +541,7 @@ export default function FormRegister({ navigation }) {
             {step < 5 && (
               <Button
                 mode="contained"
-                onPress={() => setStep((s) => s + 1)}
+                onPress={validationRegister}
                 style={{
                   backgroundColor: "#6BD2D7",
                   width: "50%",
