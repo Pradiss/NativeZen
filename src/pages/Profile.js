@@ -1,6 +1,6 @@
 
 import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert,ScrollView, TextInput } from "react-native"
+import { View, Text, Image ,Alert,ScrollView, TextInput , Keyboard, KeyboardAvoidingView, Platform} from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
@@ -82,9 +82,11 @@ export default function Profile({navigation}){
     
     
     return(
-
+<KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
-        <View style={{paddingTop:56}}>
+        <View style={{paddingTop:53, gap:8}}>
 
             <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end"}}>
                 <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
@@ -178,14 +180,8 @@ export default function Profile({navigation}){
 
             </View>
 
-
             <View style={{gap:16,}}>
-                <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
-                    <Text style={{fontSize:22,fontWeight:600,}}>Descrição</Text>
-                    <MaterialIcons name="edit-note" size={24} color="#000"
-                      onPress={() => navigation.navigate("")}
-                    />
-                </View>
+                
                 
                 <EditDescription description={users.description}/>
 
@@ -195,5 +191,6 @@ export default function Profile({navigation}){
             <View style={{paddingTop:100}}></View>
         </View>
     </ScrollView>
+    </KeyboardAvoidingView>
     )
 }

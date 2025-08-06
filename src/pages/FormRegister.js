@@ -440,7 +440,7 @@ export default function FormRegister({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         padding: 16,
-        justifyContent: "flex-end",
+        justifyContent: "center",
         flex: 1,
         backgroundColor: "#232323",
       }}
