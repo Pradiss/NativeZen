@@ -41,8 +41,6 @@ export default function ProfileView({ navigation }) {
         return "Pagode";
       case 5:
         return "MPB";
-      case 6:
-        return "DJ";
     }
   };
 

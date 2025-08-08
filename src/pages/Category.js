@@ -43,7 +43,19 @@ export default function Category({navigation}){
         if (isFocused && users.length === 0) {
         LoadingAllData()
     }
-    },[isFocused])
+    },[isFocused])   
+    
+
+    
+    useEffect(() => {
+        if (filtroCategoriaRota) {
+            setFilterCategory(filtroCategoriaRota);
+        }
+
+        if (filtroInstrumentoRota) {
+            setFilterInstrument(filtroInstrumentoRota);
+        }
+    }, [filtroCategoriaRota, filtroInstrumentoRota]);
 
         const FilterUsers = users.filter(user => {
             //filtra por tudo 

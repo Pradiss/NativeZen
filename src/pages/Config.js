@@ -94,9 +94,9 @@ export default function Config({ navigation }) {
         <Text style={styles.textButtonConfig}>Mudar Senha</Text>
       </Pressable>
 
-      <Text style={{ fontSize: 18, fontWeight: 600, marginBlock: 8 }}>
+      {/* <Text style={{ fontSize: 18, fontWeight: 600, marginBlock: 8 }}>
         Mais
-      </Text>
+      </Text> */}
 
       {/* <Pressable onPress={() => navigation.navigate("Language")} style={styles.buttonConfig}>
                <MaterialCommunityIcons color="#000" name ="tooltip-text-outline" size={17}></MaterialCommunityIcons> 
@@ -115,7 +115,7 @@ export default function Config({ navigation }) {
         <Text style={styles.textButtonConfig}>Política de Privacidade </Text>
       </Pressable> */}
 
-      <Pressable
+      {/* <Pressable
         onPress={() => navigation.navigate("Help")}
         style={styles.buttonConfig}
       >
@@ -125,7 +125,7 @@ export default function Config({ navigation }) {
           size={17}
         ></MaterialCommunityIcons>
         <Text style={styles.textButtonConfig}>Suporte </Text>
-      </Pressable>
+      </Pressable> */}
 
       <Pressable
         onPress={logout}

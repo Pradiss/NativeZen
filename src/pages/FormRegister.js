@@ -77,7 +77,8 @@ export default function FormRegister({ navigation }) {
         whatsapp: cleanPhone(formData.whatsapp)
       };
       const response = await axios.post(
-        "https://erick5457.c44.integrator.host/api/register",dataToSend,
+        "https://erick5457.c44.integrator.host/api/register",
+        dataToSend,
         {
           headers: {
             "Content-Type": "application/json",
@@ -440,7 +441,7 @@ export default function FormRegister({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{
         padding: 16,
-        justifyContent: "center",
+        justifyContent: "flex-end",
         flex: 1,
         backgroundColor: "#232323",
       }}

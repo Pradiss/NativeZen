@@ -37,7 +37,7 @@ export default function Profile({navigation}){
             case 3: return "Rock";
             case 4: return "Pagode";
             case 5: return "MPB";
-            case 6: return "DJ";
+            
         }
         
     }
@@ -73,8 +73,6 @@ export default function Profile({navigation}){
             }
             
         }
-
-        
         if(isFocused)
             LoadingUsers()
             LoadingCategory()

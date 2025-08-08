@@ -5,7 +5,7 @@ export const categoriaOptions =
   { label: "Rock", value: "3" },
   { label: "Pagode", value: "4" },
   { label: "MPB", value: "5" },
-  { label: "DJ", value: "6" },
+  
 ]
 
 export const instrumentoOptions = 

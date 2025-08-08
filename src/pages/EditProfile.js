@@ -26,6 +26,7 @@ import {
 } from "../utils/ArraysCategory";
 
 
+
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
