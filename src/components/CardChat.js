@@ -1,58 +1,51 @@
-
-import React, { useState, useEffect } from "react"
-import { View, Text, Image, TouchableOpacity } from "react-native"
-import styles from "./Style"
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import styles from "./Style";
+import { Avatar } from "react-native-paper";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { apiUsers } from "../service.js/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CardChat({ item, navigation }) {
+  return (
+     <TouchableOpacity onPress={() => navigation.navigate("ResultExtrato")}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginBlock: 18,
+          gap: 10,
+        }}>
 
+        <Avatar.Image
+          size={50}
+          source={require("../asset/avatar.png")}
+          style={{ alignSelf: "flex-start", backgroundColor: "#232323" }}
+        />
 
-    return (
-        <TouchableOpacity  >
+        <View style={{ flex: 1, gap: 4 }}>
+          <Text style={{ fontSize: 18, fontWeight: 600 }}>
+            {item.enviou_id}
+          </Text>
+          <Text style={{ fontSize: 16, color: "#555" }}>
+            {item.recebedor_name}
+          </Text>
+        </View>
 
-            <View style={{
-                flexDirection: "row", alignItems: "center",
-                backgroundColor: "#fff", borderRadius: 28, marginBlock: 8, padding: 6, marginHorizontal: 12,
-                backgroundColor: "white",
-                shadowColor: "#000",
-                shadowOffset: { width: 1, height: 2 },
-                shadowOpacity: 0.16,
-                shadowRadius: 3,
-                elevation: 5,
-            }}>
-                <Image
-                    source={require("../asset/avatar.png")}
-                    style={{ width: 100, height: 100, borderRadius: 22 }}
-                    resizeMode="cover"
+        <View style={{flex:1, alignItems: "flex-end"  ,gap:8}}>
+        
+          <Text style={{ color: "#000", fontSize: 16 }}>{item.data_envio}</Text>
+        </View>
+      </View>
+      <View
+        style={{
+          borderBottomColor: "#ccc",
+          borderBottomWidth: 1,
+          marginVertical: 10,
+        }}
+      />
 
-                />
-                <View style={{ padding: 16, justifyContent: "center", flexDirection: "row", alignContent: "flex-end" }}>
-                    <View>
-                        <Text style={{ fontSize: 22, color: "#232323", fontWeight: 600 }}>{item.nome}</Text>
-                        <Text style={styles.textEndress}><MaterialCommunityIcons name="google-maps" size={20} />{item.enviou_id}</Text>
-
-                        <View style={{ flexDirection: "row" }}>
-
-                            <Text style={styles.textEndress}>
-                                <MaterialCommunityIcons name="guitar-acoustic" size={20} color="#000">
-                                </MaterialCommunityIcons>{item.recebeu_id}
-                            </Text>
-
-                        </View>
-                    </View>
-
-                </View>
-
-                <View style={{ flex: 1, alignItems: "flex-end", padding: 4, marginTop: 70 }}>
-                    <MaterialCommunityIcons
-                        style={{ backgroundColor: "#6BD2D7", borderRadius: 30, padding: 3 }}
-                        name="arrow-top-right"
-                        size={15} color="#000"
-                    />
-                </View>
-
-            </View>
-        </TouchableOpacity>
-    )
+    
+    </TouchableOpacity>
+  );
 }
