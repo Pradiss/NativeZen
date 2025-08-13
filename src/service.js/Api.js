@@ -26,3 +26,12 @@ export const apiCategorias = axios.create({
 export const apiInstrumento = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/instrumento"
 })
+
+export const apiMessageReceive = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/mensagens/recebidas"
+})
+
+export const apiMessageSender = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/mensagens/enviadas"
+})
+

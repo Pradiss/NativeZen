@@ -24,6 +24,7 @@ export default function Home({navigation}){
     useEffect(() => {
          const LoadingUsers = async () =>{
         try{
+            
             const res = await axios.get("https://erick5457.c44.integrator.host/api/usuarios")
             setUsers(res.data)
 
