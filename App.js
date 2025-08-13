@@ -23,6 +23,7 @@ import ScreenInicial from "./src/pages/ScreenInicial";
 import FormRegister from "./src/pages/FormRegister";
 import ChangePhoto from "./src/pages/ChangePhoto";
 import EditDescription from "./src/components/EditDescription";
+import { ScreenChat } from "./src/pages/ScreenChat";
 
 const Tab = createBottomTabNavigator();
 
@@ -74,7 +75,6 @@ function MainTabs() {
   );
 }
 
-
 export default function App() {
 
 
@@ -91,7 +91,7 @@ export default function App() {
             <Stack.Screen name="Splash" component={Splash}  />
             <Stack.Screen name="Change Password" component={ChangePassword}  />
             <Stack.Screen name="MainTabs" component={MainTabs} />
-            <Stack.Screen name="Notification" component={Notification} options={{headerShown:true}} />
+            <Stack.Screen name="Notification" component={Notification} options={{headerShown:true , title:"Notificações"}}  />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ProfileDetails"  component={ProfileView}  />
             <Stack.Screen name="Editar Perfil" component={EditProfile} options={{headerShown:true}} />
@@ -102,6 +102,7 @@ export default function App() {
             <Stack.Screen name="EditDescription" component={EditDescription}/>
             <Stack.Screen name="ScreenInicial" component={ScreenInicial} />
             <Stack.Screen name="FormRegister" component={FormRegister} />
+            <Stack.Screen name="ScreenChat" component={ScreenChat}  />
             
           </Stack.Navigator>
         </NavigationContainer>

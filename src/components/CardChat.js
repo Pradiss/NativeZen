@@ -3,38 +3,55 @@ import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import styles from "./Style";
 import { Avatar } from "react-native-paper";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { apiUsers } from "../service.js/Api";
+import { apiMessageReceive, apiUsers } from "../service.js/Api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { formatarDataOuHora } from "../utils/mask";
 
 export default function CardChat({ item, navigation }) {
+
+  const [users,setUsers] = useState()
+
+  const LoadingUsers = async () =>{
+    try{
+      const idUsuario = await AsyncStorage.getItem("idUsuario")
+      const res = await apiUsers.get(`/${idUsuario}`)
+      setUsers(res.data)
+    }catch(e){
+      Alert.alert("Erro ao carregar usuario", e.message)
+    }
+  }
+
+  useEffect(()=>{
+    LoadingUsers()
+  },[])
+  
   return (
-     <TouchableOpacity onPress={() => navigation.navigate("ResultExtrato")}>
+     <TouchableOpacity onPress={() => navigation.navigate("ScreenChat",{idMensagens : item.idMensagens})}>
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
-          marginBlock: 18,
-          gap: 10,
+          marginBlock: 16,
+          gap: 12,
         }}>
 
         <Avatar.Image
           size={50}
-          source={require("../asset/avatar.png")}
+          source={users?.foto ? { uri: users?.foto } : require("../asset/avatar.png")}
           style={{ alignSelf: "flex-start", backgroundColor: "#232323" }}
         />
 
-        <View style={{ flex: 1, gap: 4 }}>
+        <View style={{ flex: 1, gap: 8 }}>
           <Text style={{ fontSize: 18, fontWeight: 600 }}>
             {item.enviou_id}
           </Text>
-          <Text style={{ fontSize: 16, color: "#555" }}>
-            {item.recebedor_name}
-          </Text>
+          <Text style={{ color: "#000", fontSize: 14 }}>{item.texto.split(" ").slice(0, 5).join(" ")}</Text>
+          
         </View>
 
         <View style={{flex:1, alignItems: "flex-end"  ,gap:8}}>
         
-          <Text style={{ color: "#000", fontSize: 16 }}>{item.data_envio}</Text>
+          <Text style={{ color: "#000", fontSize: 16 }}>{formatarDataOuHora(item.data_envio)}</Text>
         </View>
       </View>
       <View

@@ -16,7 +16,7 @@ export default function Chat({ navigation }) {
     try {
       const token = await AsyncStorage.getItem("token");
       const idUsuario = await AsyncStorage.getItem("idUsuario");
-      const res = await apiMessageReceive.get(`/${idUsuario}`);
+      const res = await apiMessageSender.get(`/${idUsuario}`);
 
       setChat(res.data);
     } catch (e) {
@@ -51,7 +51,7 @@ export default function Chat({ navigation }) {
       />
 
       <FlatList
-        data={chat.slice(0, 4)}
+        data={chat.slice(0, 4).reverse()}
         keyExtractor={(item) => item.idMensagens.toString()}
         renderItem={({ item }) => {
           return <CardChat item={item} navigation={navigation} />;

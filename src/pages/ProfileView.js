@@ -178,7 +178,7 @@ export default function ProfileView({ navigation }) {
               alignSelf: "center",
               width: "100%",
             }}
-            onPress={() => navigation.navigate("Chat")}
+           onPress={() => navigation.navigate("ScreenChat", { idUsuario })}
           >
             Envie uma mensagem
           </Button>

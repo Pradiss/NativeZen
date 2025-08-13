@@ -1,0 +1,38 @@
+import React, { useState } from 'react';
+import { View, TextInput } from 'react-native';
+import { Button } from 'react-native-paper';
+import styles from './Style';
+
+export default function InputMessage({ onSend }) {
+    const [message, setMessage] = useState('');
+
+    const SendMessage = () => {
+        if (message.trim().length === 0) return;
+        onSend(message);
+        setMessage('');
+    };
+
+    return (
+        <View style={{ flexDirection: 'row', padding: 8, alignItems: 'center' ,gap:8}}>
+            <TextInput
+                style={{
+                    flex: 1,                   
+                    height: 47,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 16,
+                    borderRadius: 18,
+                    borderWidth: 1,
+                    borderColor: "#c7c7c7",
+                }}
+                placeholder='Envie uma mensagem'
+                value={message}
+                onChangeText={setMessage}
+
+            />
+
+            <Button mode="contained" onPress={SendMessage} style={{backgroundColor:"black",padding:5}}>
+                Enviar
+            </Button>
+        </View>
+    );
+}

@@ -137,13 +137,7 @@ export default function Profile({navigation}){
 
             <View style={{paddingTop:16, gap:16}}>
                 <Text style={{fontSize:28,fontWeight:700}}>{formatReais(users.preco)}</Text>
-                <Button icon="chat-outline" mode="contained" 
-                style={{backgroundColor:"black",
-                    paddingVertical: 4, paddingHorizontal: 16, 
-                    alignSelf: "center",  width: "100%"                    
-                }}
-                onPress={() => navigation.navigate("Chat")}
-                >Envie uma mensagem</Button>
+                
             </View>
                
             <View style={{

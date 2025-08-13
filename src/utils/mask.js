@@ -65,3 +65,34 @@ export const formatReais = (value) => {
     minimumFractionDigits: 2
   });
 };
+
+
+export const formatarDataOuHora = (dataISO) => {
+  const dataMensagem = new Date(dataISO);
+  const agora = new Date();
+
+  // Data atual sem hora
+  const dataHoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+  // Data da mensagem sem hora
+  const dataMsgSemHora = new Date(dataMensagem.getFullYear(), dataMensagem.getMonth(), dataMensagem.getDate());
+
+  const diffMs = dataHoje - dataMsgSemHora;
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDias === 0) {
+    // Hoje: mostra só hora
+    return dataMensagem.toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  } else if (diffDias === 1) {
+    // Ontem
+    return "Ontem";
+  } else if (diffDias > 1 && diffDias <= 7) {
+    // Até 7 dias atrás
+    return `Há ${diffDias} dias`;
+  } else {
+    // Mais que 7 dias: mostra data completa
+    return dataMensagem.toLocaleDateString("pt-BR");
+  }
+}
