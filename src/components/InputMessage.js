@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { Button } from 'react-native-paper';
-import styles from './Style';
+
 
 export default function InputMessage({ onSend }) {
     const [message, setMessage] = useState('');

@@ -16,7 +16,7 @@ export default function Chat({ navigation }) {
     try {
       const token = await AsyncStorage.getItem("token");
       const idUsuario = await AsyncStorage.getItem("idUsuario");
-      const res = await apiMessageSender.get(`/${idUsuario}`);
+      const res = await apiMessageReceive.get(`/${idUsuario}`);
 
       setChat(res.data);
     } catch (e) {
@@ -26,7 +26,7 @@ export default function Chat({ navigation }) {
 
   const LoadingUsers = async () => {
     try {
-      const idUsuario = await AsyncStorage("idUsuario");
+      const idUsuario = await AsyncStorage.getItem("idUsuario");
       const res = await apiUsers.get(`/${idUsuario}`);
       setUsers(res.data);
     } catch (e) {
@@ -41,6 +41,18 @@ export default function Chat({ navigation }) {
     }
   }, [isFocused]);
 
+ const mensagensFiltradas = [];
+  chat.forEach((msg) => {
+    const existe = mensagensFiltradas.find(
+      (m) => m.enviou_id === msg.enviou_id
+    );
+    if (!existe) {
+      mensagensFiltradas.push(msg);
+    }
+  });
+
+
+
   return (
     <View style={{paddingHorizontal:16,paddingTop:56}}>
       <TextInput
@@ -51,7 +63,7 @@ export default function Chat({ navigation }) {
       />
 
       <FlatList
-        data={chat.slice(0, 4).reverse()}
+        data={mensagensFiltradas.slice(0, 4).reverse()}
         keyExtractor={(item) => item.idMensagens.toString()}
         renderItem={({ item }) => {
           return <CardChat item={item} navigation={navigation} />;

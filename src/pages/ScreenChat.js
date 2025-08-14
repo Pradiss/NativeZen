@@ -18,7 +18,7 @@ export function ScreenChat({ route, navigation }) {
 
   const loadMessages = async () => {
     try {
-      const res = await apiMessageReceive.get(`/${idMensagens}`);
+      const res = await apiMessageReceive.get(`/${recebeu_id}`);
       setMessages(res.data);
     } catch (e) {
       console.log("Erro ao carregar mensagens", e.message);
@@ -27,40 +27,18 @@ export function ScreenChat({ route, navigation }) {
 
   useEffect(() => {
     loadMessages();
-  }, [idMensagens]);
-
-  const sendMessage = async (text) => {
-  try {
-    if (!text.trim()) return;
-
-    // Pegue os IDs do AsyncStorage ou da rota
-    const enviou_id = await AsyncStorage.getItem("idUsuario"); // Exemplo: usuário logado
-    const recebeu_id = route.params.recebeu_id; // Ou pegue da rota ou contexto
-
-    await apiMessageSend.post("/", {
-      idMensagens,
-      enviou_id: Number(enviou_id),
-      recebeu_id: Number(recebeu_id),
-      texto: text,
-    });
-
-    await loadMessages(); // recarrega as mensagens
-  } catch (e) {
-    console.log("Erro ao enviar mensagem", e.message);
-  }
-};
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        
       >
         <View style={{ flex: 1 }}>
           <FlatList
             data={messages}
-            keyExtractor={(item) => item.idMensagens.toString()}
+            keyExtractor={(item) => item.recebeu_id.toString()}
             renderItem={({ item }) => (
               <View style={{ marginVertical: 8 }}>
                 <Text>{item.texto}</Text>
@@ -75,10 +53,8 @@ export function ScreenChat({ route, navigation }) {
           />
         </View>
 
-        
         <View
           style={{
-            
             borderTopWidth: 1,
             borderColor: "#ccc",
             paddingVertical: 12,
@@ -86,7 +62,7 @@ export function ScreenChat({ route, navigation }) {
             backgroundColor: "#fff",
           }}
         >
-          <InputMessage onSend={sendMessage} />
+          <InputMessage />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

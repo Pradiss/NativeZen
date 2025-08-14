@@ -9,21 +9,32 @@ import { formatarDataOuHora } from "../utils/mask";
 
 export default function CardChat({ item, navigation }) {
 
-  const [users,setUsers] = useState()
+  const [users,setUsers] = useState(null)
+  const [iduser, setIdUser] = useState(null)
 
   const LoadingUsers = async () =>{
     try{
-      const idUsuario = await AsyncStorage.getItem("idUsuario")
-      const res = await apiUsers.get(`/${idUsuario}`)
+      
+      const res = await apiUsers.get(`/${item.enviou_id}`)
       setUsers(res.data)
     }catch(e){
       Alert.alert("Erro ao carregar usuario", e.message)
     }
   }
 
+  const loadUser = async () => {
+      const id = await AsyncStorage.getItem("idUsuario")
+      setIdUser(id)
+  }
+  
   useEffect(()=>{
-    LoadingUsers()
-  },[])
+    if(item?.enviou_id){
+      loadUser()
+      LoadingUsers()
+
+    }
+  },[item.enviou_id])
+
   
   return (
      <TouchableOpacity onPress={() => navigation.navigate("ScreenChat",{idMensagens : item.idMensagens})}>
@@ -43,7 +54,8 @@ export default function CardChat({ item, navigation }) {
 
         <View style={{ flex: 1, gap: 8 }}>
           <Text style={{ fontSize: 18, fontWeight: 600 }}>
-            {item.enviou_id}
+            {iduser && item.enviou_id === iduser ? "Você" : users?.nome  || "Usuario " }
+
           </Text>
           <Text style={{ color: "#000", fontSize: 14 }}>{item.texto.split(" ").slice(0, 5).join(" ")}</Text>
           
@@ -61,8 +73,6 @@ export default function CardChat({ item, navigation }) {
           marginVertical: 10,
         }}
       />
-
-    
     </TouchableOpacity>
   );
 }
