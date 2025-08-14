@@ -28,10 +28,9 @@ export default function CardChat({ item, navigation }) {
   }
   
   useEffect(()=>{
-    if(item?.enviou_id){
+    if(item.enviou_id){
       loadUser()
       LoadingUsers()
-
     }
   },[item.enviou_id])
 
@@ -47,9 +46,10 @@ export default function CardChat({ item, navigation }) {
         }}>
 
         <Avatar.Image
-          size={50}
+          size={65}
           source={users?.foto ? { uri: users?.foto } : require("../asset/avatar.png")}
           style={{ alignSelf: "flex-start", backgroundColor: "#232323" }}
+          imageStyle={{ resizeMode: "cover"}}
         />
 
         <View style={{ flex: 1, gap: 8 }}>
@@ -57,7 +57,7 @@ export default function CardChat({ item, navigation }) {
             {iduser && item.enviou_id === iduser ? "Você" : users?.nome  || "Usuario " }
 
           </Text>
-          <Text style={{ color: "#000", fontSize: 14 }}>{item.texto.split(" ").slice(0, 5).join(" ")}</Text>
+          <Text style={{ color: "#000", fontSize: 14 }}>{item.texto.split(" ").slice(0, 4).join(" ")}</Text>
           
         </View>
 

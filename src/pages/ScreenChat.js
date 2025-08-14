@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import styles from "../components/Style";
 import InputMessage from "../components/InputMessage";
@@ -21,7 +22,7 @@ export function ScreenChat({ route, navigation }) {
       const res = await apiMessageReceive.get(`/${recebeu_id}`);
       setMessages(res.data);
     } catch (e) {
-      console.log("Erro ao carregar mensagens", e.message);
+      Alert.alert("Erro ao carregar mensagens", e.message);
     }
   };
 
@@ -32,17 +33,27 @@ export function ScreenChat({ route, navigation }) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={{ flex: 1 }}>
+
+          <View style={{
+              paddingVertical: 8,
+              paddingHorizontal: 8,
+              backgroundColor: "#fff",
+            }}>
+
+            <Text>{messages.recebeu_id}</Text>
+          </View>
+
           <FlatList
             data={messages}
             keyExtractor={(item) => item.recebeu_id.toString()}
             renderItem={({ item }) => (
               <View style={{ marginVertical: 8 }}>
                 <Text>{item.texto}</Text>
-                <Text style={{ fontSize: 12, color: "#999" }}>
+                <Text style={{ fontSize: 12, color: "#fff" }}>
                   {item.data_envio}
                 </Text>
               </View>
@@ -55,9 +66,7 @@ export function ScreenChat({ route, navigation }) {
 
         <View
           style={{
-            borderTopWidth: 1,
-            borderColor: "#ccc",
-            paddingVertical: 12,
+            paddingVertical: 8,
             paddingHorizontal: 8,
             backgroundColor: "#fff",
           }}
