@@ -36,7 +36,11 @@ export default function CardChat({ item, navigation }) {
 
   
   return (
-     <TouchableOpacity onPress={() => navigation.navigate("ScreenChat",{idMensagens : item.idMensagens})}>
+     <TouchableOpacity onPress={() => navigation.navigate("ScreenChat",{
+      idMensagens: item.idMensagens,
+      recebeu: item.recebeu_id,
+      enviou: item.enviou_id
+     })}>
       <View
         style={{
           flexDirection: "row",

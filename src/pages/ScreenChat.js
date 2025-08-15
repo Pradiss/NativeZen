@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   Alert,
+  ScrollView
 } from "react-native";
 import styles from "../components/Style";
 import InputMessage from "../components/InputMessage";
@@ -14,48 +15,32 @@ import { apiMessageReceive, apiMessageSender, apiUsers } from "../service.js/Api
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
+import { formatarDataOuHora } from "../utils/mask";
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+
 
 export function ScreenChat({ route, navigation }) {
-  const { idMensagens } = route.params;
+  const { idMensagens, enviou, recebeu } = route.params;
 
-  const [iduser, setIdUser] = useState("")
+  const [iduser, setIdUser] = useState(null)
   const [messages, setMessages] = useState([]);
   const isFocused = useIsFocused()
 
   const loadMessages = async () => {
     try {
-      const recebeu_id = await AsyncStorage.getItem("idUsuario")
-      const res = await apiMessageReceive.get(`/${recebeu_id}`);
+      
+      const res = await apiMessageReceive.get(`/${idMensagens}`);
       setMessages(res.data);
     } catch (e) {
       Alert.alert("Erro ao carregar mensagens", e.message);
     }
   };
 
-  const loadSender = async () => {
-    try {
-      const idUsuario = await AsyncStorage.getItem("idUsuario")
-      const res = await apiMessageSender.get(`/${idUsuario}`)
-      setMessages(res.data)
-    } catch (e) {
-      Alert.alert("Erro ao carregar mensagem", e.message)
-    }
-  }
 
-  const loadUsers = async () =>{
-    try{
-      const idUsuario = await AsyncStorage.getItem("idUsuario")
-      const res = await apiUsers.get(`/${idUsuario}`)
-      setIdUser(res.data)
-    }catch(e){
-      Alert.alert("Erro ao carregar usuario", e.message)
-    }
-  }
 
   useEffect(() => {
     if (isFocused) {
-      loadSender()
-      loadUsers()
+     
       loadMessages();
     }
   }, [isFocused]);
@@ -67,25 +52,37 @@ export function ScreenChat({ route, navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={{ flex: 1 }}>
-
           <View style={{
+            flexDirection:"row",
+            gap:16,
+            justifyContent:"center",
+            alignItems:"center",
             paddingVertical: 8,
             paddingHorizontal: 8,
+            borderEndEndRadius: 16,
+            borderBottomLeftRadius: 16,
             backgroundColor: "#fff",
           }}>
+            <View>
+
+            <MaterialCommunityIcons 
+            name="arrow-left" 
+            size={25} color="#000" onPress={()=> navigation.navigate("MainTabs",{screen: "Chat"})}/> 
+
+            
+            </View>
+
             <Avatar.Image
-              size={65}
+              size={40}
               source={ require("../asset/avatar.png")}
               style={{ alignSelf: "flex-start", backgroundColor: "#232323" }}
               imageStyle={{ resizeMode: "cover" }}
             />
 
-            <View style={{ flex: 1, gap: 8 }}>
+            <View style={{ flex: 1, gap: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: 600 }}>
-                {iduser && messages.recebeu_id === iduser ? "Você" : iduser?.nome || "Usuario "}
-
-              </Text>
-              <Text style={{ color: "#000", fontSize: 14 }}>{messages.texto}</Text>
+                {messages.nome}</Text>
+              
 
             </View>
             
@@ -95,16 +92,18 @@ export function ScreenChat({ route, navigation }) {
             data={messages}
             keyExtractor={(item) => item.idMensagens.toString()}
             renderItem={({ item }) => (
+              <ScrollView >
+              <View style={{ marginVertical: 8, paddingHorizontal:16, backgroundColor:"#fff", borderRadius:16, padding:8, gap:4}}>
 
-              <View style={{ marginVertical: 8 }}>
-
-                <Text>{item.enviou_id}</Text>
-                <Text>{item.recebeu_id}</Text>
+                <Text style={{fontSize:16,fontWeight:600}}>{item.recebeu_id}</Text>
                 <Text>{item.texto}</Text>
-                <Text style={{ fontSize: 12, color: "#fff" }}>
-                  {item.data_envio}
-                </Text>
+
+                  <View style={{alignItems:"flex-end"}}>
+                    <Text style={{ fontSize: 12}}>{formatarDataOuHora(item.data_envio)} </Text>
+                  </View>
+               
               </View>
+              </ScrollView>
             )}
 
             keyboardShouldPersistTaps="handled"

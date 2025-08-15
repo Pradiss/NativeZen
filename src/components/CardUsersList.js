@@ -3,8 +3,8 @@ import { View, Text, Image, Alert, TouchableOpacity} from "react-native"
 import styles from "./Style"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-export default function CardUsersList({item, navigation}){
 
+export default function CardUsersList({item, navigation}){
 
     const instrumento = (idInstrumento) =>{
         switch(idInstrumento){
@@ -25,21 +25,19 @@ export default function CardUsersList({item, navigation}){
             case 5: return "MPB";
             
         }
-        
     }
-    
     
     return(
     <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
 
         <View style={{flexDirection:"row", alignItems:"center",
-         backgroundColor:"#fff", borderRadius:28, marginBlock:8, padding:6, marginHorizontal:12,
-        backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.16,
-    shadowRadius: 3,
-    elevation: 5,
+            backgroundColor:"#fff", borderRadius:28, marginBlock:8, padding:6, marginHorizontal:12,
+            backgroundColor: "white",
+            shadowColor: "#000",
+            shadowOffset: { width: 1, height: 2 },
+            shadowOpacity: 0.16,
+            shadowRadius: 3,
+            elevation: 5,
         }}>
             <Image
                  source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}
