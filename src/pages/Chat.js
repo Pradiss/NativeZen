@@ -1,67 +1,51 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useIsFocused } from "@react-navigation/native"
-import React, { useState, useEffect } from "react"
-import { View, Text, FlatList, Alert, TextInput } from "react-native"
-import { apiMessageAll, apiMessageReceive, apiMessageSender } from "../service.js/Api"
-import styles from "../components/Style"
-import CardChat from "../components/CardChat"
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, TextInput, FlatList, Alert } from "react-native";
+import { apiMessageAll } from "../service.js/Api";
+import styles from "../components/Style";
+import CardChat from "../components/CardChat";
 
 export default function Chat({ navigation }) {
-  const [chat, setChat] = useState([])
-  const [search, setSearch] = useState("")
-  const isFocused = useIsFocused()
-  
+  const [chat, setChat] = useState([]);
+  const [search, setSearch] = useState("");
+  const isFocused = useIsFocused();
 
-  const loadChat = async () => {
-  try {
-    const idUsuario = await AsyncStorage.getItem("idUsuario");
-    const token = await AsyncStorage.getItem("token");
+  const loadMessages = useCallback(async () => {
+    try {
+      const idUsuario = await AsyncStorage.getItem("idUsuario");
+      const { data } = await apiMessageAll.get(`/${idUsuario}`);
+      setChat(data.reverse());
+    } catch (e) {
+      Alert.alert("Erro ao carregar mensagens", e.message);
+    }
+  }, []);
 
-    const [recebidasRes, enviadasRes] = await Promise.all([
-      apiMessageReceive.get(`/${idUsuario}`, { headers: { Authorization: `Bearer ${token}` } }),
-      apiMessageSender.get(`/${idUsuario}`, { headers: { Authorization: `Bearer ${token}` } }),
-    ]);
-
-    const todasMensagens = [...recebidasRes.data, ...enviadasRes.data];
-    setChat(todasMensagens);
-  } catch (e) {
-    Alert.alert("Erro ao carregar chat", e.message);
-  }
-}
   useEffect(() => {
     if (isFocused) {
-      loadChat()
+      loadMessages();
     }
-  }, [isFocused])
+  }, [isFocused, loadMessages]);
 
- const mensagensFiltradas = []
-  chat.forEach((msg) => {
-    const existe = mensagensFiltradas.find(
-      (m) => m.enviou_id === msg.enviou_id
-    );
-    if (!existe) {
-      mensagensFiltradas.push(msg)
-    }
-  });
+  const renderItem = ({ item }) => (
+    <CardChat item={item} navigation={navigation} />
+  );
 
   return (
-    <View style={{paddingHorizontal:16,paddingTop:56}}>
-
+    <View style={{ paddingHorizontal: 16, paddingTop: 56 }}>
       <TextInput
-        style={[styles.input, { width: "95%", }]}
+        style={[styles.input, { width: "95%" }]}
         placeholder="Buscar chat"
         value={search}
         onChangeText={setSearch}
       />
 
       <FlatList
-        data={mensagensFiltradas.slice(0, 4).reverse()}
+        data={chat}
         keyExtractor={(item) => item.idMensagens.toString()}
-        renderItem={({ item }) => {
-          return <CardChat item={item} navigation={navigation} />
-        }}
-        contentContainerStyle={{ paddingBottom: 100, marginTop:16,}}
-        ListFooterComponent={<View style={{ height: 80 }} ListEmptyComponent={null} />}
+        renderItem={renderItem}
+        contentContainerStyle={{ paddingBottom: 100, marginTop: 16 }}
+        ListFooterComponent={<View style={{ height: 80 }} />}
       />
     </View>
   );

@@ -1,9 +1,30 @@
 import React, { useState } from "react";
-import { View, TextInput } from "react-native";
+import { View, TextInput, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
+import { apiSendMessage } from "../service.js/Api";
 
-export default function InputMessage({ onSend }) {
+export default function InputMessage({ receiverId, loadMessages }) {
   const [message, setMessage] = useState("");
+
+  const SendMessage = async () => {
+    if (!message.trim()) return;
+
+    try {
+      const userId = await AsyncStorage.getItem("idUsuario");
+
+      await apiSendMessage.post("/", {
+        enviou_id: userId,
+        recebeu_id: receiverId,
+        texto: message,
+      });
+
+      setMessage("");
+      loadMessages(); // Atualiza a lista após enviar
+    } catch (e) {
+      Alert.alert("Erro ao enviar mensagem", e.message);
+    }
+  };
 
   return (
     <View
@@ -23,7 +44,11 @@ export default function InputMessage({ onSend }) {
         value={message}
         onChangeText={setMessage}
       />
-      <Button mode="contained" style={{ backgroundColor: "black", padding: 5 }}>
+      <Button
+        mode="contained"
+        style={{ backgroundColor: "black", padding: 5 }}
+        onPress={SendMessage}
+      >
         Enviar
       </Button>
     </View>

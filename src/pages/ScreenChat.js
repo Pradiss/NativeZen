@@ -18,14 +18,23 @@ import { formatarDataOuHora } from "../utils/mask";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export function ScreenChat({ route, navigation }) {
-  const { idMensagens, enviou, recebeu } = route.params;
+  const { enviou, recebeu } = route.params;
 
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [usuarios, setUsuarios] = useState({});
   const isFocused = useIsFocused();
 
-  // Função para buscar usuário com cache
+  // buscar id do usuário logado
+  useEffect(() => {
+    const getUserId = async () => {
+      const userId = await AsyncStorage.getItem("idUsuario");
+      setIdUser(userId);
+    };
+    getUserId();
+  }, []);
+
+  // Buscar usuário com cache
   const getUsuario = async (id) => {
     if (usuarios[id]) return usuarios[id];
     try {
@@ -38,27 +47,33 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-  // Carregar mensagens
+  // Carregar mensagens do chat
   const loadMessages = async () => {
     try {
       const res = await apiMessage.get("/", {
         params: { enviou_id: enviou, recebeu_id: recebeu },
       });
       setMessages(res.data);
+      // carrega os dados dos dois usuários (remetente e destinatário)
+      getUsuario(enviou);
+      getUsuario(recebeu);
     } catch (e) {
       Alert.alert("Erro ao carregar mensagens", e.message);
     }
   };
 
-  // Polling seguro
+  // Polling
   useEffect(() => {
     let interval;
     if (isFocused) {
       loadMessages();
-      interval = setInterval(loadMessages, 15000); // 15s
+      interval = setInterval(loadMessages, 15000);
     }
     return () => clearInterval(interval);
   }, [isFocused]);
+
+  // id da outra pessoa (para mostrar no topo)
+  const otherId = iduser == enviou ? recebeu : enviou;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -66,7 +81,7 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {/* Cabeçalho */}
+        {/* Header */}
         <View
           style={{
             flexDirection: "row",
@@ -89,13 +104,11 @@ export function ScreenChat({ route, navigation }) {
             size={40}
             source={require("../asset/avatar.png")}
             style={{ backgroundColor: "#232323" }}
-            imageStyle={{ resizeMode: "cover" }}
           />
 
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              {/* Mostra nome do outro usuário */}
-              {usuarios[recebeu]?.nome || "Usuário"}
+              {usuarios[otherId]?.nome || "Usuário"}
             </Text>
           </View>
         </View>
@@ -111,10 +124,12 @@ export function ScreenChat({ route, navigation }) {
                 padding: 12,
                 paddingHorizontal: 16,
                 borderRadius: 16,
-                backgroundColor: item.enviou_id === iduser ? "#DCF8C6" : "#fff",
+                backgroundColor:
+                  item.enviou_id == iduser ? "#DCF8C6" : "#fff",
+                alignSelf:
+                  item.enviou_id == iduser ? "flex-end" : "flex-start",
               }}
             >
-              <Text style={{ fontWeight: "600" }}>{item.enviou_id}</Text>
               <Text>{item.texto}</Text>
               <View style={{ alignItems: "flex-end" }}>
                 <Text style={{ fontSize: 12 }}>
@@ -123,12 +138,16 @@ export function ScreenChat({ route, navigation }) {
               </View>
             </View>
           )}
-          contentContainerStyle={{ paddingBottom: 10 }}
+          contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
         />
 
-        {/* Input */}
+        {/* input */}
         <View style={{ padding: 8, backgroundColor: "#fff" }}>
-          <InputMessage loadMessages={loadMessages} />
+          <InputMessage
+            iduser={iduser}
+            recebeu={otherId}
+            loadMessages={loadMessages}
+          />
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
