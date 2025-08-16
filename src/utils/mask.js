@@ -43,28 +43,25 @@ export const formatUF = (value) =>
     .toUpperCase() 
     .slice(0, 2);
 
-export const formatMoney = (value) => {
-   const numericValue = value.replace(/\D/g, ""); // Remove tudo que não é número
-
-  const number = (Number(numericValue) / 100).toFixed(2); // Divide por 100 para centavos
-
-return "R$ " + number
-  .replace(".", ",")
-  .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
-
 export const formatReais = (value) => {
-  // Converte para número (caso seja string)
-  const number = Number(value) || 0;
-  
-  // Formata como moeda brasileira
-  return number.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    minimumFractionDigits: 2
-  });
+  if (!value) return "R$ 0";
+  const numericValue = Number(value); // garante que seja número
+  return "R$ " + numericValue.toLocaleString("pt-BR");
 };
+
+
+export const formatReaisInteiro = (value) => {
+  // remove tudo que não é número
+  const numericValue = value.replace(/\D/g, "");
+
+  if (!numericValue) return ;
+
+  // formata para reais sem centavos
+  return "R$ " + Number(numericValue).toLocaleString("pt-BR");
+};
+
+
+
 
 
 export const formatarDataOuHora = (dataISO) => {

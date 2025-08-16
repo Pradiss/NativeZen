@@ -16,7 +16,7 @@ export default function CardInstrument({ item, navigation }) {
       <View>
         <View style={{ flex: 1, alignItems: "center" }}>
           <Image
-            source={require("../asset/instrumento.jpg")}
+            source={{ uri: item.foto }}
             style={{
               width: 80,
               height: 80,

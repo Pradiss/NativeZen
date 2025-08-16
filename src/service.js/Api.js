@@ -31,7 +31,25 @@ export const apiMessageReceive = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/mensagens/recebidas"
 })
 
+
 export const apiMessageSender = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/mensagens/enviadas"
 })
 
+
+export const apiMessage = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/message"
+})
+export const apiMessageAll = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/mesage"
+})
+
+
+  // useEffect(() => {
+  //   let interval
+  //   if (isFocused) {
+  //   LoadingChat()
+  //   interval = setInterval(LoadingChat, 5000)
+  // }
+  // return () => clearInterval(interval);
+  // }, [isFocused])

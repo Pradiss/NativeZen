@@ -1,82 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
-import styles from "./Style";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { apiMessageReceive, apiUsers } from "../service.js/Api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { formatarDataOuHora } from "../utils/mask";
 
-export default function CardChat({ item, navigation }) {
+export default function CardChat({ item, navigation, getUsuario }) {
+  const [user, setUser] = useState(null);
 
-  const [users,setUsers] = useState(null)
-  const [iduser, setIdUser] = useState(null)
+  useEffect(() => {
+    let isMounted = true;
 
-  const LoadingUsers = async () =>{
-    try{
-      
-      const res = await apiUsers.get(`/${item.enviou_id}`)
-      setUsers(res.data)
-    }catch(e){
-      Alert.alert("Erro ao carregar usuario", e.message)
-    }
-  }
+    (async () => {
+      if (!item.enviou_id) return;
+      const data = await getUsuario(item.enviou_id);
+      if (isMounted) setUser(data);
+    })();
 
-  const loadUser = async () => {
-      const id = await AsyncStorage.getItem("idUsuario")
-      setIdUser(id)
-  }
-  
-  useEffect(()=>{
-    if(item.enviou_id){
-      loadUser()
-      LoadingUsers()
-    }
-  },[item.enviou_id])
+    return () => {
+      isMounted = false; 
+    };
+  }, [item.enviou_id]);
 
-  
   return (
-     <TouchableOpacity onPress={() => navigation.navigate("ScreenChat",{
-      idMensagens: item.idMensagens,
-      recebeu: item.recebeu_id,
-      enviou: item.enviou_id
-     })}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginBlock: 16,
-          gap: 12,
-        }}>
-
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("ScreenChat", {
+          idMensagens: item.idMensagens,
+          recebeu: item.recebeu_id,
+          enviou: item.enviou_id,
+        })
+      }
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 16, gap: 12 }}>
         <Avatar.Image
           size={65}
-          source={users?.foto ? { uri: users?.foto } : require("../asset/avatar.png")}
-          style={{ alignSelf: "flex-start", backgroundColor: "#232323" }}
-          imageStyle={{ resizeMode: "cover"}}
+          source={user?.foto ? { uri: user.foto } : require("../asset/avatar.png")}
+          style={{ backgroundColor: "#232323" }}
+          imageStyle={{ resizeMode: "cover" }}
         />
-
         <View style={{ flex: 1, gap: 8 }}>
-          <Text style={{ fontSize: 18, fontWeight: 600 }}>
-            {iduser && item.enviou_id === iduser ? "Você" : users?.nome  || "Usuario " }
-
+          <Text style={{ fontSize: 18, fontWeight: "600" }}>
+            {user?.nome || "Usuário"}
           </Text>
-          <Text style={{ color: "#000", fontSize: 14 }}>{item.texto.split(" ").slice(0, 4).join(" ")}</Text>
-          
+          <Text style={{ color: "#000", fontSize: 14 }}>
+            {item.texto.split(" ").slice(0, 4).join(" ")}
+          </Text>
         </View>
-
-        <View style={{flex:1, alignItems: "flex-end"  ,gap:8}}>
-        
-          <Text style={{ color: "#000", fontSize: 16 }}>{formatarDataOuHora(item.data_envio)}</Text>
+        <View style={{ alignItems: "flex-end", gap: 8 }}>
+          <Text style={{ color: "#000", fontSize: 16 }}>
+            {formatarDataOuHora(item.data_envio)}
+          </Text>
         </View>
       </View>
-      <View
-        style={{
-          borderBottomColor: "#ccc",
-          borderBottomWidth: 1,
-          marginVertical: 10,
-        }}
-      />
+
+      <View style={{ borderBottomColor: "#ccc", borderBottomWidth: 1, marginVertical: 10 }} />
     </TouchableOpacity>
   );
 }

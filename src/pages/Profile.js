@@ -20,27 +20,39 @@ export default function Profile({navigation}){
     const [categoria,setCategory] = useState([])
     const isFocused = useIsFocused()
 
-    const instrumento = (idInstrumento) =>{
-        switch(idInstrumento){
-            case 1: return "Violão";
-            case 2: return "Bateria";
-            case 3: return "Cavaco";
-            case 4: return "Cantor(a)";
-           case 5: return "Baixo";
-        }
-        
-    }
-    const category = (idCategoria) =>{
-        switch(idCategoria){
-            case 1: return "Samba";
-            case 2: return "Sertanejo";
-            case 3: return "Rock";
-            case 4: return "Pagode";
-            case 5: return "MPB";
-            
-        }
-        
-    }
+    const instrumento = (idInstrumento) => {
+  switch(idInstrumento){
+    case 1: return "Violão";
+    case 2: return "Bateria";
+    case 3: return "Cavaco";
+    case 4: return "Cantor(a)";
+    case 5: return "Contrabaixo";
+    case 6: return "Piano";
+    case 7: return "Guitarra";
+    case 8: return "Violino";
+    case 9: return "Saxofone";
+    case 10: return "Teclado";
+    case 11: return "Flauta";
+    case 12: return "Tambor";
+    case 13: return "Bandolim";
+    case 14: return "Trompete";
+  }
+}
+
+const category = (idCategoria) => {
+  switch(idCategoria){
+    case 1: return "Samba";
+    case 2: return "Sertanejo";
+    case 3: return "Rock";
+    case 4: return "Pagode";
+    case 5: return "MPB";
+    case 7: return "Gospel";
+    case 8: return "Reggae";
+    case 9: return "Blues";
+    case 10: return "Jazz";
+    case 11: return "Música Erudita";
+  }
+}
     
     const LoadingCategory = async () =>{
         try{ 
@@ -53,30 +65,29 @@ export default function Profile({navigation}){
         
     }
 
-    useEffect(() => {
-        
-        const LoadingUsers = async () =>{
-            try{
-                const api = await AsyncStorage.getItem("api_token")
-                const idUsuario = await AsyncStorage.getItem("idUsuario")
-                const res = await apiUsers.get(`/${idUsuario}`,
-                    {
-                        headers:{
-                            "Content-Type" : "application/json",
-                            "Authorization" : `Bearer ${api}`
-                        }
+    
+    const LoadingUsers = async () =>{
+        try{
+            const api = await AsyncStorage.getItem("api_token")
+            const idUsuario = await AsyncStorage.getItem("idUsuario")
+            const res = await apiUsers.get(`/${idUsuario}`,
+                {
+                    headers:{
+                        "Content-Type" : "application/json",
+                        "Authorization" : `Bearer ${api}`
                     }
-                )
-                setUsers(res.data)
-            }catch(error){
-                Alert.alert("ERROR",error)
-            }
-            
+                }
+            )
+            setUsers(res.data)
+        }catch(error){
+            Alert.alert("ERROR",error)
         }
-        if(isFocused)
-            LoadingUsers()
-            LoadingCategory()
-    },[isFocused])
+        
+    }
+   useEffect(() => {
+    LoadingCategory()
+    if (isFocused) LoadingUsers()
+  }, [isFocused])
     
     
     return(

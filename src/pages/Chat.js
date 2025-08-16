@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useIsFocused } from "@react-navigation/native"
 import React, { useState, useEffect } from "react"
 import { View, Text, FlatList, Alert, TextInput } from "react-native"
-import { apiMessageReceive, apiMessageSender } from "../service.js/Api"
+import { apiMessageAll, apiMessageReceive, apiMessageSender } from "../service.js/Api"
 import styles from "../components/Style"
 import CardChat from "../components/CardChat"
 
@@ -12,19 +12,25 @@ export default function Chat({ navigation }) {
   const isFocused = useIsFocused()
   
 
-  const LoadingChat = async () => {
-    try {
-      const idUsuario = await AsyncStorage.getItem("idUsuario")
-      const res = await apiMessageReceive.get(`/${idUsuario}`)
-      setChat(res.data)
-    } catch (e) {
-      Alert.alert("Erro ao mostrar as mensagem", e.message)
-    }
-  }
+  const loadChat = async () => {
+  try {
+    const idUsuario = await AsyncStorage.getItem("idUsuario");
+    const token = await AsyncStorage.getItem("token");
 
+    const [recebidasRes, enviadasRes] = await Promise.all([
+      apiMessageReceive.get(`/${idUsuario}`, { headers: { Authorization: `Bearer ${token}` } }),
+      apiMessageSender.get(`/${idUsuario}`, { headers: { Authorization: `Bearer ${token}` } }),
+    ]);
+
+    const todasMensagens = [...recebidasRes.data, ...enviadasRes.data];
+    setChat(todasMensagens);
+  } catch (e) {
+    Alert.alert("Erro ao carregar chat", e.message);
+  }
+}
   useEffect(() => {
     if (isFocused) {
-      LoadingChat()
+      loadChat()
     }
   }, [isFocused])
 

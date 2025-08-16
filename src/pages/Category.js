@@ -18,33 +18,33 @@ export default function Category({navigation}){
     const [filterInstrument, setFilterInstrument] = useState("")
     const isFocused = useIsFocused()
     const route = useRoute();
+    const [hasLoaded, setHasLoaded] = useState(false)
     const { filtroCategoria: filtroCategoriaRota } = route.params || {}
     const { filtroInstrumento: filtroInstrumentoRota } = route.params || {}
 
-    const LoadingAllData = async () => {
-            try {
-                const [resUsers, resCategorias, resInstrumentos] = await Promise.all([
-                apiUsers.get("/"),
-                apiCategorias.get("/"),
-                apiInstrumento.get("/")
-                ])
-
-                setUsers(resUsers.data)
-                setCategory(resCategorias.data)
-                setInstrument(resInstrumentos.data)
-
-            } catch (error) {
-                Alert.alert("Erro ao carregar dados", error.message || "Erro desconhecido");
-                console.log(error)
-            }
-        }
-
     useEffect(() => {
-        if (isFocused && users.length === 0) {
-        LoadingAllData()
+  if (isFocused && !hasLoaded) {
+    const LoadingAllData = async () => {
+      try {
+        const [resUsers, resCategorias, resInstrumentos] = await Promise.all([
+          apiUsers.get("/"),
+          apiCategorias.get("/"),
+          apiInstrumento.get("/")
+        ])
+
+        setUsers(resUsers.data)
+        setCategory(resCategorias.data)
+        setInstrument(resInstrumentos.data)
+        setHasLoaded(true) // marca que já carregou
+      } catch (error) {
+        Alert.alert("Erro ao carregar dados", error.message || "Erro desconhecido")
+        console.log(error)
+      }
     }
-    },[isFocused])   
-    
+
+    LoadingAllData()
+  }
+}, [isFocused, hasLoaded])
 
     
     useEffect(() => {
