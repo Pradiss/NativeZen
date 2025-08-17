@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useState, useEffect, useCallback } from "react";
 import { View, TextInput, FlatList, Alert } from "react-native";
-import { apiMessageAll } from "../service.js/Api";
+import { apiMessageAll, apiUsers } from "../service.js/Api";
 import styles from "../components/Style";
 import CardChat from "../components/CardChat";
 
@@ -14,8 +14,28 @@ export default function Chat({ navigation }) {
   const loadMessages = useCallback(async () => {
     try {
       const idUsuario = await AsyncStorage.getItem("idUsuario");
-      const { data } = await apiMessageAll.get(`/${idUsuario}`);
-      setChat(data.reverse());
+
+      const { data: mensagens } = await apiMessageAll.get(`/${idUsuario}`);
+
+     const mensagensComUsuario = await Promise.all(
+      mensagens.map(async (msg) => {
+        const { data: user } = await apiUsers.get(`/${msg.recebeu_id}`);
+        return { ...msg, user };
+      })
+    );
+
+    const chatMap = {};
+    mensagensComUsuario.forEach((msg) => {
+      const userId = msg.user.idUsuario;
+      
+    if (!chatMap[userId] || new Date(msg.data_envio) > new Date(chatMap[userId].data_envio)) {
+      chatMap[userId] = msg;
+    }
+});
+
+
+const chatsUnicos = Object.values(chatMap);
+setChat(chatsUnicos.reverse());
     } catch (e) {
       Alert.alert("Erro ao carregar mensagens", e.message);
     }

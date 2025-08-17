@@ -25,7 +25,7 @@ export function ScreenChat({ route, navigation }) {
   const [usuarios, setUsuarios] = useState({});
   const isFocused = useIsFocused();
 
-  // buscar id do usuário logado
+ 
   useEffect(() => {
     const getUserId = async () => {
       const userId = await AsyncStorage.getItem("idUsuario");
@@ -34,7 +34,7 @@ export function ScreenChat({ route, navigation }) {
     getUserId();
   }, []);
 
-  // Buscar usuário com cache
+  
   const getUsuario = async (id) => {
     if (usuarios[id]) return usuarios[id];
     try {
@@ -47,14 +47,14 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-  // Carregar mensagens do chat
+  
   const loadMessages = async () => {
     try {
       const res = await apiMessage.get("/", {
         params: { enviou_id: enviou, recebeu_id: recebeu },
       });
       setMessages(res.data);
-      // carrega os dados dos dois usuários (remetente e destinatário)
+      
       getUsuario(enviou);
       getUsuario(recebeu);
     } catch (e) {
@@ -62,7 +62,7 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-  // Polling
+
   useEffect(() => {
     let interval;
     if (isFocused) {
@@ -72,7 +72,7 @@ export function ScreenChat({ route, navigation }) {
     return () => clearInterval(interval);
   }, [isFocused]);
 
-  // id da outra pessoa (para mostrar no topo)
+  
   const otherId = iduser == enviou ? recebeu : enviou;
 
   return (
@@ -81,7 +81,7 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {/* Header */}
+       
         <View
           style={{
             flexDirection: "row",
@@ -113,7 +113,7 @@ export function ScreenChat({ route, navigation }) {
           </View>
         </View>
 
-        {/* Lista de mensagens */}
+        
         <FlatList
           data={messages}
           keyExtractor={(item) => item.idMensagens.toString()}
@@ -141,7 +141,7 @@ export function ScreenChat({ route, navigation }) {
           contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
         />
 
-        {/* input */}
+       
         <View style={{ padding: 8, backgroundColor: "#fff" }}>
           <InputMessage
             iduser={iduser}

@@ -5,26 +5,7 @@ import { Button } from "react-native-paper";
 import { apiSendMessage } from "../service.js/Api";
 
 export default function InputMessage({ receiverId, loadMessages }) {
-  const [message, setMessage] = useState("");
-
-  const SendMessage = async () => {
-    if (!message.trim()) return;
-
-    try {
-      const userId = await AsyncStorage.getItem("idUsuario");
-
-      await apiSendMessage.post("/", {
-        enviou_id: userId,
-        recebeu_id: receiverId,
-        texto: message,
-      });
-
-      setMessage("");
-      loadMessages(); // Atualiza a lista após enviar
-    } catch (e) {
-      Alert.alert("Erro ao enviar mensagem", e.message);
-    }
-  };
+const [message, setMessage] = useState("");
 
   return (
     <View
@@ -47,7 +28,7 @@ export default function InputMessage({ receiverId, loadMessages }) {
       <Button
         mode="contained"
         style={{ backgroundColor: "black", padding: 5 }}
-        onPress={SendMessage}
+        onPress={""}
       >
         Enviar
       </Button>
