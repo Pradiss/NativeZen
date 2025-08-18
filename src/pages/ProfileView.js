@@ -108,7 +108,7 @@ const category = (idCategoria) => {
           icon="chat-outline"
           mode="contained"
           style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
-          onPress={() => navigation.navigate("ScreenChat", { idUsuario })}
+          onPress={() => navigation.navigate("ScreenChat", { idMensagens: item.idMensagens })}
         >
           Envie uma mensagem
         </Button>

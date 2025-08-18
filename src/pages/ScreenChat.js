@@ -3,20 +3,19 @@ import {
   View,
   FlatList,
   Text,
+  TextInput,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
-import styles from "../components/Style";
-import InputMessage from "../components/InputMessage";
-import { apiMessage, apiUsers } from "../service.js/Api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useIsFocused } from "@react-navigation/native";
-import { Avatar } from "react-native-paper";
-import { formatarDataOuHora } from "../utils/mask";
+import { Avatar, Button } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { apiMessage, apiUsers, apiSendMessage } from "../service.js/Api";
+import { formatarDataOuHora } from "../utils/mask";
 
 export function ScreenChat({ route, navigation }) {
   const { enviou, recebeu } = route.params;
@@ -24,9 +23,10 @@ export function ScreenChat({ route, navigation }) {
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [usuarios, setUsuarios] = useState({});
+  const [message, setMessage] = useState(""); // mensagem do input
   const isFocused = useIsFocused();
 
- 
+  // Pegar ID do usuário logado
   useEffect(() => {
     const getUserId = async () => {
       const userId = await AsyncStorage.getItem("idUsuario");
@@ -35,7 +35,7 @@ export function ScreenChat({ route, navigation }) {
     getUserId();
   }, []);
 
-  
+  // Pegar dados do usuário
   const getUsuario = async (id) => {
     if (usuarios[id]) return usuarios[id];
     try {
@@ -48,23 +48,22 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-  
+  // Carregar mensagens
   const loadMessages = async () => {
-  try {
-    const res = await apiMessage.get("/", {
-      params: { enviou_id: enviou, recebeu_id: recebeu },
-    });
-    setMessages(res.data);
+    try {
+      const res = await apiMessage.get("/", {
+        params: { enviou_id: enviou, recebeu_id: recebeu },
+      });
+      setMessages(res.data);
 
-    
-    if (!usuarios[enviou]) await getUsuario(enviou);
-    if (!usuarios[recebeu]) await getUsuario(recebeu);
+      if (!usuarios[enviou]) await getUsuario(enviou);
+      if (!usuarios[recebeu]) await getUsuario(recebeu);
+    } catch (e) {
+      Alert.alert("Erro ao carregar mensagens", e.message);
+    }
+  };
 
-  } catch (e) {
-    Alert.alert("Erro ao carregar mensagens", e.message);
-  }
-};
-
+  // Atualiza mensagens a cada 15s
   useEffect(() => {
     let interval;
     if (isFocused) {
@@ -74,8 +73,24 @@ export function ScreenChat({ route, navigation }) {
     return () => clearInterval(interval);
   }, [isFocused]);
 
-  
   const otherId = iduser == enviou ? recebeu : enviou;
+
+  // Enviar mensagem
+  const sendMessage = async () => {
+    if (!message.trim()) return;
+    try {
+      const senderId = await AsyncStorage.getItem("idUsuario");
+      await apiSendMessage.post("/", {
+        enviou_id: senderId,
+        recebeu_id: otherId,
+        texto: message,
+      });
+      setMessage("");
+      loadMessages();
+    } catch (e) {
+      Alert.alert("Erro ao enviar mensagem", e.message);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -83,49 +98,49 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-  
-<View
-  style={{
-    flexDirection: "row",
-    gap: 16,
-    alignItems: "center",
-    padding: 8,
-    backgroundColor: "#fff",
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-  }}
->
-  <MaterialCommunityIcons
-    name="arrow-left"
-    size={25}
-    color="#000"
-    onPress={() => navigation.goBack()}
-  />
+        {/* Header */}
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 16,
+            alignItems: "center",
+            padding: 8,
+            backgroundColor: "#fff",
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
+          }}
+        >
+          <MaterialCommunityIcons
+            name="arrow-left"
+            size={25}
+            color="#000"
+            onPress={() => navigation.goBack()}
+          />
 
-  <TouchableOpacity
-    style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
-    onPress={() => navigation.navigate("ProfileDetails", { idUsuario: otherId })}
-  >
-    <Avatar.Image
-      size={40}
-      source={
-        usuarios[otherId]?.foto
-          ? { uri: usuarios[otherId].foto }
-          : require("../asset/avatar.png")
-      }
-      style={{ backgroundColor: "#232323" }}
-    />
+          <TouchableOpacity
+            style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+            onPress={() =>
+              navigation.navigate("ProfileDetails", { idUsuario: otherId })
+            }
+          >
+            <Avatar.Image
+              size={40}
+              source={
+                usuarios[otherId]?.foto
+                  ? { uri: usuarios[otherId].foto }
+                  : require("../asset/avatar.png")
+              }
+              style={{ backgroundColor: "#232323" }}
+            />
+            <View style={{ marginLeft: 12 }}>
+              <Text style={{ fontSize: 18, fontWeight: "600" }}>
+                {usuarios[otherId]?.nome || "Usuário"}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-    <View style={{ marginLeft: 12 }}>
-      <Text style={{ fontSize: 18, fontWeight: "600" }}>
-        {usuarios[otherId]?.nome || "Usuário"}
-      </Text>
-    </View>
-  </TouchableOpacity>
-</View>
-
-
-        
+        {/* Mensagens */}
         <FlatList
           data={messages}
           keyExtractor={(item) => item.idMensagens.toString()}
@@ -153,13 +168,39 @@ export function ScreenChat({ route, navigation }) {
           contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
         />
 
-       
-        <View style={{ padding: 8, backgroundColor: "#fff" }}>
-          <InputMessage
-            iduser={iduser}
-            recebeu={otherId}
-            loadMessages={loadMessages}
+        {/* Input */}
+        <View
+          style={{
+            flexDirection: "row",
+            padding: 8,
+            alignItems: "center",
+            gap: 8,
+            backgroundColor: "#fff",
+          }}
+        >
+          <TextInput
+            style={{
+              flex: 1,
+              height: 47,
+              backgroundColor: "#fff",
+              paddingHorizontal: 16,
+              borderRadius: 18,
+              borderWidth: 1,
+              borderColor: "#c7c7c7",
+            }}
+            placeholder="Envie uma mensagem"
+            value={message}
+            onChangeText={setMessage}
+            onSubmitEditing={sendMessage}
+            returnKeyType="send"
           />
+          <Button
+            mode="contained"
+            style={{ backgroundColor: "black", padding: 5 }}
+            onPress={sendMessage}
+          >
+            Enviar
+          </Button>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
