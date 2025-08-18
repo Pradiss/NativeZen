@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, TextInput, FlatList, Alert } from "react-native";
 import { apiMessageAll, apiUsers } from "../service.js/Api";
 import styles from "../components/Style";
@@ -11,42 +11,48 @@ export default function Chat({ navigation }) {
   const [search, setSearch] = useState("");
   const isFocused = useIsFocused();
 
+  // 🔴 cache persistente para usuários que já foram carregados
+  const userCache = useRef({});
+
   const loadMessages = useCallback(async () => {
     try {
       const idUsuario = await AsyncStorage.getItem("idUsuario");
       if (!idUsuario) return;
 
-      // Pega todas as mensagens do usuário logado
       const { data: mensagens } = await apiMessageAll.get(`/${idUsuario}`);
       if (!mensagens || mensagens.length === 0) {
         setChat([]);
         return;
       }
 
-      // Cache para não buscar o mesmo usuário várias vezes
-      const userCache = {};
+      // ids únicos dos usuários envolvidos no chat
+      const uniqueUserIds = [...new Set(mensagens.map((m) => m.recebeu_id))];
 
-      const mensagensComUsuario = await Promise.all(
-        mensagens.map(async (msg) => {
-          const userId = msg.recebeu_id;
-
-          if (!userCache[userId]) {
+      // 👉 busca somente os usuários que *ainda* não estão no cache
+      await Promise.all(
+        uniqueUserIds.map(async (userId) => {
+          if (!userCache.current[userId]) {
             const { data: user } = await apiUsers.get(`/${userId}`);
-            userCache[userId] = user;
+            userCache.current[userId] = user;
           }
-
-          return { ...msg, user: userCache[userId] };
         })
       );
 
-      // Agrupa mensagens por usuário, mantendo apenas a última
+      // adiciona o user em cada mensagem
+      const mensagensComUsuario = mensagens.map((msg) => ({
+        ...msg,
+        user: userCache.current[msg.recebeu_id],
+      }));
+
+      // agrupa por usuário e mantém apenas a última
       const chatMap = {};
       mensagensComUsuario.forEach((msg) => {
         const userId = msg.user.idUsuario;
-        if (
+        const isNewer =
           !chatMap[userId] ||
-          new Date(msg.data_envio) > new Date(chatMap[userId].data_envio)
-        ) {
+          new Date(msg.data_envio) > new Date(chatMap[userId].data_envio);
+
+        if (isNewer) {
           chatMap[userId] = msg;
         }
       });
@@ -64,10 +70,6 @@ export default function Chat({ navigation }) {
     }
   }, [isFocused, loadMessages]);
 
-  const renderItem = ({ item }) => (
-    <CardChat item={item} navigation={navigation} />
-  );
-
   return (
     <View style={{ paddingHorizontal: 16, paddingTop: 56 }}>
       <TextInput
@@ -80,7 +82,9 @@ export default function Chat({ navigation }) {
       <FlatList
         data={chat}
         keyExtractor={(item) => item.idMensagens.toString()}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <CardChat item={item} navigation={navigation} />
+        )}
         contentContainerStyle={{ paddingBottom: 100, marginTop: 16 }}
         ListFooterComponent={<View style={{ height: 80 }} />}
       />

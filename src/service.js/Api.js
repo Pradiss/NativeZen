@@ -48,3 +48,7 @@ export const apiSendMessage = axios.create({
   baseURL: "https://erick5457.c44.integrator.host/api/mensagens"
 })
 
+export const apiChangePassword = axios.create({
+  baseURL: "https://erick5457.c44.integrator.host/api/changePassword"
+})
+

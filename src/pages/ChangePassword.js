@@ -1,79 +1,86 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Alert, Image } from "react-native";
 import styles from "../components/Style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { apiChangePassword } from "../service.js/Api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ChangePassword({ navigation }) {
-  const [senha, setSenha] = useState("");
   const [senhaNova, setSenhaNova] = useState("");
+  const [confirmSenhaNova, setConfirmSenhaNova] = useState("");
 
-  const editPassword = () => {
-    if (senha === senhaNova) {
-      Alert.alert("Sucesso", "Senha alterada com sucesso!");
-    } else {
-      Alert.alert("Erro", "As senhas não conferem!");
+  const editPassword = async () => {
+    if (senhaNova.length < 6) {
+      return Alert.alert("Erro", "A nova senha deve conter no mínimo 6 caracteres");
+    }
+
+    if (senhaNova !== confirmSenhaNova) {
+      return Alert.alert("Erro", "A confirmação não confere com a nova senha");
+    }
+
+    try {
+      const idUsuario = await AsyncStorage.getItem("idUsuario")
+      await apiChangePassword.put(
+  `/changePassword/${idUsuario}`,
+  { senha: senhaNova },
+  {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+  }
+);
+
+      Alert.alert("Sucesso", "Senha atualizada com sucesso!");
+      setSenhaNova("");
+      setConfirmSenhaNova("");
+    } catch (error) {
+      Alert.alert(
+        "Erro",
+        error?.response?.data?.message || "Ocorreu um erro ao atualizar a senha."
+      );
     }
   };
 
   return (
-    <View
-      style={{
-        paddingHorizontal: 16,
-        paddingTop: 56,
-      }}
-    >
-        <View style={{ alignItems: "start", }}>
-          <MaterialCommunityIcons
-            name="arrow-left"
-            color="#000"
-            size={24}
-            onPress={() => navigation.navigate("MainTabs", { screen: "Home" })}
-          />
-        </View>
-      <View style={{alignItems:"center"}}>
-        <View
-          style={{
-            paddingBottom: 26,
-            flexDirection: "row",
-            gap: 0,
-            alignItems: "center",
-            justifyContent:"center"
-          }}
-        >
-          <Image
-            source={require("../asset/logoZene.png")}
-            style={{ width: 100, height: 100, alignItems: "center" }}
-            resizeMode="contain"
-          />
-        </View>
+    <View style={{ paddingHorizontal: 16, paddingTop: 56 }}>
+      <View style={{ alignItems: "start" }}>
+        <MaterialCommunityIcons
+          name="arrow-left"
+          color="#000"
+          size={24}
+          onPress={() => navigation.navigate("MainTabs", { screen: "Home" })}
+        />
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <Image
+          source={require("../asset/logoZene.png")}
+          style={{ width: 100, height: 100 }}
+          resizeMode="contain"
+        />
 
         <Text style={{ fontSize: 22 }}>Gostaria de mudar sua senha?</Text>
         <Text style={{ paddingBlock: 8 }}>
-          Digite sua senha atual e a nova senha desejada
+          Digite a nova senha e confirme abaixo
         </Text>
 
         <TextInput
           placeholderTextColor="#ccc"
           style={styles.inputLogin}
-          value={senha}
-          placeholder="Digite sua Senha Atual"
-          secureTextEntry={true} // hide password
-          onChangeText={setSenha}
+          value={senhaNova}
+          placeholder="Nova Senha"
+          secureTextEntry={true}
+          onChangeText={setSenhaNova}
         />
 
         <TextInput
           placeholderTextColor="#ccc"
           style={styles.inputLogin}
-          value={senhaNova}
-          placeholder="Digite Sua Senha Nova"
-          secureTextEntry={true} // hide password
-          onChangeText={setSenhaNova}
+          value={confirmSenhaNova}
+          placeholder="Confirmar Nova Senha"
+          secureTextEntry={true}
+          onChangeText={setConfirmSenhaNova}
         />
-        {senha.length > 0 && senha.length < 6 && (
-          <Text style={{ color: "red", marginBottom: 8 }}>
-            A senha deve conter no mínimo 6 caracteres
-          </Text>
-        )}
 
         <Pressable
           style={{
@@ -85,11 +92,10 @@ export default function ChangePassword({ navigation }) {
             marginTop: 32,
             backgroundColor: "black",
             padding: 8,
-            color: "white",
           }}
           onPress={editPassword}
         >
-          <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha </Text>
+          <Text style={{ fontSize: 18, color: "#fff" }}>Atualizar Senha</Text>
         </Pressable>
       </View>
     </View>
