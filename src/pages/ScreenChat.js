@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   Alert,
+  TouchableOpacity
 } from "react-native";
 import styles from "../components/Style";
 import InputMessage from "../components/InputMessage";
@@ -49,19 +50,20 @@ export function ScreenChat({ route, navigation }) {
 
   
   const loadMessages = async () => {
-    try {
-      const res = await apiMessage.get("/", {
-        params: { enviou_id: enviou, recebeu_id: recebeu },
-      });
-      setMessages(res.data);
-      
-      getUsuario(enviou);
-      getUsuario(recebeu);
-    } catch (e) {
-      Alert.alert("Erro ao carregar mensagens", e.message);
-    }
-  };
+  try {
+    const res = await apiMessage.get("/", {
+      params: { enviou_id: enviou, recebeu_id: recebeu },
+    });
+    setMessages(res.data);
 
+    
+    if (!usuarios[enviou]) await getUsuario(enviou);
+    if (!usuarios[recebeu]) await getUsuario(recebeu);
+
+  } catch (e) {
+    Alert.alert("Erro ao carregar mensagens", e.message);
+  }
+};
 
   useEffect(() => {
     let interval;
@@ -81,37 +83,47 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-       
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 16,
-            alignItems: "center",
-            padding: 8,
-            backgroundColor: "#fff",
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-          }}
-        >
-          <MaterialCommunityIcons
-            name="arrow-left"
-            size={25}
-            color="#000"
-            onPress={() => navigation.goBack()}
-          />
+  
+<View
+  style={{
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
+    padding: 8,
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+  }}
+>
+  <MaterialCommunityIcons
+    name="arrow-left"
+    size={25}
+    color="#000"
+    onPress={() => navigation.goBack()}
+  />
 
-          <Avatar.Image
-            size={40}
-            source={require("../asset/avatar.png")}
-            style={{ backgroundColor: "#232323" }}
-          />
+  <TouchableOpacity
+    style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+    onPress={() => navigation.navigate("ProfileDetails", { idUsuario: otherId })}
+  >
+    <Avatar.Image
+      size={40}
+      source={
+        usuarios[otherId]?.foto
+          ? { uri: usuarios[otherId].foto }
+          : require("../asset/avatar.png")
+      }
+      style={{ backgroundColor: "#232323" }}
+    />
 
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              {usuarios[otherId]?.nome || "Usuário"}
-            </Text>
-          </View>
-        </View>
+    <View style={{ marginLeft: 12 }}>
+      <Text style={{ fontSize: 18, fontWeight: "600" }}>
+        {usuarios[otherId]?.nome || "Usuário"}
+      </Text>
+    </View>
+  </TouchableOpacity>
+</View>
+
 
         
         <FlatList

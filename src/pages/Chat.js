@@ -14,30 +14,47 @@ export default function Chat({ navigation }) {
   const loadMessages = useCallback(async () => {
     try {
       const idUsuario = await AsyncStorage.getItem("idUsuario");
+      if (!idUsuario) return;
 
+      // Pega todas as mensagens do usuário logado
       const { data: mensagens } = await apiMessageAll.get(`/${idUsuario}`);
+      if (!mensagens || mensagens.length === 0) {
+        setChat([]);
+        return;
+      }
 
-     const mensagensComUsuario = await Promise.all(
-      mensagens.map(async (msg) => {
-        const { data: user } = await apiUsers.get(`/${msg.recebeu_id}`);
-        return { ...msg, user };
-      })
-    );
+      // Cache para não buscar o mesmo usuário várias vezes
+      const userCache = {};
 
-    const chatMap = {};
-    mensagensComUsuario.forEach((msg) => {
-      const userId = msg.user.idUsuario;
-      
-    if (!chatMap[userId] || new Date(msg.data_envio) > new Date(chatMap[userId].data_envio)) {
-      chatMap[userId] = msg;
-    }
-});
+      const mensagensComUsuario = await Promise.all(
+        mensagens.map(async (msg) => {
+          const userId = msg.recebeu_id;
 
+          if (!userCache[userId]) {
+            const { data: user } = await apiUsers.get(`/${userId}`);
+            userCache[userId] = user;
+          }
 
-const chatsUnicos = Object.values(chatMap);
-setChat(chatsUnicos.reverse());
+          return { ...msg, user: userCache[userId] };
+        })
+      );
+
+      // Agrupa mensagens por usuário, mantendo apenas a última
+      const chatMap = {};
+      mensagensComUsuario.forEach((msg) => {
+        const userId = msg.user.idUsuario;
+        if (
+          !chatMap[userId] ||
+          new Date(msg.data_envio) > new Date(chatMap[userId].data_envio)
+        ) {
+          chatMap[userId] = msg;
+        }
+      });
+
+      setChat(Object.values(chatMap));
     } catch (e) {
-      Alert.alert("Erro ao carregar mensagens", e.message);
+      console.log("Erro ao carregar mensagens:", e);
+      Alert.alert("Erro ao carregar mensagens", e.message || e.toString());
     }
   }, []);
 
