@@ -20,8 +20,9 @@ export default function ChangePassword({ navigation }) {
 
     try {
       const idUsuario = await AsyncStorage.getItem("idUsuario")
+      const apiToken = await AsyncStorage.getItem("token")
       await apiChangePassword.put(
-  `/changePassword/${idUsuario}`,
+  `/${idUsuario}`,
   { senha: senhaNova },
   {
     headers: {
@@ -31,9 +32,11 @@ export default function ChangePassword({ navigation }) {
   }
 );
 
-      Alert.alert("Sucesso", "Senha atualizada com sucesso!");
-      setSenhaNova("");
-      setConfirmSenhaNova("");
+Alert.alert("Sucesso", "Senha atualizada com sucesso!");
+setSenhaNova("");
+setConfirmSenhaNova("");
+navigation.goBack()
+
     } catch (error) {
       Alert.alert(
         "Erro",

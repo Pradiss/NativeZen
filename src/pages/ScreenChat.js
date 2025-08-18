@@ -62,7 +62,7 @@ export function ScreenChat({ route, navigation }) {
     let interval;
     if (isFocused) {
       loadMessages();
-      interval = setInterval(loadMessages, 15000);
+      interval = setInterval(loadMessages, 3000);
     }
     return () => clearInterval(interval);
   }, [isFocused]);
@@ -87,6 +87,7 @@ export function ScreenChat({ route, navigation }) {
             borderBottomRightRadius: 16,
           }}
         >
+        
           <MaterialCommunityIcons
             name="arrow-left"
             size={25}
