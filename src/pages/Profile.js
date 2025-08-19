@@ -192,7 +192,7 @@ const category = (idCategoria) => {
             <MaterialCommunityIcons
                 name="camera"
                 size={20}
-                color="#fff"
+                color="#333"
                 onPress={trocarFoto}
                 style={{
                     position: "absolute",

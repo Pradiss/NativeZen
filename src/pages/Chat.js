@@ -11,7 +11,6 @@ export default function Chat({ navigation }) {
   const [search, setSearch] = useState("");
   const isFocused = useIsFocused();
 
-  // 🔴 cache persistente para usuários que já foram carregados
   const userCache = useRef({});
 
   const loadMessages = useCallback(async () => {
@@ -25,10 +24,16 @@ export default function Chat({ navigation }) {
         return;
       }
 
-      // ids únicos dos usuários envolvidos no chat
-      const uniqueUserIds = [...new Set(mensagens.map((m) => m.recebeu_id))];
+      // 👉 identifica o "outro" usuário em cada mensagem
+      const uniqueUserIds = [
+        ...new Set(
+          mensagens.map((m) =>
+            m.enviou_id == idUsuario ? m.recebeu_id : m.enviou_id
+          )
+        ),
+      ];
 
-      // 👉 busca somente os usuários que *ainda* não estão no cache
+      // busca apenas os que não estão no cache
       await Promise.all(
         uniqueUserIds.map(async (userId) => {
           if (!userCache.current[userId]) {
@@ -38,13 +43,17 @@ export default function Chat({ navigation }) {
         })
       );
 
-      // adiciona o user em cada mensagem
-      const mensagensComUsuario = mensagens.map((msg) => ({
-        ...msg,
-        user: userCache.current[msg.recebeu_id],
-      }));
+      // adiciona o campo 'user' correspondente ao outro participante
+      const mensagensComUsuario = mensagens.map((msg) => {
+        const other =
+          msg.enviou_id == idUsuario ? msg.recebeu_id : msg.enviou_id;
+        return {
+          ...msg,
+          user: userCache.current[other],
+        };
+      });
 
-      // agrupa por usuário e mantém apenas a última
+      // agrupa por usuário e mantém apenas a mais recente
       const chatMap = {};
       mensagensComUsuario.forEach((msg) => {
         const userId = msg.user.idUsuario;
@@ -57,7 +66,11 @@ export default function Chat({ navigation }) {
         }
       });
 
-      setChat(Object.values(chatMap));
+      // ordena por data (decrescente)
+      const ordered = Object.values(chatMap).sort(
+        (a, b) => Date.parse(b.data_envio) - Date.parse(a.data_envio)
+      );
+      setChat(ordered);
     } catch (e) {
       console.log("Erro ao carregar mensagens:", e);
       Alert.alert("Erro ao carregar mensagens", e.message || e.toString());
@@ -73,20 +86,21 @@ export default function Chat({ navigation }) {
   return (
     <View style={{ paddingHorizontal: 16, paddingTop: 56 }}>
       <TextInput
-        style={[styles.input, { width: "95%" }]}
+        style={[styles.input, { width: "100%" }]}
         placeholder="Buscar chat"
         value={search}
         onChangeText={setSearch}
       />
 
       <FlatList
-        data={chat}
+        data={chat.filter((c) =>
+          c.user.nome.toLowerCase().includes(search.toLowerCase())
+        )}
         keyExtractor={(item) => item.idMensagens.toString()}
         renderItem={({ item }) => (
           <CardChat item={item} navigation={navigation} />
         )}
         contentContainerStyle={{ paddingBottom: 100, marginTop: 16 }}
-        ListFooterComponent={<View style={{ height: 80 }} />}
       />
     </View>
   );

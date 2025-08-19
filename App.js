@@ -44,7 +44,7 @@ function MainTabs() {
         },
         headerShown: false,
         // tabBarShowLabel:false,
-        tabBarActiveTintColor: '#fff',
+        tabBarActiveTintColor: '#6BD2D7',
         tabBarInactiveTintColor:"#ccc",
         tabBarStyle: {
           margin:14,

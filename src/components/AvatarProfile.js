@@ -65,10 +65,10 @@ export default function Profile({navigation,item}){
                 </View>
         </View>
         </TouchableOpacity>
-       
+{/*        
         <MaterialCommunityIcons style={styles.icon} name="bell" size={24} color="#fff"
         onPress={() => navigation.navigate("Notification")}
-        />
+        /> */}
           
     </View>
     )

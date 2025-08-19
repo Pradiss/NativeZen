@@ -5,7 +5,7 @@ export const SocialIcon = ({ platform, icon, username, urlScheme, webBaseUrl }) 
   <View style={{ flexDirection: "column", alignItems: "center", gap: 8 }}>
     <MaterialCommunityIcons
       name={icon}
-      color="#000"
+      color="#333"
       size={28}
       onPress={() => {
         const appUrl = `${urlScheme}${username}`;
@@ -19,7 +19,7 @@ export const SocialIcon = ({ platform, icon, username, urlScheme, webBaseUrl }) 
             Alert.alert('Erro', `Não foi possível abrir o perfil do ${platform}.`);
           });
       }}
-      style={{ padding: 12, backgroundColor: "#e9e9e9", borderRadius: 50 }}
+      style={{ padding: 12, backgroundColor: "#6BD2D7", borderRadius: 50 }}
     />
     <Text>{username}</Text>
   </View>
