@@ -55,16 +55,7 @@ export default function Config({ navigation }) {
             users.foto ? { uri: users.foto } : require("../asset/avatar.png")
           }
         />
-        <MaterialCommunityIcons
-          name="pencil"
-          size={20}
-          color="#000"
-          onPress={() => navigation.navigate("Mudar foto")}
-          style={{ position: "absolute",
-            bottom: 0, right: 0,
-            backgroundColor: "#6BD2D7",
-            borderRadius: 50, padding: 4 }}
-        />
+       
       </View>
 
       <Text style={{ fontSize: 18, fontWeight: 600, marginBlock: 8 }}>

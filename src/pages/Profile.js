@@ -12,7 +12,7 @@ import { formatPhone, formatReais } from "../utils/mask"
 import { apiUsers } from "../service.js/Api"
 import EditDescription from "../components/EditDescription"
 import { cleanPhone } from "../utils/mask"
-
+import * as ImagePicker from "expo-image-picker";
 
 export default function Profile({navigation}){
 
@@ -89,6 +89,71 @@ const category = (idCategoria) => {
     if (isFocused) LoadingUsers()
   }, [isFocused])
     
+        const trocarFoto = async () => {
+        const idUsuario = await AsyncStorage.getItem("idUsuario");
+        const token = await AsyncStorage.getItem("api_token");
+
+        const abrirCamera = async () => {
+            
+            const { status } = await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== "granted") {
+            Alert.alert("Permissão negada", "Você precisa liberar o acesso à câmera");
+            return;
+            }
+
+            const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.7,
+            });
+            if (!result.canceled) {
+            await atualizarFoto(result.assets[0].uri);
+            }
+        };
+
+        const abrirGaleria = async () => {
+            
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== "granted") {
+            Alert.alert("Permissão negada", "Você precisa liberar o acesso à galeria");
+            return;
+            }
+
+            const result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.7,
+            });
+            if (!result.canceled) {
+            await atualizarFoto(result.assets[0].uri);
+            }
+        };
+
+        const atualizarFoto = async (uri) => {
+            try {
+            await apiUsers.put(
+                `/${idUsuario}/foto`,
+                { foto: uri },
+                {
+                    headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    },
+                }
+                );
+            setUsers((prev) => ({ ...prev, foto: uri }));
+            Alert.alert("Sucesso", "Foto atualizada com sucesso!");
+            } catch (e) {
+            Alert.alert("Erro", e.message);
+            }
+        };
+
+        Alert.alert("Foto de perfil", "Escolha uma opção", [
+            { text: "Tirar foto", onPress: abrirCamera },
+            { text: "Escolher da galeria", onPress: abrirGaleria },
+            { text: "Cancelar", style: "cancel" },
+        ]);
+        };
     
     return(
 <KeyboardAvoidingView
@@ -106,6 +171,7 @@ const category = (idCategoria) => {
                 />
             </View>
 
+        <View>
             <Image
                 source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
                 style={{ 
@@ -123,10 +189,27 @@ const category = (idCategoria) => {
                 }}
                 resizeMode="cover"
                 />
+            <MaterialCommunityIcons
+                name="camera"
+                size={20}
+                color="#fff"
+                onPress={trocarFoto}
+                style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: "#6BD2D7",
+                    borderRadius: 50,
+                    padding: 6
+                    }}
+                />
+        </View>
+            
+                 
 
             <View style={{alignItems:"start", }}>
                 
-                <Text style={{fontSize:38, fontWeight:600, marginTop:16}}>{users.nome}  , {users.idade}</Text>
+                <Text style={{fontSize:38, fontWeight:600, marginTop:16}}>{users.nome}  , {users.idade}</Text> 
 
                 <Text style={{fontSize:20,color:"#555555", fontWeight:400 ,marginTop:8}} >
                     <MaterialCommunityIcons style={{color:"#222222"}} name="google-maps" size={22} />{users.cidade}, {users.uf}

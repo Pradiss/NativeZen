@@ -58,29 +58,11 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-
-
-const timeoutRef = useRef(null);
-
-useEffect(() => {
-  const fetchAndSchedule = async () => {
-    await loadMessages();
-    timeoutRef.current = setTimeout(fetchAndSchedule, 3000);
-  };
-
-  if (isFocused) {
-    // inicia a "loop"
-    fetchAndSchedule();
-  }
-
-  return () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+  useEffect(() => {
+    if (isFocused) {
+      loadMessages(); //
     }
-  };
-}, [isFocused]);
-
+  }, [isFocused]);
 
   const otherId = iduser == enviou ? recebeu : enviou;
 
@@ -102,7 +84,6 @@ useEffect(() => {
             borderBottomRightRadius: 16,
           }}
         >
-        
           <MaterialCommunityIcons
             name="arrow-left"
             size={25}
@@ -136,10 +117,8 @@ useEffect(() => {
                 padding: 12,
                 paddingHorizontal: 16,
                 borderRadius: 16,
-                backgroundColor:
-                  item.enviou_id == iduser ? "#DCF8C6" : "#fff",
-                alignSelf:
-                  item.enviou_id == iduser ? "flex-end" : "flex-start",
+                backgroundColor: item.enviou_id == iduser ? "#DCF8C6" : "#fff",
+                alignSelf: item.enviou_id == iduser ? "flex-end" : "flex-start",
               }}
             >
               <Text>{item.texto}</Text>
@@ -154,12 +133,7 @@ useEffect(() => {
         />
 
         {/* Input */}
-        <InputMessage
-          enviou={enviou}
-          recebeu={recebeu}
-          onSend={loadMessages}
-          timeoutRef={timeoutRef}
-        />
+        <InputMessage enviou={enviou} recebeu={recebeu} onSend={loadMessages} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
