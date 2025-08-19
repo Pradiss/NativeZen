@@ -16,8 +16,6 @@ export default function InputMessage({ enviou, recebeu, onSend }) {
 
     try {
       const token = await AsyncStorage.getItem("token");
-      console.log("Dados enviados:", { enviou, recebeu, texto });
-      console.log("TOKEN:", token);
 
       if (!token) {
         Alert.alert("Erro", "Token inválido ou expirado — faça login novamente");

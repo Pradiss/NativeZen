@@ -46,17 +46,23 @@ export function ScreenChat({ route, navigation }) {
   };
 
   const loadMessages = async () => {
-    try {
-      const res = await apiMessage.get("/", {
-        params: { enviou_id: enviou, recebeu_id: recebeu },
-      });
-      setMessages(res.data);
-      getUsuario(enviou);
-      getUsuario(recebeu);
-    } catch (e) {
-      Alert.alert("Erro ao carregar mensagens", e.message);
+  try {
+    const res = await apiMessage.get("/", {
+      params: { enviou_id: enviou, recebeu_id: recebeu },
+    });
+    setMessages(res.data);
+
+    if (!usuarios[enviou]) {
+      await getUsuario(enviou);
     }
-  };
+    if (!usuarios[recebeu]) {
+      await getUsuario(recebeu);
+    }
+  } catch (e) {
+    Alert.alert("Erro ao carregar mensagens", e.message);
+  }
+};
+
   useEffect(() => {
     if (isFocused) {
       loadMessages(); //
