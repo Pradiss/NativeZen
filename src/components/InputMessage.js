@@ -8,17 +8,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function InputMessage({ enviou, recebeu, onSend }) {
 
   const [texto,setTexto] = useState("")
+const [loading, setLoading] = useState(false);
 
-
-  const enviarMensagem = async () => {
+const enviarMensagem = async () => {
+  if (loading) return;
+  setLoading(true);
     try{
       const token = await AsyncStorage.getItem("token")
       const response = await axios.post(
         "https://erick5457.c44.integrator.host/api/mensagens",
         {
-          enviou,
-          recebeu,
-          texto:texto
+          enviou_id: enviou,
+          recebeu_id: recebeu,
+           texto: texto
         },
         {
           headers: {
@@ -30,15 +32,17 @@ export default function InputMessage({ enviou, recebeu, onSend }) {
       ); 
 
       console.log(response);
-      // Chama a função onSend para atualizar as mensagens
+      
       if (onSend) {
         onSend();
       }
       setTexto(""); // limpa o campo após enviar
-    }catch(e){
-      Alert.alert("Erro ao enviar mensagem", e.message)
-    }    
+     } catch (e) {
+    Alert.alert("Erro ao enviar mensagem", e.message);
+  } finally {
+    setLoading(false);
   }
+};
 
  
   return (
@@ -67,15 +71,17 @@ export default function InputMessage({ enviou, recebeu, onSend }) {
           onSubmitEditing={enviarMensagem}
           returnKeyType="send"
         />
-        <Button
+       <Button
           mode="contained"
-          style={{ backgroundColor: "black", padding: 5 }}
-          labelStyle={{color:"white"}}
-          disabled={!texto.trim()}
+          contentStyle={{ height: 47 }}  // deixa mais alto
+          style={{ backgroundColor: "black", paddingHorizontal: 16 }}
+          labelStyle={{ color: "white" }}
+          disabled={loading || !texto.trim()}
           onPress={enviarMensagem}
         >
           Enviar
         </Button>
+
       </View>
     </View>
   );

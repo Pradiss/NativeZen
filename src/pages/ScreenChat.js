@@ -58,14 +58,29 @@ export function ScreenChat({ route, navigation }) {
     }
   };
 
-  useEffect(() => {
-    let interval;
-    if (isFocused) {
-      loadMessages();
-      interval = setInterval(loadMessages, 3000);
+
+
+const timeoutRef = useRef(null);
+
+useEffect(() => {
+  const fetchAndSchedule = async () => {
+    await loadMessages();
+    timeoutRef.current = setTimeout(fetchAndSchedule, 3000);
+  };
+
+  if (isFocused) {
+    // inicia a "loop"
+    fetchAndSchedule();
+  }
+
+  return () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
-    return () => clearInterval(interval);
-  }, [isFocused]);
+  };
+}, [isFocused]);
+
 
   const otherId = iduser == enviou ? recebeu : enviou;
 
@@ -112,6 +127,7 @@ export function ScreenChat({ route, navigation }) {
         <FlatList
           ref={flatListRef}
           data={messages}
+          keyboardShouldPersistTaps="handled"
           keyExtractor={(item) => item.idMensagens.toString()}
           renderItem={({ item }) => (
             <View
@@ -142,6 +158,7 @@ export function ScreenChat({ route, navigation }) {
           enviou={enviou}
           recebeu={recebeu}
           onSend={loadMessages}
+          timeoutRef={timeoutRef}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
