@@ -8,43 +8,51 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function InputMessage({ enviou, recebeu, onSend }) {
 
   const [texto,setTexto] = useState("")
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const enviarMensagem = async () => {
-  if (loading) return;
-  setLoading(true);
-    try{
-      const token = await AsyncStorage.getItem("token")
+  const enviarMensagem = async () => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      const token = await AsyncStorage.getItem("token");
+      console.log("Dados enviados:", { enviou, recebeu, texto });
+      console.log("TOKEN:", token);
+
+      if (!token) {
+        Alert.alert("Erro", "Token inválido ou expirado — faça login novamente");
+        return;
+      }
+
       const response = await axios.post(
         "https://erick5457.c44.integrator.host/api/mensagens",
         {
           enviou_id: enviou,
           recebeu_id: recebeu,
-           texto: texto
+          texto: texto,
         },
         {
           headers: {
-
             "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
-      ); 
+      );
 
-      console.log(response);
-      
+      // apenas chama o callback
       if (onSend) {
-        onSend();
+        onSend(response.data); 
       }
-      setTexto(""); // limpa o campo após enviar
-     } catch (e) {
-    Alert.alert("Erro ao enviar mensagem", e.message);
-  } finally {
-    setLoading(false);
-  }
-};
 
- 
+      setTexto("");
+    } catch (e) {
+      Alert.alert("Erro ao enviar mensagem", e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
   return (
     <View style={{ padding: 8, backgroundColor: "#fff" }}>
       <View
@@ -73,7 +81,7 @@ const enviarMensagem = async () => {
         />
        <Button
           mode="contained"
-          contentStyle={{ height: 47 }}  // deixa mais alto
+          contentStyle={{ height: 47 }} 
           style={{ backgroundColor: "black", paddingHorizontal: 16 }}
           labelStyle={{ color: "white" }}
           disabled={loading || !texto.trim()}

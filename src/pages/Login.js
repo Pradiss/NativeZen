@@ -39,11 +39,11 @@ export default function Login({ navigation }) {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      const token = res.data.token
+      const token = res.data.token;
       const idUsuario = res.data?.usuario?.idUsuario;
 
-      await AsyncStorage.setItem("api_token", token)
-      await AsyncStorage.setItem("idUsuario", idUsuario.toString())
+      await AsyncStorage.setItem("token", token);      
+      await AsyncStorage.setItem("idUsuario", idUsuario.toString());
 
       // reset
       navigation.reset({

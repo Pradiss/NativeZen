@@ -105,13 +105,19 @@ const category = (idCategoria) => {
         </Text>
 
         <Button
-          icon="chat-outline"
-          mode="contained"
-          style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
-          onPress={() => navigation.navigate("ScreenChat", { idMensagens: item.idMensagens })}
-        >
-          Envie uma mensagem
-        </Button>
+        icon="chat-outline"
+        mode="contained"
+        style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
+        onPress={() =>
+          navigation.navigate("ScreenChat", {
+            enviou: user.idUsuario,
+            recebeu: idUsuario,
+          })
+        }
+      >
+        Envie uma mensagem
+      </Button>
+
 
         <View style={{ flexDirection:"row", justifyContent:"space-around", marginVertical:32 }}>
           <SocialIcon platform="Instagram" icon="instagram" username={user.instagram} urlScheme="instagram://user?username=" webBaseUrl="https://www.instagram.com/"/>
