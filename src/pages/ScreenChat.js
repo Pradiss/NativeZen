@@ -57,7 +57,6 @@ export function ScreenChat({ route, navigation }) {
       Alert.alert("Erro ao carregar mensagens", e.message);
     }
   };
-
   useEffect(() => {
     if (isFocused) {
       loadMessages(); //
@@ -72,7 +71,7 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {/* Header */}
+      
         <View
           style={{
             flexDirection: "row",
@@ -104,7 +103,7 @@ export function ScreenChat({ route, navigation }) {
           </View>
         </View>
 
-        {/* Lista de mensagens */}
+       
         <FlatList
           ref={flatListRef}
           data={messages}
@@ -132,7 +131,7 @@ export function ScreenChat({ route, navigation }) {
           contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
         />
 
-        {/* Input */}
+        
         <InputMessage enviou={enviou} recebeu={recebeu} onSend={loadMessages} />
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -7,8 +7,7 @@ export default function CardChat({ item, navigation }) {
 
   const user = item.user
 
-  const avatarUri =
-  user.foto 
+  const avatarUri = user.foto 
 
 
   return (

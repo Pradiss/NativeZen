@@ -17,8 +17,6 @@ export default function Profile({navigation,item}){
     const isFocused = useIsFocused()
 
 
-    
-
     useEffect(() => {
        
         const LoadingUsers = async () =>{

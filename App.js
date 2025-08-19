@@ -43,7 +43,6 @@ function MainTabs() {
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
-        // tabBarShowLabel:false,
         tabBarActiveTintColor: '#6BD2D7',
         tabBarInactiveTintColor:"#ccc",
         tabBarStyle: {
