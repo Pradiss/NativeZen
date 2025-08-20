@@ -37,10 +37,8 @@ export default function InputMessage({ enviou, recebeu, onSend }) {
         }
       );
 
-      // apenas chama o callback
-      if (onSend) {
-        onSend(response.data); 
-      }
+      
+      onSend && onSend();
 
       setTexto("");
     } catch (e) {

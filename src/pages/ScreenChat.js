@@ -19,20 +19,21 @@ import InputMessage from "../components/InputMessage";
 export function ScreenChat({ route, navigation }) {
   const { enviou, recebeu } = route.params;
 
-
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [usuarios, setUsuarios] = useState({});
   const isFocused = useIsFocused();
   const flatListRef = useRef(null);
 
+  
   useEffect(() => {
     const getUserId = async () => {
       const userId = await AsyncStorage.getItem("idUsuario");
-      setIdUser(userId);
+      setIdUser(Number(userId));
     };
     getUserId();
   }, []);
+
 
   const getUsuario = async (id) => {
     if (usuarios[id]) return usuarios[id];
@@ -47,29 +48,37 @@ export function ScreenChat({ route, navigation }) {
   };
 
   const loadMessages = async () => {
-  try {
-    const res = await apiMessage.get("", {
-      params: { enviou_id: enviou, recebeu_id: recebeu },
-    });
-    setMessages(res.data);
-    console.log(res.data)
+    try {
+      const res = await apiMessage.get("", {
+        params: { enviou_id: enviou, recebeu_id: recebeu },
+      });
 
-    if (!usuarios[enviou]) {
-      await getUsuario(enviou);
+      
+      const messagesArray = Array.isArray(res.data) ? res.data : [];
+
+      
+      const ordered = messagesArray.sort(
+        (a, b) => new Date(a.data_envio) - new Date(b.data_envio)
+      );
+      setMessages(ordered);
+
+      
+      if (!usuarios[enviou]) {
+        await getUsuario(enviou);
+      }
+      if (!usuarios[recebeu]) {
+        await getUsuario(recebeu);
+      }
+    } catch (e) {
+      Alert.alert("Erro ao carregar mensagens", e.message);
     }
-    if (!usuarios[recebeu]) {
-      await getUsuario(recebeu);
-    }
-  } catch (e) {
-    Alert.alert("Erro ao carregar mensagens", e.message);
-  }
-};
+  };
 
   useEffect(() => {
-    
-      loadMessages()
-    
-  }, []);
+    if (isFocused) {
+      loadMessages();
+    }
+  }, [isFocused]);
 
   const otherId = iduser == enviou ? recebeu : enviou;
 
@@ -79,7 +88,6 @@ export function ScreenChat({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-      
         <View
           style={{
             flexDirection: "row",
@@ -111,35 +119,40 @@ export function ScreenChat({ route, navigation }) {
           </View>
         </View>
 
-       
         <FlatList
           ref={flatListRef}
           data={messages}
-          keyboardShouldPersistTaps="handled"
           keyExtractor={(item) => item.idMensagens.toString()}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                marginVertical: 8,
-                padding: 12,
-                paddingHorizontal: 16,
-                borderRadius: 16,
-                backgroundColor: item.enviou_id == iduser ? "#DCF8C6" : "#fff",
-                alignSelf: item.enviou_id == iduser ? "flex-end" : "flex-start",
-              }}
-            >
-              <Text>{item.texto}</Text>
-              <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 12 }}>
-                  {formatarDataOuHora(item.data_envio)}
-                </Text>
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 10,
+            paddingHorizontal: 8
+          }}
+          renderItem={({ item }) => {
+            const isMyMessage = Number(item.enviou_id) === Number(iduser);
+            return (
+              <View
+                style={{
+                  marginVertical: 8,
+                  padding: 12,
+                  paddingHorizontal: 16,
+                  borderRadius: 16,
+                  backgroundColor: isMyMessage ? "#DCF8C6" : "#fff",
+                  alignSelf: isMyMessage ? "flex-end" : "flex-start",
+                }}
+              >
+                <Text>{item.texto}</Text>
+                <View style={{ alignItems: "flex-end" }}>
+                  <Text style={{ fontSize: 12 }}>
+                    {formatarDataOuHora(item.data_envio)}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-          contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
+            );
+          }}
         />
 
-        
         <InputMessage enviou={enviou} recebeu={recebeu} onSend={loadMessages} />
       </KeyboardAvoidingView>
     </SafeAreaView>

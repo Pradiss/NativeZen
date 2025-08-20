@@ -220,14 +220,14 @@ export default function FormRegister({ navigation }) {
             </View>
             <View style={{ gap: 8, marginBlock: 4, flexDirection: "row" }}>
               <DropdownModal
-                label="Selecione um estilo musical"
+                label="Seu estilo musical"
                 options={categoriaOptions}
                 selectedValue={formData.idCategoria}
                 onValueChange={(value) => updateField("idCategoria", value)}
               />
 
               <DropdownModal
-                label="Selecione um instrumento"
+                label="Seu instrumento"
                 options={instrumentoOptions}
                 selectedValue={formData.idInstrumento}
                 onValueChange={(value) => updateField("idInstrumento", value)}

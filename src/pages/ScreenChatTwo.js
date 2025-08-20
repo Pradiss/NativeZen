@@ -19,7 +19,7 @@ import InputMessage from "../components/InputMessage";
 export function ScreenChatTwo({ route, navigation }) {
   const { send_id, receive_id } = route.params;
 
-  console.log(send_id, receive_id)
+  console.log(send_id, receive_id);
 
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -30,7 +30,7 @@ export function ScreenChatTwo({ route, navigation }) {
   useEffect(() => {
     const getUserId = async () => {
       const userId = await AsyncStorage.getItem("idUsuario");
-      setIdUser(userId);
+      setIdUser(Number(userId));
     };
     getUserId();
   }, []);
@@ -48,29 +48,34 @@ export function ScreenChatTwo({ route, navigation }) {
   };
 
   const loadMessages = async () => {
-  try {
-    const res = await apiMessage.get("", {
-      params: { enviou_id: send_id, recebeu_id: receive_id },
-    });
-    setMessages(res.data);
-    console.log(res.data)
+    try {
+      const res = await apiMessage.get("", {
+        params: { enviou_id: send_id, recebeu_id: receive_id },
+      });
 
-    if (!usuarios[send_id]) {
-      await getUsuario(send_id);
+      // se NÃO for array, usa array vazio
+      const messagesArray = Array.isArray(res.data) ? res.data : [];
+      const ordered = messagesArray.sort(
+        (a, b) => new Date(a.data_envio) - new Date(b.data_envio)
+      );
+      setMessages(ordered);
+
+      if (!usuarios[send_id]) {
+        await getUsuario(send_id);
+      }
+      if (!usuarios[receive_id]) {
+        await getUsuario(receive_id);
+      }
+    } catch (e) {
+      Alert.alert("Erro ao carregar mensagens", e.message);
     }
-    if (!usuarios[receive_id]) {
-      await getUsuario(receive_id);
-    }
-  } catch (e) {
-    Alert.alert("Erro ao carregar mensagens", e.message);
-  }
-};
+  };
 
   useEffect(() => {
-    
-      loadMessages()
-    
-  }, []);
+    if (isFocused) {
+      loadMessages();
+    }
+  }, [isFocused]);
 
   const otherId = iduser == send_id ? receive_id : send_id;
 
@@ -80,7 +85,6 @@ export function ScreenChatTwo({ route, navigation }) {
         style={{ flex: 1, backgroundColor: "#6BD2D7" }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-      
         <View
           style={{
             flexDirection: "row",
@@ -112,36 +116,44 @@ export function ScreenChatTwo({ route, navigation }) {
           </View>
         </View>
 
-       
         <FlatList
-          ref={flatListRef}
           data={messages}
-          keyboardShouldPersistTaps="handled"
           keyExtractor={(item) => item.idMensagens.toString()}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                marginVertical: 8,
-                padding: 12,
-                paddingHorizontal: 16,
-                borderRadius: 16,
-                backgroundColor: item.enviou_id == iduser ? "#DCF8C6" : "#fff",
-                alignSelf: item.enviou_id == iduser ? "flex-end" : "flex-start",
-              }}
-            >
-              <Text>{item.texto}</Text>
-              <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 12 }}>
-                  {formatarDataOuHora(item.data_envio)}
-                </Text>
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 10,
+            paddingHorizontal: 8
+          }}
+          renderItem={({ item }) => {
+            const isMyMessage = Number(item.enviou_id) === Number(iduser);
+            return (
+              <View
+                style={{
+                  marginVertical: 8,
+                  padding: 12,
+                  paddingHorizontal: 16,
+                  borderRadius: 16,
+                  backgroundColor: isMyMessage ? "#DCF8C6" : "#fff",
+                  alignSelf: isMyMessage ? "flex-end" : "flex-start",
+                }}
+              >
+                <Text>{item.texto}</Text>
+                <View style={{ alignItems: "flex-end" }}>
+                  <Text style={{ fontSize: 12 }}>
+                    {formatarDataOuHora(item.data_envio)}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-          contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 8 }}
+            );
+          }}
         />
 
-        
-        <InputMessage enviou={send_id} recebeu={receive_id} onSend={loadMessages} />
+        <InputMessage
+          enviou={send_id}
+          recebeu={receive_id}
+          onSend={loadMessages}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

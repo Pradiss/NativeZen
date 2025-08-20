@@ -7,11 +7,13 @@ import { Button } from "react-native-paper";
 import { SocialIcon } from "../components/RedeSocial";
 import { formatReais } from "../utils/mask";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function ProfileView({ navigation }) {
   const [user, setUser] = useState(null);
   const [categories, setCategories] = useState([]);
   const route = useRoute();
+  const [loggedUserId, setLoggedUserId] = useState(null);
   const { idUser } = route.params;
 
   const instrumento = (idInstrumento) => {
@@ -69,12 +71,21 @@ const category = (idCategoria) => {
     fetchData();
   }, [idUser]);
 
-  
- 
-  
+useEffect(() => {
+  const getLoggedId = async () => {
+    const loggedId = await AsyncStorage.getItem("idUsuario");
+    setLoggedUserId(loggedId);
+  };
+  getLoggedId();
+}, []);
 
-  if (!user) return <Text> Carregando...</Text>;
-  
+      if (!user) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator animating={true} color={"black"} size={"large"} />
+        </View>
+      );
+    }
   
 
   return (
@@ -115,20 +126,18 @@ const category = (idCategoria) => {
         </Text>
 
         <Button
-        icon="chat-outline"
-        mode="contained"
-        style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
-        onPress={() =>
-          navigation.navigate("ScreenChatTwo", {
-            
-            send_id: user.idUsuario,
-
-            receive_id: idUser,
-          })
-        }
-      >
-        Envie uma mensagem
-      </Button>
+          icon="chat-outline"
+          mode="contained"
+          style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
+          onPress={() =>
+            navigation.navigate("ScreenChatTwo", {
+              send_id: loggedUserId,       
+              receive_id: user.idUsuario,   
+            })
+          }
+        >
+          Envie uma mensagem
+        </Button>
 
 
         <View style={{ flexDirection:"row", justifyContent:"space-around", marginVertical:32 }}>
