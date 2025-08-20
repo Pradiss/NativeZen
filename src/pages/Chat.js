@@ -24,7 +24,7 @@ export default function Chat({ navigation }) {
         return;
       }
 
-      // 👉 identifica o "outro" usuário em cada mensagem
+      //  identifica o "outro" usuário em cada mensagem
       const uniqueUserIds = [
         ...new Set(
           mensagens.map((m) =>
@@ -80,6 +80,7 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     if (isFocused) {
       loadMessages();
+      console.log("teste")
     }
   }, [isFocused, loadMessages]);
 

@@ -89,7 +89,7 @@ const category = (idCategoria) => {
     if (isFocused) LoadingUsers()
   }, [isFocused])
     
-        const trocarFoto = async () => {
+    const trocarFoto = async () => {
         const idUsuario = await AsyncStorage.getItem("idUsuario");
         const token = await AsyncStorage.getItem("api_token");
 
@@ -153,7 +153,7 @@ const category = (idCategoria) => {
             { text: "Escolher da galeria", onPress: abrirGaleria },
             { text: "Cancelar", style: "cancel" },
         ]);
-        };
+    };
     
     return(
 <KeyboardAvoidingView

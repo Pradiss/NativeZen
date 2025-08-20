@@ -41,7 +41,7 @@ const category = (idCategoria) => {
 
   return(
     <View style={{flex:1}}>
-      <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails", { idUsuario: item.idUsuario })}>
+      <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails", { idUser: item.idUsuario })}>
         <View style={styles.CardUser}>
           <ImageBackground
             source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}

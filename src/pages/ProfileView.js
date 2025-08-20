@@ -6,12 +6,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Button } from "react-native-paper";
 import { SocialIcon } from "../components/RedeSocial";
 import { formatReais } from "../utils/mask";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProfileView({ navigation }) {
   const [user, setUser] = useState(null);
   const [categories, setCategories] = useState([]);
   const route = useRoute();
-  const { idUsuario } = route.params;
+  const { idUser } = route.params;
 
   const instrumento = (idInstrumento) => {
   switch(idInstrumento){
@@ -51,11 +52,14 @@ const category = (idCategoria) => {
     const fetchData = async () => {
       try {
         const [userRes, catRes] = await Promise.all([
-          axios.get(`https://erick5457.c44.integrator.host/api/usuarios/${idUsuario}`),
+          axios.get(`https://erick5457.c44.integrator.host/api/usuarios/${idUser}`),
           axios.get("https://erick5457.c44.integrator.host/api/categorias")
         ]);
 
+        
+
         setUser(userRes.data);
+        
         setCategories(catRes.data);
       } catch (error) {
         Alert.alert("Erro", error.message);
@@ -63,9 +67,15 @@ const category = (idCategoria) => {
     };
 
     fetchData();
-  }, [idUsuario]);
+  }, [idUser]);
 
-  if (!user) return <Text>Carregando...</Text>;
+  
+ 
+  
+
+  if (!user) return <Text> Carregando...</Text>;
+  
+  
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow:1, paddingBottom:100, paddingHorizontal:16 }}>
@@ -109,9 +119,11 @@ const category = (idCategoria) => {
         mode="contained"
         style={{ backgroundColor:"black", width:"100%", paddingVertical:4, marginTop:16 }}
         onPress={() =>
-          navigation.navigate("ScreenChat", {
-            enviou: user.idUsuario,
-            recebeu: idUsuario,
+          navigation.navigate("ScreenChatTwo", {
+            
+            send_id: user.idUsuario,
+
+            receive_id: idUser,
           })
         }
       >

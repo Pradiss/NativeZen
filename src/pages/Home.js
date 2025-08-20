@@ -72,7 +72,7 @@ export default function Home({navigation}){
                 
                 <View style={{flexDirection:"row", alignItems:"center" , marginHorizontal:12,paddingTop:18,}}>
                     <TextInput  style={styles.input} placeholder="Search Free Lance" value={search} onChangeText={setSearch} /> 
-                    <IconButton  style={styles.filter} icon="text-search" size={30} onPress={() => navigation.navigate("Filtro", {item: search})}></IconButton> 
+                    <IconButton  style={styles.filter} icon="text-search" size={30} onPress={() => navigation.navigate("Filters")} ></IconButton> 
                 </View>
                 
                 <View style={styles.title}>

@@ -23,6 +23,8 @@ import ScreenInicial from "./src/pages/ScreenInicial";
 import FormRegister from "./src/pages/FormRegister";
 import EditDescription from "./src/components/EditDescription";
 import { ScreenChat } from "./src/pages/ScreenChat";
+import Filtros from "./src/pages/Filters";
+import { ScreenChatTwo } from "./src/pages/ScreenChatTwo";
 
 const Tab = createBottomTabNavigator();
 
@@ -93,13 +95,14 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ProfileDetails"  component={ProfileView}  />
             <Stack.Screen name="Editar Perfil" component={EditProfile} options={{headerShown:true}} />
-            <Stack.Screen name="Filters" component={Filters} options={{headerShown:true}} />
+            <Stack.Screen name="Filters" component={Filtros} options={{headerShown:true}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="EditDescription" component={EditDescription}/>
             <Stack.Screen name="ScreenInicial" component={ScreenInicial} />
             <Stack.Screen name="FormRegister" component={FormRegister} />
             <Stack.Screen name="ScreenChat" component={ScreenChat}  />
+            <Stack.Screen name="ScreenChatTwo" component={ScreenChatTwo}  />
             
           </Stack.Navigator>
         </NavigationContainer>

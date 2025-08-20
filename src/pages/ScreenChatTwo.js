@@ -16,9 +16,10 @@ import { useIsFocused } from "@react-navigation/native";
 import { formatarDataOuHora } from "../utils/mask";
 import InputMessage from "../components/InputMessage";
 
-export function ScreenChat({ route, navigation }) {
-  const { enviou, recebeu } = route.params;
+export function ScreenChatTwo({ route, navigation }) {
+  const { send_id, receive_id } = route.params;
 
+  console.log(send_id, receive_id)
 
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -49,16 +50,16 @@ export function ScreenChat({ route, navigation }) {
   const loadMessages = async () => {
   try {
     const res = await apiMessage.get("", {
-      params: { enviou_id: enviou, recebeu_id: recebeu },
+      params: { enviou_id: send_id, recebeu_id: receive_id },
     });
     setMessages(res.data);
     console.log(res.data)
 
-    if (!usuarios[enviou]) {
-      await getUsuario(enviou);
+    if (!usuarios[send_id]) {
+      await getUsuario(send_id);
     }
-    if (!usuarios[recebeu]) {
-      await getUsuario(recebeu);
+    if (!usuarios[receive_id]) {
+      await getUsuario(receive_id);
     }
   } catch (e) {
     Alert.alert("Erro ao carregar mensagens", e.message);
@@ -71,7 +72,7 @@ export function ScreenChat({ route, navigation }) {
     
   }, []);
 
-  const otherId = iduser == enviou ? recebeu : enviou;
+  const otherId = iduser == send_id ? receive_id : send_id;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -140,7 +141,7 @@ export function ScreenChat({ route, navigation }) {
         />
 
         
-        <InputMessage enviou={enviou} recebeu={recebeu} onSend={loadMessages} />
+        <InputMessage enviou={send_id} recebeu={receive_id} onSend={loadMessages} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

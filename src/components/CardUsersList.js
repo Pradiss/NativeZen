@@ -42,7 +42,7 @@ const category = (idCategoria) => {
 }
     
     return(
-    <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUsuario : item.idUsuario})}>
+    <TouchableOpacity  onPress={() => navigation.navigate("ProfileDetails",{idUser : item.idUsuario})}>
 
         <View style={{flexDirection:"row", alignItems:"center",
             backgroundColor:"#fff", borderRadius:28, marginBlock:8, padding:6, marginHorizontal:12,
