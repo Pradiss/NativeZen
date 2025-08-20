@@ -55,8 +55,6 @@ export function ScreenChat({ route, navigation }) {
 
       
       const messagesArray = Array.isArray(res.data) ? res.data : [];
-
-      
       const ordered = messagesArray.sort(
         (a, b) => new Date(a.data_envio) - new Date(b.data_envio)
       );

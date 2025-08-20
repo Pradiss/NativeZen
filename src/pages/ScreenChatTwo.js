@@ -19,7 +19,11 @@ import InputMessage from "../components/InputMessage";
 export function ScreenChatTwo({ route, navigation }) {
   const { send_id, receive_id } = route.params;
 
-  console.log(send_id, receive_id);
+  // converte os ids recebidos via params para número
+  const sendIdParam = Number(send_id);
+  const receiveIdParam = Number(receive_id);
+
+  console.log(sendIdParam,receiveIdParam)
 
   const [iduser, setIdUser] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -50,21 +54,20 @@ export function ScreenChatTwo({ route, navigation }) {
   const loadMessages = async () => {
     try {
       const res = await apiMessage.get("", {
-        params: { enviou_id: send_id, recebeu_id: receive_id },
+        params: { enviou_id: sendIdParam, recebeu_id: receiveIdParam },
       });
 
-      // se NÃO for array, usa array vazio
       const messagesArray = Array.isArray(res.data) ? res.data : [];
       const ordered = messagesArray.sort(
         (a, b) => new Date(a.data_envio) - new Date(b.data_envio)
       );
       setMessages(ordered);
 
-      if (!usuarios[send_id]) {
-        await getUsuario(send_id);
+      if (!usuarios[sendIdParam]) {
+        await getUsuario(sendIdParam);
       }
-      if (!usuarios[receive_id]) {
-        await getUsuario(receive_id);
+      if (!usuarios[receiveIdParam]) {
+        await getUsuario(receiveIdParam);
       }
     } catch (e) {
       Alert.alert("Erro ao carregar mensagens", e.message);
@@ -77,7 +80,13 @@ export function ScreenChatTwo({ route, navigation }) {
     }
   }, [isFocused]);
 
-  const otherId = iduser == send_id ? receive_id : send_id;
+  // identifica quem é o outro usuário da conversa
+  const otherId = iduser === sendIdParam ? receiveIdParam : sendIdParam;
+
+  // evita renderizar antes de carregar o id do usuário logado
+  if (iduser === null) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -123,10 +132,10 @@ export function ScreenChatTwo({ route, navigation }) {
           contentContainerStyle={{
             flexGrow: 1,
             paddingBottom: 10,
-            paddingHorizontal: 8
+            paddingHorizontal: 8,
           }}
           renderItem={({ item }) => {
-            const isMyMessage = Number(item.enviou_id) === Number(iduser);
+            const isMyMessage = Number(item.enviou_id) === iduser;
             return (
               <View
                 style={{
@@ -150,8 +159,8 @@ export function ScreenChatTwo({ route, navigation }) {
         />
 
         <InputMessage
-          enviou={send_id}
-          recebeu={receive_id}
+          enviou={iduser}           // <-- agora usa o usuário logado
+          recebeu={otherId}         // <-- e o outro usuário
           onSend={loadMessages}
         />
       </KeyboardAvoidingView>
