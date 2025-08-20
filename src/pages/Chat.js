@@ -94,8 +94,8 @@ export default function Chat({ navigation }) {
       />
 
       <FlatList
-        data={chat.filter((c) =>
-          c.user.nome.toLowerCase().includes(search.toLowerCase())
+        data={chat.filter((conversas) =>
+          conversas.user.nome.toLowerCase().includes(search.toLowerCase())
         )}
         keyExtractor={(item) => item.idMensagens.toString()}
         renderItem={({ item }) => (
