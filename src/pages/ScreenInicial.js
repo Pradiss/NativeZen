@@ -25,12 +25,12 @@ export default function ScreenInicial({ navigation }) {
       <View>
         <Image
           source={require("../asset/BackgroundScreen.png")}
-          style={{ width: 350, height: 350, paddingTop: 50 }}
+          style={{ width: 300, height: 300, paddingTop: 10 }}
           resizeMode="contain"
         />
       </View>
 
-      <View style={styles.backgroundScreenBlack}>
+      <View style={[styles.backgroundScreenBlack,{flex:1}]}>
         <Text
           style={{
             fontSize: 38,

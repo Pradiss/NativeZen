@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#232323",
     alignItems: "center",
     justifyContent: "center",
-    padding: 40,
+    padding:30,
   },
 
   inputLogin: {

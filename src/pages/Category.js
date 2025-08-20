@@ -157,9 +157,7 @@ export default function Category({navigation}){
                     )}
                     contentContainerStyle={{ paddingBottom: 100 }}
                     ListFooterComponent={<View style={{ height: 80 }} />}
-                    />
-            
-                
+                />  
         </View>
     )
 }

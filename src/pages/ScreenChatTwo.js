@@ -7,6 +7,7 @@ import {
   Platform,
   SafeAreaView,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -107,22 +108,26 @@ export function ScreenChatTwo({ route, navigation }) {
         >
           <MaterialCommunityIcons
             name="arrow-left"
-            size={25}
+            size={30}
             color="#000"
             onPress={() => navigation.goBack()}
           />
-
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ProfileDetails", { idUser: otherId })}
+          style={{ flexDirection:"row", alignItems:"center", width:"100%" }}
+        >
           <Avatar.Image
             size={40}
             source={{ uri: usuarios[otherId]?.foto }}
             style={{ backgroundColor: "#232323" }}
           />
 
-          <View style={{ flex: 1 }}>
+          <View style={{ marginLeft: 8 }}>
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
-              {usuarios[otherId]?.nome || "Usuário"}
+              {usuarios[otherId]?.nome || "Carregando..."}
             </Text>
           </View>
+        </TouchableOpacity>
         </View>
 
         <FlatList
