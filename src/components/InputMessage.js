@@ -50,7 +50,7 @@ export default function InputMessage({ enviou, recebeu, onSend }) {
 
 
   return (
-    <View style={{ padding: 8, backgroundColor: "#fff" }}>
+    <View style={{ padding: 8,paddingBottom:20, backgroundColor: "#fff" }}>
       <View
         style={{
           flexDirection: "row",

@@ -98,9 +98,11 @@ export function ScreenChatTwo({ route, navigation }) {
         <View
           style={{
             flexDirection: "row",
-            gap: 16,
+            gap: 12,
             alignItems: "center",
             padding: 8,
+            paddingBlock:16,
+            paddingTop:16,
             backgroundColor: "#fff",
             borderBottomLeftRadius: 16,
             borderBottomRightRadius: 16,
@@ -117,7 +119,7 @@ export function ScreenChatTwo({ route, navigation }) {
           style={{ flexDirection:"row", alignItems:"center", width:"100%" }}
         >
           <Avatar.Image
-            size={40}
+            size={50}
             source={{ uri: usuarios[otherId]?.fotoUrl }}
             style={{ backgroundColor: "#232323" }}
           />
