@@ -64,13 +64,13 @@ export default function Category({ navigation }) {
     }
   }, [isFocused, hasLoaded])
 
-  // ===> FILTRO FINAL (patch anti-crash)
+  
   const FilterUsers = (Array.isArray(users) ? users : []).filter((user) => {
     const termo = (search || "").toLowerCase()
     const nome = (user?.nome ?? "").toString().toLowerCase()
     const cidadeUser = (user?.cidade ?? "").toString().toLowerCase()
 
-    // busca por nome ou cidade (sem quebrar se vier null/undefined)
+    
     const nameOrCity = !termo || nome.includes(termo) || cidadeUser.includes(termo)
 
     const filterCategoriaBtn = filterCategory ? user.idCategoria === filterCategory : true
@@ -121,7 +121,7 @@ export default function Category({ navigation }) {
         />
       </View>
 
-      <View style={{ paddingStart: 8 }}>
+      <View style={{ paddingStart: 8 ,gap:6 }}>
         <FlatList
           data={category}
           horizontal
@@ -146,7 +146,8 @@ export default function Category({ navigation }) {
           renderItem={({ item }) => (
             <Button
               mode="outlined"
-              style={{ marginHorizontal: 4 }}
+              style={{ marginHorizontal: 4 , borderColor:"#000"}}
+              labelStyle={{color:"#000"}}
               onPress={() => setFilterInstrument(item.idInstrumento)}
             >
               {item.nomeInstrumento}
@@ -155,8 +156,9 @@ export default function Category({ navigation }) {
         />
       </View>
 
-      <View style={{ paddingHorizontal: 8, paddingTop: 8 }}>
+      <View style={{ paddingHorizontal: 8, paddingBlock: 16}}>
         <Button
+          labelStyle={{color:"#000"}}
           mode="outlined"
           icon="close"
           onPress={() => {

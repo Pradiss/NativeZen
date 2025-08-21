@@ -91,8 +91,8 @@ const category = (idCategoria) => {
     
     const trocarFoto = async () => {
         const idUsuario = await AsyncStorage.getItem("idUsuario");
-        const token = await AsyncStorage.getItem("api_token");
-
+        const token = await AsyncStorage.getItem("token");
+console.log(token)
         const abrirCamera = async () => {
             
             const { status } = await ImagePicker.requestCameraPermissionsAsync();
