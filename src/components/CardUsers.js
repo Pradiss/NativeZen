@@ -44,7 +44,7 @@ const category = (idCategoria) => {
       <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails", { idUser: item.idUsuario })}>
         <View style={styles.CardUser}>
           <ImageBackground
-            source={item.fotoUrl ? { uri: item.fotoUrl} : require("../asset/avatar.png")}
+            source={item.fotoUrl ? { uri: item.fotoUrl } : require('../asset/avatar.png')}
             style={{ padding:12, width: 250, height:280, borderRadius:30 }}
             resizeMode="cover"
             imageStyle={{borderRadius:30}}
