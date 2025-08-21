@@ -20,7 +20,7 @@ import InputMessage from "../components/InputMessage";
 export function ScreenChatTwo({ route, navigation }) {
   const { send_id, receive_id } = route.params;
 
-  // converte os ids recebidos via params para número
+  
   const sendIdParam = Number(send_id);
   const receiveIdParam = Number(receive_id);
 
@@ -81,10 +81,10 @@ export function ScreenChatTwo({ route, navigation }) {
     }
   }, [isFocused]);
 
-  // identifica quem é o outro usuário da conversa
+  
   const otherId = iduser === sendIdParam ? receiveIdParam : sendIdParam;
 
-  // evita renderizar antes de carregar o id do usuário logado
+  
   if (iduser === null) {
     return null;
   }

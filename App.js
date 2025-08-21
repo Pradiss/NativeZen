@@ -95,7 +95,7 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="ProfileDetails"  component={ProfileView}  />
             <Stack.Screen name="Editar Perfil" component={EditProfile} options={{headerShown:true}} />
-            <Stack.Screen name="Filters" component={Filtros} options={{headerShown:true}} />
+            <Stack.Screen name="Filters" component={Filtros} options={{headerShown:true, title: " Filtro"}} />
             <Stack.Screen name="Configuração" component={Config} options={{headerShown:true}} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="EditDescription" component={EditDescription}/>

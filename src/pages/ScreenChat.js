@@ -60,7 +60,6 @@ export function ScreenChat({ route, navigation }) {
       );
       setMessages(ordered);
 
-      
       if (!usuarios[enviou]) {
         await getUsuario(enviou);
       }

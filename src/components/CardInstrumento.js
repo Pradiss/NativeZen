@@ -21,6 +21,8 @@ export default function CardInstrument({ item, navigation }) {
               width: 80,
               height: 80,
               borderRadius: 28,
+              borderWidth:1,
+              borderColor:"#000",
               marginEnd: 8,
               marginBottom: 8,
             }}

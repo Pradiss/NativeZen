@@ -9,7 +9,6 @@ export default function CardChat({ item, navigation }) {
 
   const avatarUri = user.foto 
 
-
   return (
     <TouchableOpacity
       onPress={() =>

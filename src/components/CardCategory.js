@@ -18,7 +18,7 @@ export default function CardCategory({ item, navigation }) {
                     <Image
 
                         source={{ uri: item.foto }}
-                        style={{ width: 80, height: 80, borderRadius: 28, marginEnd: 8, marginBottom: 8 }}
+                        style={{ width: 80, height: 80, borderRadius: 28, marginEnd: 8, marginBottom: 8,borderWidth:1,borderColor:"#000" }}
                         resizeMode="cover"
                     />
 

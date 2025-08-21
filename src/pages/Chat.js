@@ -80,7 +80,7 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     if (isFocused) {
       loadMessages();
-      console.log("teste")
+      
     }
   }, [isFocused, loadMessages]);
 
