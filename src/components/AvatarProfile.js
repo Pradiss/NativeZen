@@ -23,7 +23,7 @@ export default function Profile({navigation,item}){
             try{
                 
                 const idUsuario = await AsyncStorage.getItem("idUsuario")
-                const api = await AsyncStorage.getItem("api")
+                const api = await AsyncStorage.getItem("token")
                 const res = await apiUsers.get(
                     `/${idUsuario}`,
                     {
@@ -54,7 +54,7 @@ export default function Profile({navigation,item}){
         <View style={{flexDirection:"row",justifyContent:"center"}}>
                 <Avatar.Image 
                 size={50} 
-                source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
+                source={users.fotoUrl ? { uri: users.fotoUrl } : require("../asset/avatar.png")}
                 style={{ alignSelf: 'flex-start' }}     
                 />
                 <View style={{justifyContent:"center", padding:8}}>

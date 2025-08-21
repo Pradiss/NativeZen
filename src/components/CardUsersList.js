@@ -54,7 +54,7 @@ const category = (idCategoria) => {
             elevation: 5,
         }}>
             <Image
-                 source={item.foto ? { uri: item.foto } : require("../asset/avatar.png")}
+                 source={item.fotoUrl ? { uri: item.fotoUrl } : require("../asset/avatar.png")}
                 style={{ width: 100, height:100, borderRadius:22}}
                 resizeMode="cover"
                 

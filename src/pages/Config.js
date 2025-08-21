@@ -52,7 +52,7 @@ export default function Config({ navigation }) {
         <Avatar.Image
           size={160}
           source={
-            users.foto ? { uri: users.foto } : require("../asset/avatar.png")
+            users.fotoUrl ? { uri: users.fotoUrl } : require("../asset/avatar.png")
           }
         />
        

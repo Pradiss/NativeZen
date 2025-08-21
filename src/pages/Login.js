@@ -60,7 +60,7 @@ export default function Login({ navigation }) {
           )
         }
       }else if (error.request){
-        Alert.alert("Falha no login", "Servidor não respondeu. Tente novamente")
+        Alert.alert("Falha no login", "Servidor não respondeu. Tente novamente Mais Tarde")
       }else{
         Alert.alert("Falha no login ", error.message)
       }

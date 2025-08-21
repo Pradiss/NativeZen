@@ -99,7 +99,7 @@ useEffect(() => {
         />
 
         <Image
-          source={user.foto ? { uri: user.foto } : require("../asset/avatar.png")}
+          source={user.fotoUrl ? { uri: user.fotoUrl} : require("../asset/avatar.png")}
           style={{ width:"100%", height:290, borderRadius:50, alignSelf:"center", marginTop:22 }}
           resizeMode="cover"
         />

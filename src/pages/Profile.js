@@ -66,95 +66,112 @@ const category = (idCategoria) => {
     }
 
     
-    const LoadingUsers = async () =>{
-        try{
-            const api = await AsyncStorage.getItem("api_token")
-            const idUsuario = await AsyncStorage.getItem("idUsuario")
-            const res = await apiUsers.get(`/${idUsuario}`,
-                {
-                    headers:{
-                        "Content-Type" : "application/json",
-                        "Authorization" : `Bearer ${api}`
-                    }
-                }
-            )
-            setUsers(res.data)
-        }catch(error){
-            Alert.alert("ERROR",error)
-        }
-        
-    }
+    const LoadingUsers = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    const idUsuario = await AsyncStorage.getItem("idUsuario");
+    const res = await apiUsers.get(`/${idUsuario}`, {
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}`
+      }
+    });
+
+    const API_HOST = "https://erick5457.c44.integrator.host";
+    const u = res.data;
+
+    // prioriza fotoUrl (absoluta); se vier só "foto" relativa, monta absoluta
+    const fotoAbs = u.fotoUrl || (u.foto ? `${API_HOST}${u.foto.startsWith('/')?'':'/'}${u.foto}` : null);
+
+    setUsers({ ...u, foto: fotoAbs });  // GUARDE em users.foto UMA URL ABSOLUTA
+  } catch (error) {
+    Alert.alert("ERROR", error?.response?.data?.message || error?.message || String(error));
+  }
+};
    useEffect(() => {
     LoadingCategory()
     if (isFocused) LoadingUsers()
   }, [isFocused])
     
-    const trocarFoto = async () => {
-        const idUsuario = await AsyncStorage.getItem("idUsuario");
-        const token = await AsyncStorage.getItem("token");
-console.log(token)
-        const abrirCamera = async () => {
-            
-            const { status } = await ImagePicker.requestCameraPermissionsAsync();
-            if (status !== "granted") {
-            Alert.alert("Permissão negada", "Você precisa liberar o acesso à câmera");
-            return;
-            }
 
-            const result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.7,
-            });
-            if (!result.canceled) {
-            await atualizarFoto(result.assets[0].uri);
-            }
-        };
+const API_BASE = "https://erick5457.c44.integrator.host/api/usuarios";
 
-        const abrirGaleria = async () => {
-            
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== "granted") {
-            Alert.alert("Permissão negada", "Você precisa liberar o acesso à galeria");
-            return;
-            }
+const trocarFoto = async () => {
+  const idUsuario = await AsyncStorage.getItem("idUsuario");
+  const token = await AsyncStorage.getItem("token"); // use a MESMA chave que você salvou no login
 
-            const result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.7,
-            });
-            if (!result.canceled) {
-            await atualizarFoto(result.assets[0].uri);
-            }
-        };
+  if (!idUsuario || !token) {
+    Alert.alert("Erro", "Sessão inválida. Faça login novamente.");
+    return;
+  }
 
-        const atualizarFoto = async (uri) => {
-            try {
-            await apiUsers.put(
-                `/${idUsuario}/foto`,
-                { foto: uri },
-                {
-                    headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                    },
-                }
-                );
-            setUsers((prev) => ({ ...prev, foto: uri }));
-            Alert.alert("Sucesso", "Foto atualizada com sucesso!");
-            } catch (e) {
-            Alert.alert("Erro", e.message);
-            }
-        };
+  const enviarArquivo = async (uri) => {
+    try {
+      const form = new FormData();
+      form.append("_method", "PUT"); // override p/ Laravel
+      form.append("foto", {
+        uri,
+        name: `foto_${Date.now()}.jpg`,
+        type: "image/jpeg",
+      });
 
-        Alert.alert("Foto de perfil", "Escolha uma opção", [
-            { text: "Tirar foto", onPress: abrirCamera },
-            { text: "Escolher da galeria", onPress: abrirGaleria },
-            { text: "Cancelar", style: "cancel" },
-        ]);
-    };
-    
+      const resp = await fetch(`${API_BASE}/${idUsuario}/foto`, {
+        method: "POST", // POST + _method=PUT
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // NÃO defina Content-Type manualmente
+        },
+        body: form,
+      });
+
+      const text = await resp.text();
+      let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+      console.log("UPLOAD status:", resp.status, data);
+
+      if (!resp.ok) {
+        const msg = data?.errors?.foto?.[0] || data?.message || data?.error || "Falha no upload.";
+        throw new Error(msg);
+      }
+
+      const fotoUrl = data?.fotoUrl; // absoluta (https://...)
+      setUsers(prev => ({ ...prev, foto: `${fotoUrl}?t=${Date.now()}` })); // quebra cache
+      Alert.alert("Sucesso", "Foto atualizada com sucesso!");
+    } catch (e) {
+      console.log("UPLOAD ERRO:", e?.message || e);
+      Alert.alert("Erro", e?.message || "Tente novamente.");
+    }
+  };
+
+  const abrirCamera = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à câmera");
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.85,
+    });
+    if (!result.canceled) await enviarArquivo(result.assets[0].uri);
+  };
+
+  const abrirGaleria = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à galeria");
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.85,
+    });
+    if (!result.canceled) await enviarArquivo(result.assets[0].uri);
+  };
+
+  Alert.alert("Foto de perfil", "Escolha uma opção", [
+    { text: "Tirar foto", onPress: abrirCamera },
+    { text: "Escolher da galeria", onPress: abrirGaleria },
+    { text: "Cancelar", style: "cancel" },
+  ]);
+};
+ 
     return(
 <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -173,7 +190,7 @@ console.log(token)
 
         <View>
             <Image
-                source={users.foto ? { uri: users.foto } : require("../asset/avatar.png")}
+                source={users.fotoUrl ? { uri: users.fotoUrl } : require("../asset/avatar.png")}
                 style={{ 
                     width: "100%", 
                     height: 290, 

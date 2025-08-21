@@ -118,7 +118,7 @@ export function ScreenChatTwo({ route, navigation }) {
         >
           <Avatar.Image
             size={40}
-            source={{ uri: usuarios[otherId]?.foto }}
+            source={{ uri: usuarios[otherId]?.fotoUrl }}
             style={{ backgroundColor: "#232323" }}
           />
 
