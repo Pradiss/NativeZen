@@ -1,6 +1,6 @@
 
-import React,{useState,useEffect} from "react"
-import { View, Text, Image ,Alert,ScrollView, TextInput , Keyboard, KeyboardAvoidingView, Platform} from "react-native"
+import React, { useState, useEffect } from "react"
+import { View, Text, Image, Alert, ScrollView, TextInput, Keyboard, KeyboardAvoidingView, Platform } from "react-native"
 import { useIsFocused } from "@react-navigation/native"
 import axios from "axios"
 import styles from "../components/Style"
@@ -14,286 +14,285 @@ import EditDescription from "../components/EditDescription"
 import { cleanPhone } from "../utils/mask"
 import * as ImagePicker from "expo-image-picker";
 
-export default function Profile({navigation}){
+export default function Profile({ navigation }) {
 
-    const [users,setUsers] = useState([])
-    const [categoria,setCategory] = useState([])
-    const isFocused = useIsFocused()
+  const [users, setUsers] = useState([])
+  const [categoria, setCategory] = useState([])
+  const isFocused = useIsFocused()
 
-    const instrumento = (idInstrumento) => {
-  switch(idInstrumento){
-    case 1: return "Violão";
-    case 2: return "Bateria";
-    case 3: return "Cavaco";
-    case 4: return "Cantor(a)";
-    case 5: return "Contrabaixo";
-    case 6: return "Piano";
-    case 7: return "Guitarra";
-    case 8: return "Violino";
-    case 9: return "Saxofone";
-    case 10: return "Teclado";
-    case 11: return "Flauta";
-    case 12: return "Tambor";
-    case 13: return "Bandolim";
-    case 14: return "Trompete";
+  const instrumento = (idInstrumento) => {
+    switch (idInstrumento) {
+      case 1: return "Violão";
+      case 2: return "Bateria";
+      case 3: return "Cavaco";
+      case 4: return "Cantor(a)";
+      case 5: return "Contrabaixo";
+      case 6: return "Piano";
+      case 7: return "Guitarra";
+      case 8: return "Violino";
+      case 9: return "Saxofone";
+      case 10: return "Teclado";
+      case 11: return "Flauta";
+      case 12: return "Tambor";
+      case 13: return "Bandolim";
+      case 14: return "Trompete";
+    }
   }
-}
 
-const category = (idCategoria) => {
-  switch(idCategoria){
-    case 1: return "Samba";
-    case 2: return "Sertanejo";
-    case 3: return "Rock";
-    case 4: return "Pagode";
-    case 5: return "MPB";
-    case 7: return "Gospel";
-    case 8: return "Reggae";
-    case 9: return "Blues";
-    case 10: return "Jazz";
-    case 11: return "Música Erudita";
+  const category = (idCategoria) => {
+    switch (idCategoria) {
+      case 1: return "Samba";
+      case 2: return "Sertanejo";
+      case 3: return "Rock";
+      case 4: return "Pagode";
+      case 5: return "MPB";
+      case 7: return "Gospel";
+      case 8: return "Reggae";
+      case 9: return "Blues";
+      case 10: return "Jazz";
+      case 11: return "Música Erudita";
+    }
   }
-}
-    
-    const LoadingCategory = async () =>{
-        try{ 
-            const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
-            setCategory(res.data)
 
-        }catch(error){
-            Alert.alert("ERROR",error.message)
-        }
-        
+  const LoadingCategory = async () => {
+    try {
+      const res = await axios.get("https://erick5457.c44.integrator.host/api/categorias")
+      setCategory(res.data)
+
+    } catch (error) {
+      Alert.alert("ERROR", error.message)
     }
 
-    
-    const LoadingUsers = async () => {
-  try {
-    const token = await AsyncStorage.getItem("token");
-    const idUsuario = await AsyncStorage.getItem("idUsuario");
-    const res = await apiUsers.get(`/${idUsuario}`, {
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":`Bearer ${token}`
-      }
-    });
-
-    const API_HOST = "https://erick5457.c44.integrator.host";
-    const u = res.data;
-
-    // prioriza fotoUrl (absoluta); se vier só "foto" relativa, monta absoluta
-    const fotoAbs = u.fotoUrl || (u.foto ? `${API_HOST}${u.foto.startsWith('/')?'':'/'}${u.foto}` : null);
-
-    setUsers({ ...u, foto: fotoAbs });  // GUARDE em users.foto UMA URL ABSOLUTA
-  } catch (error) {
-    Alert.alert("ERROR", error?.response?.data?.message || error?.message || String(error));
   }
-};
-   useEffect(() => {
+
+  const LoadingUsers = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const idUsuario = await AsyncStorage.getItem("idUsuario");
+      const res = await apiUsers.get(`/${idUsuario}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const API_HOST = "https://erick5457.c44.integrator.host";
+      const u = res.data;
+
+      // prioriza fotoUrl (absoluta); se vier só "foto" relativa, monta absoluta
+      const fotoAbs = u.fotoUrl || (u.foto ? `${API_HOST}${u.foto.startsWith('/') ? '' : '/'}${u.foto}` : null);
+
+      setUsers({ ...u, foto: fotoAbs });  // GUARDE em users.foto UMA URL ABSOLUTA
+    } catch (error) {
+      Alert.alert("ERROR", error?.response?.data?.message || error?.message || String(error));
+    }
+  };
+  useEffect(() => {
     LoadingCategory()
     if (isFocused) LoadingUsers()
   }, [isFocused])
-    
 
-const API_BASE = "https://erick5457.c44.integrator.host/api/usuarios";
 
-const trocarFoto = async () => {
-  const idUsuario = await AsyncStorage.getItem("idUsuario");
-  const token = await AsyncStorage.getItem("token"); // use a MESMA chave que você salvou no login
+  const API_BASE = "https://erick5457.c44.integrator.host/api/usuarios";
 
-  if (!idUsuario || !token) {
-    Alert.alert("Erro", "Sessão inválida. Faça login novamente.");
-    return;
-  }
+  const trocarFoto = async () => {
+    const idUsuario = await AsyncStorage.getItem("idUsuario");
+    const token = await AsyncStorage.getItem("token"); // use a MESMA chave que você salvou no login
 
-  const enviarArquivo = async (uri) => {
-    try {
-      const form = new FormData();
-      form.append("_method", "PUT"); // override p/ Laravel
-      form.append("foto", {
-        uri,
-        name: `foto_${Date.now()}.jpg`,
-        type: "image/jpeg",
-      });
-
-      const resp = await fetch(`${API_BASE}/${idUsuario}/foto`, {
-        method: "POST", // POST + _method=PUT
-        headers: {
-          Authorization: `Bearer ${token}`,
-          // NÃO defina Content-Type manualmente
-        },
-        body: form,
-      });
-
-      const text = await resp.text();
-      let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
-
-      console.log("UPLOAD status:", resp.status, data);
-
-      if (!resp.ok) {
-        const msg = data?.errors?.foto?.[0] || data?.message || data?.error || "Falha no upload.";
-        throw new Error(msg);
-      }
-
-      const fotoUrl = data?.fotoUrl; // absoluta (https://...)
-      setUsers(prev => ({ ...prev, foto: `${fotoUrl}?t=${Date.now()}` })); // quebra cache
-      Alert.alert("Sucesso", "Foto atualizada com sucesso!");
-    } catch (e) {
-      console.log("UPLOAD ERRO:", e?.message || e);
-      Alert.alert("Erro", e?.message || "Tente novamente.");
+    if (!idUsuario || !token) {
+      Alert.alert("Erro", "Sessão inválida. Faça login novamente.");
+      return;
     }
+
+    const enviarArquivo = async (uri) => {
+      try {
+        const form = new FormData();
+        form.append("_method", "PUT"); // override p/ Laravel
+        form.append("foto", {
+          uri,
+          name: `foto_${Date.now()}.jpg`,
+          type: "image/jpeg",
+        });
+
+        const resp = await fetch(`${API_BASE}/${idUsuario}/foto`, {
+          method: "POST", // POST + _method=PUT
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // NÃO defina Content-Type manualmente
+          },
+          body: form,
+        });
+
+        const text = await resp.text();
+        let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+        console.log("UPLOAD status:", resp.status, data);
+
+        if (!resp.ok) {
+          const msg = data?.errors?.foto?.[0] || data?.message || data?.error || "Falha no upload.";
+          throw new Error(msg);
+        }
+
+        const fotoUrl = data?.fotoUrl; // absoluta (https://...)
+        setUsers(prev => ({ ...prev, foto: `${fotoUrl}?t=${Date.now()}` })); // quebra cache
+        Alert.alert("Sucesso", "Foto atualizada com sucesso!");
+      } catch (e) {
+        console.log("UPLOAD ERRO:", e?.message || e);
+        Alert.alert("Erro", e?.message || "Tente novamente.");
+      }
+    };
+
+    const abrirCamera = async () => {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à câmera");
+      const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.85,
+      });
+      if (!result.canceled) await enviarArquivo(result.assets[0].uri);
+    };
+
+    const abrirGaleria = async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à galeria");
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.85,
+      });
+      if (!result.canceled) await enviarArquivo(result.assets[0].uri);
+    };
+
+    Alert.alert("Foto de perfil", "Escolha uma opção", [
+      { text: "Tirar foto", onPress: abrirCamera },
+      { text: "Escolher da galeria", onPress: abrirGaleria },
+      { text: "Cancelar", style: "cancel" },
+    ]);
   };
 
-  const abrirCamera = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à câmera");
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.85,
-    });
-    if (!result.canceled) await enviarArquivo(result.assets[0].uri);
-  };
-
-  const abrirGaleria = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") return Alert.alert("Permissão negada", "Libere o acesso à galeria");
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.85,
-    });
-    if (!result.canceled) await enviarArquivo(result.assets[0].uri);
-  };
-
-  Alert.alert("Foto de perfil", "Escolha uma opção", [
-    { text: "Tirar foto", onPress: abrirCamera },
-    { text: "Escolher da galeria", onPress: abrirGaleria },
-    { text: "Cancelar", style: "cancel" },
-  ]);
-};
- 
-    return(
-<KeyboardAvoidingView
+  return (
+    <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 , paddingHorizontal:16}}>
-        <View style={{paddingTop:53, gap:8}}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100, paddingHorizontal: 16 }}>
+        <View style={{ paddingTop: 53, gap: 8 }}>
 
-            <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"flex-end"}}>
-                <MaterialCommunityIcons  name="arrow-left" color="#000" size={24}  
-                onPress={()=> navigation.navigate("Home")}
-                />
-                <MaterialCommunityIcons  name="cog" color="#000" size={24}  
-                onPress={()=> navigation.navigate("Configuração")}
-                />
-            </View>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
+            <MaterialCommunityIcons name="arrow-left" color="#000" size={24}
+              onPress={() => navigation.navigate("Home")}
+            />
+            <MaterialCommunityIcons name="cog" color="#000" size={24}
+              onPress={() => navigation.navigate("Configuração")}
+            />
+          </View>
 
-        <View>
+          <View>
             <Image
-                source={users.fotoUrl ? { uri: users.fotoUrl } : require("../asset/avatar.png")}
-                style={{ 
-                    width: "100%", 
-                    height: 290, 
-                    borderRadius: 50, 
-                    alignSelf: "center", 
-                    marginTop:22,
-                    backgroundColor: "#fff",
-                    shadowColor: "#000",
-                    shadowOffset: { width: 1, height: 2 },
-                    shadowOpacity: 0.16,
-                    shadowRadius: 3,
-                    elevation: 5
-                }}
-                resizeMode="cover"
-                />
+              source={users.fotoUrl ? { uri: users.fotoUrl } : require("../asset/avatar.png")}
+              style={{
+                width: "100%",
+                height: 290,
+                borderRadius: 50,
+                alignSelf: "center",
+                marginTop: 22,
+                backgroundColor: "#fff",
+                shadowColor: "#000",
+                shadowOffset: { width: 1, height: 2 },
+                shadowOpacity: 0.16,
+                shadowRadius: 3,
+                elevation: 5
+              }}
+              resizeMode="cover"
+            />
             <MaterialCommunityIcons
-                name="camera"
-                size={20}
-                color="#333"
-                onPress={trocarFoto}
-                style={{
-                    position: "absolute",
-                    bottom: 0,
-                    right: 0,
-                    backgroundColor: "#6BD2D7",
-                    borderRadius: 50,
-                    padding: 6
-                    }}
-                />
+              name="camera"
+              size={20}
+              color="#333"
+              onPress={trocarFoto}
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                backgroundColor: "#6BD2D7",
+                borderRadius: 50,
+                padding: 6
+              }}
+            />
+          </View>
+
+
+
+          <View style={{ alignItems: "start", }}>
+
+            <Text style={{ fontSize: 38, fontWeight: 600, marginTop: 16 }}>{users.nome}  , {users.idade}</Text>
+
+            <Text style={{ fontSize: 20, color: "#555555", fontWeight: 400, marginTop: 8 }} >
+              <MaterialCommunityIcons style={{ color: "#222222" }} name="google-maps" size={22} />{users.cidade}, {users.uf}
+            </Text>
+            <View style={{ flexDirection: "row", marginTop: 16, gap: 32 }}>
+              <Text style={{ color: "#555555", fontSize: 20, fontWeight: 400 }}>
+                <MaterialCommunityIcons name="music-circle" size={22} color="#000" >
+                </MaterialCommunityIcons>
+                {category(users.idCategoria)}
+              </Text>
+
+              <Text style={{ fontSize: 20, color: "#555555", fontWeight: 400, marginBottom: 8 }}>
+                <MaterialCommunityIcons name="guitar-acoustic" size={22} color="#000">
+                </MaterialCommunityIcons>
+                {instrumento(users.idInstrumento)}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ paddingTop: 16, gap: 16 }}>
+            <Text style={{ fontSize: 28, fontWeight: 700 }}>{formatReais(users.preco)}</Text>
+
+          </View>
+
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around",
+            marginBlock: 32
+          }}>
+            <SocialIcon
+              platform="Instagram"
+              icon="instagram"
+              username={users.instagram}
+              urlScheme="instagram://user?username="
+              webBaseUrl="https://www.instagram.com/"
+            />
+
+            <SocialIcon
+              platform="Facebook"
+              icon="facebook"
+              username={users.facebook}
+              urlScheme="facebook://user?username="
+              webBaseUrl="https://www.facebook.com/"
+            />
+
+            <SocialIcon
+              platform="WhatsApp"
+              icon="whatsapp"
+              username={users.whatsapp}
+              urlScheme="whatsapp://send?phone="
+              webBaseUrl={`https://wa.me/${cleanPhone(users.whatsapp)}`}
+            />
+
+          </View>
+
+          <View style={{ gap: 16, }}>
+
+
+            <EditDescription description={users.description} />
+
+          </View>
+
+
+          <View style={{ paddingTop: 100 }}></View>
         </View>
-            
-                 
-
-            <View style={{alignItems:"start", }}>
-                
-                <Text style={{fontSize:38, fontWeight:600, marginTop:16}}>{users.nome}  , {users.idade}</Text> 
-
-                <Text style={{fontSize:20,color:"#555555", fontWeight:400 ,marginTop:8}} >
-                    <MaterialCommunityIcons style={{color:"#222222"}} name="google-maps" size={22} />{users.cidade}, {users.uf}
-                </Text>
-                <View style={{flexDirection:"row", marginTop:16, gap:32}}>
-                    <Text style={{color:"#555555", fontSize:20, fontWeight:400}}>
-                        <MaterialCommunityIcons name="music-circle" size={22} color="#000" >
-                        </MaterialCommunityIcons>
-                        {category(users.idCategoria)}
-                    </Text>
-
-                    <Text style={{fontSize:20,color:"#555555", fontWeight:400 ,marginBottom:8}}>
-                        <MaterialCommunityIcons name="guitar-acoustic" size={22} color="#000">
-                        </MaterialCommunityIcons>
-                        {instrumento(users.idInstrumento)}
-                    </Text>
-                </View>
-            </View>
-
-            <View style={{paddingTop:16, gap:16}}>
-                <Text style={{fontSize:28,fontWeight:700}}>{formatReais(users.preco)}</Text>
-                
-            </View>
-               
-            <View style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-around",
-                marginBlock: 32
-                }}>
-                <SocialIcon
-                    platform="Instagram"
-                    icon="instagram"
-                    username={users.instagram}
-                    urlScheme="instagram://user?username="
-                    webBaseUrl="https://www.instagram.com/"
-                />
-
-                <SocialIcon
-                    platform="Facebook"
-                    icon="facebook"
-                    username={users.facebook}
-                    urlScheme="facebook://user?username="
-                    webBaseUrl="https://www.facebook.com/"
-                />
-
-                <SocialIcon
-                platform="WhatsApp"
-                icon="whatsapp"
-                username={users.whatsapp}
-                urlScheme="whatsapp://send?phone="
-                webBaseUrl={`https://wa.me/${cleanPhone(users.whatsapp)}`}
-                />
-
-            </View>
-
-            <View style={{gap:16,}}>
-                
-                
-                <EditDescription description={users.description}/>
-
-            </View>
-           
-
-            <View style={{paddingTop:100}}></View>
-        </View>
-    </ScrollView>
+      </ScrollView>
     </KeyboardAvoidingView>
-    )
+  )
 }

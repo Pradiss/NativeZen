@@ -19,18 +19,19 @@ export default function Chat({ navigation }) {
       if (!idUsuario) return;
 
       const { data: mensagens } = await apiMessageAll.get(`/${idUsuario}`);
-      if (!mensagens || mensagens.length === 0) {
-        setChat([]);
-        return;
-      }
+     if (!Array.isArray(mensagens) || mensagens.length === 0) {
+      setChat([]);
+      return;
+    }
 
       //  identifica o "outro" usuário em cada mensagem
       const uniqueUserIds = [
         ...new Set(
           mensagens.map((m) =>
             m.enviou_id == idUsuario ? m.recebeu_id : m.enviou_id
-          )
-        ),
+        )
+      ),
+      
       ];
 
       // busca apenas os que não estão no cache
@@ -95,7 +96,7 @@ export default function Chat({ navigation }) {
 
       <FlatList
         data={chat.filter((conversas) =>
-          conversas.user.nome.toLowerCase().includes(search.toLowerCase())
+          (conversas.user?.nome || "").toLowerCase().includes(search.toLowerCase())
         )}
         keyExtractor={(item) => item.idMensagens.toString()}
         renderItem={({ item }) => (
